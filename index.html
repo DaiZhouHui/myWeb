@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vless节点生成工具 - 完整版</title>
+    <title>Vless节点生成工具 - 最完整版</title>
     <style>
         :root {
             --primary-color: #4361ee;
@@ -164,7 +164,7 @@
             font-size: 0.95rem;
         }
 
-        input, select, textarea {
+        input, textarea {
             width: 100%;
             padding: 14px 16px;
             border: 2px solid #e2e8f0;
@@ -174,7 +174,7 @@
             background: white;
         }
 
-        input:focus, select:focus, textarea:focus {
+        input:focus, textarea:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
@@ -249,11 +249,6 @@
             color: white;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
-        }
-
         .btn-success {
             background: linear-gradient(135deg, #4cc9f0 0%, #4895ef 100%);
             color: white;
@@ -264,17 +259,11 @@
             color: white;
         }
 
-        .btn-warning {
-            background: linear-gradient(135deg, var(--warning-color) 0%, #b5179e 100%);
-            color: white;
-        }
-
         .btn-block {
             display: block;
             width: 100%;
         }
 
-        /* 修复文件上传区域样式 */
         .file-upload-container {
             margin-bottom: 20px;
         }
@@ -329,7 +318,6 @@
             display: none;
         }
 
-        /* 修复文件信息区域样式 */
         .file-info {
             margin-top: 15px;
             padding: 15px;
@@ -337,7 +325,6 @@
             border-radius: 8px;
             border: 1px solid #b6e0fe;
             display: none;
-            animation: fadeIn 0.3s ease-out;
         }
 
         .file-info.show {
@@ -350,12 +337,6 @@
             align-items: center;
         }
 
-        .file-info-text {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
         .file-name {
             font-weight: 600;
             color: #2d3748;
@@ -366,7 +347,6 @@
             color: #718096;
         }
 
-        /* 修复移除文件按钮样式 */
         .remove-file-btn {
             background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
             color: #c53030;
@@ -377,9 +357,6 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .remove-file-btn:hover {
@@ -396,15 +373,6 @@
             border: 1px solid #e1e4e8;
         }
 
-        .github-config h4 {
-            color: #24292e;
-            margin-bottom: 15px;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
         .result-box {
             background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
             border-radius: 10px;
@@ -412,7 +380,6 @@
             margin-top: 20px;
             border: 1px solid #e2e8f0;
             position: relative;
-            overflow: hidden;
         }
 
         .result-box::before {
@@ -488,13 +455,6 @@
             display: block;
         }
 
-        .status-warning {
-            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-            color: #856404;
-            border-left-color: #ffc107;
-            display: block;
-        }
-
         .help-text {
             font-size: 13px;
             color: #718096;
@@ -507,13 +467,6 @@
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
             margin-bottom: 20px;
-        }
-
-        .action-buttons {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 25px;
         }
 
         .github-buttons {
@@ -606,123 +559,21 @@
         }
 
         @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes shine {
             0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
             100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border-radius: 4px;
-        }
-
-        @media (max-width: 768px) {
-            .main-grid {
-                gap: 30px;
-            }
-            
-            .card-body {
-                padding: 20px;
-            }
-            
-            .action-buttons {
-                grid-template-columns: 1fr;
-            }
-            
-            header h1 {
-                font-size: 2.2rem;
-            }
-        }
-
-        .workflow-steps {
-            margin-top: 20px;
-        }
-
-        .step {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            padding: 15px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .step-number {
-            background: var(--primary-color);
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-
-        .step-content {
-            flex: 1;
-        }
-
-        .step-title {
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 5px;
-        }
-
-        .step-desc {
-            font-size: 13px;
-            color: #718096;
-            line-height: 1.4;
-        }
-
-        .token-info {
-            background: linear-gradient(135deg, #e8f4fd 0%, #d1e9ff 100%);
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 10px;
-            border: 1px solid #b6e0fe;
-            font-size: 12px;
-            color: #2c5282;
-        }
-
-        .token-info a {
-            color: #2b6cb0;
-            text-decoration: none;
-        }
-
-        .token-info a:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Vless节点生成工具 - 完整版</h1>
-            <p>生成Vless节点 + GitHub订阅文件自动同步，全流程一键执行</p>
+            <h1>Vless节点生成工具 - 最完整版</h1>
+            <p>CSV转Vless + Base64订阅 + GitHub自动同步</p>
         </header>
 
         <div class="main-grid">
@@ -762,9 +613,22 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="help-text">
-                            <strong>⚠️ 注意：</strong>上传CSV文件后，系统将优先从文件的A列(第1列)提取IP，H列(第8列)提取端口
+
+                        <!-- CSV列配置 -->
+                        <div class="section-title">
+                            <span>📊 CSV列配置</span>
+                        </div>
+                        <div class="config-row">
+                            <div class="form-group">
+                                <label for="ipColumn">IP地址列（默认A列）</label>
+                                <input type="number" id="ipColumn" value="0" min="0">
+                                <div class="help-text">A列=0，B列=1，以此类推</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="portColumn">端口列（默认H列）</label>
+                                <input type="number" id="portColumn" value="7" min="-1">
+                                <div class="help-text">-1表示无端口列，将使用默认端口</div>
+                            </div>
                         </div>
                     </div>
 
@@ -787,9 +651,6 @@
 104.238.162.245:8080
 45.76.123.234 8443
 108.61.123.45"></textarea>
-                            <div class="help-text">
-                                ⚠️ 当上传了CSV文件时，此处的粘贴内容将被忽略，优先使用文件数据
-                            </div>
                         </div>
                     </div>
 
@@ -800,33 +661,25 @@
                         
                         <div class="config-row">
                             <div class="form-group">
-                                <label for="defaultPort">默认端口</label>
+                                <label for="defaultPort">默认端口（无端口时使用）</label>
                                 <input type="number" id="defaultPort" value="443" min="1" max="65535">
-                                <div class="help-text">当CSV中未提供端口时使用</div>
                             </div>
                             
                             <div class="form-group">
-                                <label for="remarksPrefix">别名前缀</label>
-                                <input type="text" id="remarksPrefix" value="自选" placeholder="如：自选">
-                                <div class="help-text">备用别名前缀（当IP属地无法识别时使用）</div>
+                                <label for="remarksPrefix">别名前缀（属地无法识别时使用）</label>
+                                <input type="text" id="remarksPrefix" value="自选">
                             </div>
                         </div>
                         
+                        <!-- 新增：强制443端口选项 -->
                         <div class="checkbox-group">
                             <input type="checkbox" id="forcePort443">
-                            <label for="forcePort443"><strong>强制使用443端口</strong></label>
-                        </div>
-                        <div class="help-text">
-                            ✓ 启用：所有节点统一使用443端口，忽略CSV中的端口信息<br>
-                            □ 禁用：使用CSV中的端口，仅当CSV无端口时使用默认端口
+                            <label for="forcePort443"><strong>强制所有节点使用443端口</strong></label>
                         </div>
 
                         <div class="checkbox-group">
                             <input type="checkbox" id="autoLocation" checked>
-                            <label for="autoLocation"><strong>自动识别IP属地</strong></label>
-                        </div>
-                        <div class="help-text">
-                            ✓ 启用：自动识别IP所属地区，生成如"新加坡01"、"美国02"等别名
+                            <label for="autoLocation"><strong>自动识别IP属地生成别名</strong></label>
                         </div>
                     </div>
 
@@ -849,29 +702,39 @@
 
                     <div class="section">
                         <div class="section-title">
-                            <span>⚙️ 高级配置</span>
+                            <span>⚙️ 高级配置（固定默认值）</span>
                         </div>
                         
                         <div class="config-row">
                             <div class="form-group">
-                                <label for="uuid">用户ID (UUID)</label>
-                                <input type="text" id="uuid" value="471a8e64-7b21-4703-b1d1-45a221098459">
+                                <label>用户ID (UUID)</label>
+                                <input type="text" id="uuid" value="471a8e64-7b21-4703-b1d1-45a221098459" readonly>
                             </div>
                             
                             <div class="form-group">
-                                <label for="host">伪装域名</label>
+                                <label>伪装域名 (Host)</label>
                                 <input type="text" id="host" value="knny.dpdns.org">
                             </div>
                             
                             <div class="form-group">
-                                <label for="sni">SNI域名</label>
+                                <label>SNI域名</label>
                                 <input type="text" id="sni" value="knny.dpdns.org">
                             </div>
                             
                             <div class="form-group">
-                                <label for="fp">浏览器指纹</label>
+                                <label>浏览器指纹 (fp)</label>
                                 <input type="text" id="fp" value="chrome">
                             </div>
+                        </div>
+
+                        <div class="help-text">
+                            其他固定参数：<br>
+                            • 加密方式：none<br>
+                            • 网络类型：ws<br>
+                            • Path：/<br>
+                            • TLS：启用<br>
+                            • Flow：空<br>
+                            • 伪装方式：空
                         </div>
                     </div>
                 </div>
@@ -889,47 +752,67 @@
                 <div class="card-body">
                     <div class="section">
                         <div class="result-header">
-                            <h3>🔗 Vless节点链接</h3>
+                            <h3>🔗 Vless节点链接（本地生成）</h3>
                             <button id="copyVlessBtn" class="btn btn-success">
-                                <span>📋</span> 复制全部
+                                <span>📋</span> 复制全部Vless链接
                             </button>
                         </div>
                         <div class="result-box">
                             <div id="vless-links" class="result-content empty">Vless链接将在这里显示...</div>
                         </div>
-                        
-                        <div class="github-stats" id="githubStats" style="display: none;">
-                            <div class="stat-item">
-                                <span class="stat-label">本地节点</span>
-                                <span class="stat-value" id="localNodes">0</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">远程节点</span>
-                                <span class="stat-value" id="remoteNodes">0</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">合并后节点</span>
-                                <span class="stat-value" id="mergedNodes">0</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">去重后节点</span>
-                                <span class="stat-value" id="uniqueNodes">0</span>
-                            </div>
+                    </div>
+
+                    <!-- 新增：本地生成自动转Base64订阅 -->
+                    <div class="section" id="localBase64Section" style="display: none;">
+                        <div class="result-header">
+                            <h3>🔗 Base64订阅（本地生成节点自动转换）</h3>
+                            <button id="copyLocalBase64Btn" class="btn btn-success">
+                                <span>📋</span> 一键复制Base64
+                            </button>
+                        </div>
+                        <div class="result-box">
+                            <div id="localBase64Output" class="result-content empty">Base64订阅内容将在这里显示...</div>
+                        </div>
+                        <div class="help-text">
+                            此Base64可直接作为订阅链接导入Clash、Shadowrocket等工具
                         </div>
                     </div>
 
+                    <!-- 手动Vless转Base64功能（保留） -->
                     <div class="section">
                         <div class="section-title">
-                            <span>📦 其他输出格式</span>
+                            <span>🔄 手动Vless转Base64订阅</span>
                         </div>
-                        
-                        <div class="action-buttons">
-                            <button id="showJsonBtn" class="btn btn-info">
-                                <span>📄</span> JSON配置
+                        <div class="form-group">
+                            <label for="manualVlessInput">粘贴Vless明文节点（每行一个）</label>
+                            <textarea id="manualVlessInput" placeholder="粘贴vless://开头的节点链接，每行一个"></textarea>
+                        </div>
+                        <div class="config-row">
+                            <button id="convertToBase64Btn" class="btn btn-success">
+                                <span>🔗</span> 转换为Base64订阅
                             </button>
-                            <button id="showSubBtn" class="btn btn-primary">
-                                <span>🔗</span> 订阅链接
+                            <button id="copyManualBase64Btn" class="btn btn-info">
+                                <span>📋</span> 复制Base64订阅
                             </button>
+                        </div>
+                        <div class="result-box" id="manualBase64Section" style="display: none; margin-top: 20px;">
+                            <div class="result-header">
+                                <h3>手动转换的Base64订阅</h3>
+                            </div>
+                            <div id="manualBase64Output" class="result-content empty">Base64内容将在这里显示...</div>
+                        </div>
+                    </div>
+
+                    <!-- 自动Base64订阅展示框（合并后） -->
+                    <div class="section" id="autoBase64Section" style="display: none;">
+                        <div class="result-header">
+                            <h3>🔗 Base64订阅内容（本地+远程合并去重后）</h3>
+                            <button id="copyAutoBase64Btn" class="btn btn-success">
+                                <span>📋</span> 复制Base64
+                            </button>
+                        </div>
+                        <div class="result-box">
+                            <div id="autoBase64Output" class="result-content empty">合并去重后将自动生成Base64订阅内容...</div>
                         </div>
                     </div>
 
@@ -938,12 +821,12 @@
                             <span>💾 下载结果</span>
                         </div>
                         
-                        <div class="action-buttons">
+                        <div class="config-row">
                             <button id="downloadVlessBtn" class="btn btn-success">
                                 <span>⬇️</span> 下载Vless链接
                             </button>
                             <button id="downloadAllBtn" class="btn btn-info">
-                                <span>📁</span> 下载全部文件
+                                <span>📁</span> 下Vless文件
                             </button>
                         </div>
                     </div>
@@ -957,17 +840,16 @@
                             <h4><span>🔧</span> GitHub配置</h4>
                             <div class="form-group">
                                 <label for="githubToken">GitHub个人访问令牌：</label>
-                                <input type="password" id="githubToken" placeholder="输入GitHub Personal Access Token">
+                                <input type="password" id="githubToken" placeholder="ghp_XXXXXXXXXXXXXXXXXXXX">
                                 <div class="help-text">
-                                    需要repo权限，用于提交文件到GitHub仓库
-                                    <a href="https://github.com/settings/tokens" target="_blank">获取令牌</a>
+                                    需要repo权限 <a href="https://github.com/settings/tokens" target="_blank">获取令牌</a>
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <label for="githubRepo">GitHub仓库：</label>
-                                <input type="text" id="githubRepo" value="daizhouhui/CustomNode">
-                                <div class="help-text">格式：用户名/仓库名</div>
+                                <input type="text" id="githubRepo" value="DaiZhouHui/CustomNode">
+                                <div class="help-text">注意大小写：DaiZhouHui/CustomNode</div>
                             </div>
                             
                             <div class="form-group">
@@ -976,95 +858,78 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="githubFile">订阅文件路径：</label>
-                                <input type="text" id="githubFile" value="node.txt">
+                                <label for="nodeFile">Base64订阅文件路径（默认）：</label>
+                                <input type="text" id="nodeFile" value="node.txt">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="plainFile">明文节点文件路径：</label>
+                                <input type="text" id="plainFile" value="plain.txt">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newFile">本地生成Base64文件路径：</label>
+                                <input type="text" id="newFile" value="new.txt">
+                                <div class="help-text">用于上传本地生成的Base64订阅</div>
                             </div>
                             
                             <div class="checkbox-group">
                                 <input type="checkbox" id="saveToken" checked>
                                 <label for="saveToken">保存令牌到本地存储</label>
                             </div>
-                            
-                            <div class="token-info">
-                                <strong>⚠️ 安全提示：</strong>令牌将保存到浏览器的本地存储中，仅用于GitHub API调用。
-                                建议使用仅具有必要权限的令牌，并定期更新。
-                            </div>
-                        </div>
-                        
-                        <div class="workflow-steps">
-                            <div class="step">
-                                <div class="step-number">1</div>
-                                <div class="step-content">
-                                    <div class="step-title">下载订阅文件</div>
-                                    <div class="step-desc">从GitHub API下载现有的Base64订阅文件</div>
-                                </div>
-                            </div>
-                            <div class="step">
-                                <div class="step-number">2</div>
-                                <div class="step-content">
-                                    <div class="step-title">合并去重</div>
-                                    <div class="step-desc">将本地生成的节点与远程节点合并，去除重复项</div>
-                                </div>
-                            </div>
-                            <div class="step">
-                                <div class="step-number">3</div>
-                                <div class="step-content">
-                                    <div class="step-title">提交更新</div>
-                                    <div class="step-desc">将新的Base64订阅文件提交回GitHub仓库</div>
-                                </div>
-                            </div>
                         </div>
                         
                         <div class="github-buttons">
                             <button id="downloadSubBtn" class="btn btn-primary">
-                                <span>⬇️</span> 下载订阅文件
+                                <span>⬇️</span> 下载远程订阅文件
                             </button>
                             <button id="mergeBtn" class="btn btn-success">
-                                <span>🔄</span> 合并节点
+                                <span>🔄</span> 本地与远程节点合并
                             </button>
-                            <button id="syncBtn" class="btn btn-github">
+                            <!-- 新增的三个独立上传按钮 -->
+                            <button id="uploadLocalBase64Btn" class="btn btn-github">
+                                <span>📤</span> 本地Base64订阅上传
+                            </button>
+                            <button id="uploadPlainNodesBtn" class="btn btn-github">
+                                <span>📤</span> Vless明文上传
+                            </button>
+                            <button id="uploadMergedBase64Btn" class="btn btn-github">
+                                <span>📤</span> Base64订阅上传
+                            </button>
+                            <button id="syncBtn" class="btn btn-github btn-block" style="grid-column: 1/-1; margin-top: 20px;">
                                 <span>🚀</span> 一键同步
                             </button>
-                        </div>
-                        
-                        <div class="help-text">
-                            <strong>一键同步功能：</strong>自动执行下载→合并→提交的完整流程，生成新的订阅文件并更新到GitHub
-                        </div>
-                    </div>
-
-                    <div class="section" id="jsonSection" style="display: none;">
-                        <div class="result-header">
-                            <h3>📄 JSON配置</h3>
-                            <button id="copyJsonBtn" class="btn btn-success">
-                                <span>📋</span> 复制
-                            </button>
-                        </div>
-                        <div class="result-box">
-                            <div id="json-output" class="result-content"></div>
-                        </div>
-                    </div>
-
-                    <div class="section" id="subSection" style="display: none;">
-                        <div class="result-header">
-                            <h3>🔗 Base64订阅链接</h3>
-                            <button id="copySubBtn" class="btn btn-success">
-                                <span>📋</span> 复制
-                            </button>
-                        </div>
-                        <div class="result-box">
-                            <div id="subscription" class="result-content"></div>
                         </div>
                     </div>
 
                     <div class="section" id="mergedSection" style="display: none;">
                         <div class="result-header">
-                            <h3>🔄 合并结果</h3>
+                            <h3>🔄 合并结果预览（明文）</h3>
                             <button id="copyMergedBtn" class="btn btn-success">
-                                <span>📋</span> 复制
+                                <span>📋</span> 复制明文
                             </button>
                         </div>
                         <div class="result-box">
-                            <div id="mergedResult" class="result-content"></div>
+                            <div id="mergedResult" class="result-content empty">合并后的节点将在这里显示...</div>
+                        </div>
+                    </div>
+
+                    <div class="github-stats" id="githubStats" style="display: none;">
+                        <div class="stat-item">
+                            <span class="stat-label">本地节点</span>
+                            <span class="stat-value" id="localNodes">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">远程节点</span>
+                            <span class="stat-value" id="remoteNodes">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">合并节点</span>
+                            <span class="stat-value" id="mergedNodes">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">去重后节点</span>
+                            <span class="stat-value" id="uniqueNodes">0</span>
                         </div>
                     </div>
                 </div>
@@ -1072,1053 +937,254 @@
         </div>
 
         <div class="footer">
-            <p>© 2023 Vless节点生成工具 | 生成Vless节点 + GitHub订阅文件自动同步，全流程一键执行</p>
-            <p>支持GitHub订阅文件下载、合并、去重、提交全自动化流程</p>
+            <p>© 2025 Vless节点生成工具</p>
         </div>
     </div>
 
     <script>
-        // 全局变量
-        let generatedData = {
+        // 全局数据
+        let data = {
             vlessLinks: [],
-            jsonConfig: [],
-            subscription: '',
-            nodesCount: 0,
-            currentSource: 'none',
-            currentFileName: '',
+            localBase64Content: '',  // 本地生成自动Base64
+            autoBase64Content: '',   // 合并后自动Base64
+            manualBase64Content: '', // 手动转换Base64
             remoteNodes: [],
-            mergedNodes: [],
             uniqueNodes: [],
-            githubStats: {
-                local: 0,
-                remote: 0,
-                merged: 0,
-                unique: 0
-            }
+            nodeSha: null,
+            plainSha: null,
+            newSha: null,
+            stats: { local: 0, remote: 0, merged: 0, unique: 0 },
+            currentSource: 'none'
         };
 
-        // 页面加载完成
-        document.addEventListener('DOMContentLoaded', function() {
-            // 初始化事件监听
-            initEventListeners();
-            
-            // 初始化拖放功能
+        document.addEventListener('DOMContentLoaded', () => {
             initDragDrop();
-            
-            // 更新UI状态
-            updateSourceBadge();
-            updateResultCount();
-            
-            // 加载保存的GitHub令牌
+            initEvents();
             loadSavedToken();
-            
-            // 默认设置
-            document.getElementById('forcePort443').checked = false;
-            document.getElementById('autoLocation').checked = true;
-            document.getElementById('saveToken').checked = true;
+            updateStats();
         });
 
-        // 初始化事件监听
-        function initEventListeners() {
-            // 文件选择
-            document.getElementById('fileInput').addEventListener('change', handleFileSelect);
-            
-            // 移除文件按钮
-            document.getElementById('removeFileBtn').addEventListener('click', removeSelectedFile);
-            
-            // 生成按钮
+        function initEvents() {
+            document.getElementById('fileInput').addEventListener('change', e => e.target.files[0] && handleFile(e.target.files[0]));
+            document.getElementById('removeFileBtn').addEventListener('click', removeFile);
             document.getElementById('generateBtn').addEventListener('click', generateVless);
-            
-            // 复制按钮
-            document.getElementById('copyVlessBtn').addEventListener('click', () => copyToClipboard('vless'));
-            document.getElementById('copyJsonBtn').addEventListener('click', () => copyToClipboard('json'));
-            document.getElementById('copySubBtn').addEventListener('click', () => copyToClipboard('subscription'));
-            document.getElementById('copyMergedBtn').addEventListener('click', () => copyToClipboard('merged'));
-            
-            // 显示其他格式
-            document.getElementById('showJsonBtn').addEventListener('click', () => toggleSection('jsonSection'));
-            document.getElementById('showSubBtn').addEventListener('click', () => toggleSection('subSection'));
-            
-            // 下载按钮
-            document.getElementById('downloadVlessBtn').addEventListener('click', downloadVlessLinks);
+            document.getElementById('copyVlessBtn').addEventListener('click', () => copyText(data.vlessLinks.join('\n')));
+            document.getElementById('downloadVlessBtn').addEventListener('click', downloadVless);
             document.getElementById('downloadAllBtn').addEventListener('click', downloadAll);
+            document.getElementById('downloadSubBtn').addEventListener('click', downloadRemote);
+            document.getElementById('mergeBtn').addEventListener('click', mergeAndShow);
+            document.getElementById('syncBtn').addEventListener('click', oneClickSync);
+            document.getElementById('copyMergedBtn').addEventListener('click', () => copyText(data.uniqueNodes.join('\n')));
+            document.getElementById('copyLocalBase64Btn').addEventListener('click', () => copyText(data.localBase64Content));
+            document.getElementById('copyAutoBase64Btn').addEventListener('click', () => copyText(data.autoBase64Content));
+            document.getElementById('convertToBase64Btn').addEventListener('click', convertManualToBase64);
+            document.getElementById('copyManualBase64Btn').addEventListener('click', () => copyText(data.manualBase64Content));
             
-            // GitHub相关按钮
-            document.getElementById('downloadSubBtn').addEventListener('click', downloadGitHubSubscription);
-            document.getElementById('mergeBtn').addEventListener('click', mergeNodes);
-            document.getElementById('syncBtn').addEventListener('click', syncToGitHub);
-            
-            // 防抖自动生成
-            let debounceTimer;
-            document.getElementById('csvInput').addEventListener('input', function() {
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(() => {
-                    if (generatedData.currentSource !== 'file') {
-                        generateVless();
-                    }
-                }, 1000);
-            });
-            
-            // 保存令牌设置变化
-            document.getElementById('saveToken').addEventListener('change', function() {
-                if (!this.checked) {
-                    // 如果不保存令牌，清除已保存的令牌
-                    localStorage.removeItem('github_token');
-                }
+            // 新增的三个上传按钮
+            document.getElementById('uploadLocalBase64Btn').addEventListener('click', uploadLocalBase64);
+            document.getElementById('uploadPlainNodesBtn').addEventListener('click', uploadPlainNodes);
+            document.getElementById('uploadMergedBase64Btn').addEventListener('click', uploadMergedBase64);
+
+            let timer;
+            document.getElementById('csvInput').addEventListener('input', () => {
+                clearTimeout(timer);
+                timer = setTimeout(() => data.currentSource !== 'file' && generateVless(), 1000);
             });
         }
 
-        // 加载保存的GitHub令牌
-        function loadSavedToken() {
-            const savedToken = localStorage.getItem('github_token');
-            if (savedToken) {
-                document.getElementById('githubToken').value = savedToken;
-                showStatus('已加载保存的GitHub令牌', 'info');
-            }
-        }
-
-        // 保存GitHub令牌
-        function saveGitHubToken(token) {
-            if (document.getElementById('saveToken').checked) {
-                localStorage.setItem('github_token', token);
-                showStatus('GitHub令牌已保存到本地存储', 'success');
-            }
-        }
-
-        // 初始化拖放功能
         function initDragDrop() {
-            const dropArea = document.getElementById('dropArea');
-            
-            // 防止默认拖放行为
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                dropArea.addEventListener(eventName, preventDefaults, false);
-                document.body.addEventListener(eventName, preventDefaults, false);
-            });
-            
-            // 高亮拖放区域
-            ['dragenter', 'dragover'].forEach(eventName => {
-                dropArea.addEventListener(eventName, highlight, false);
-            });
-            
-            ['dragleave', 'drop'].forEach(eventName => {
-                dropArea.addEventListener(eventName, unhighlight, false);
-            });
-            
-            // 处理文件放置
-            dropArea.addEventListener('drop', handleDrop, false);
-            
-            // 点击选择文件
-            dropArea.addEventListener('click', () => {
-                document.getElementById('fileInput').click();
-            });
-            
-            function preventDefaults(e) {
+            const area = document.getElementById('dropArea');
+            ['dragenter', 'dragover'].forEach(e => area.addEventListener(e, () => area.classList.add('dragover')));
+            ['dragleave', 'drop'].forEach(e => area.addEventListener(e, () => area.classList.remove('dragover')));
+            area.addEventListener('drop', e => {
                 e.preventDefault();
-                e.stopPropagation();
-            }
-            
-            function highlight() {
-                dropArea.classList.add('dragover');
-            }
-            
-            function unhighlight() {
-                dropArea.classList.remove('dragover');
-            }
-            
-            function handleDrop(e) {
-                const dt = e.dataTransfer;
-                const files = dt.files;
-                
-                if (files.length > 0) {
-                    handleFile(files[0]);
-                }
-            }
+                e.dataTransfer.files[0] && handleFile(e.dataTransfer.files[0]);
+            });
+            area.addEventListener('click', () => document.getElementById('fileInput').click());
         }
 
-        // 处理文件
         function handleFile(file) {
-            if (!file.name.match(/\.(csv|txt)$/i)) {
-                showStatus('错误: 请选择CSV或TXT文件！', 'error');
-                return;
-            }
-            
+            if (!/\.(csv|txt)$/i.test(file.name)) return showStatus('请上传CSV或TXT文件', 'error');
             const reader = new FileReader();
-            reader.onload = function(e) {
-                // 保存文件信息
-                generatedData.currentSource = 'file';
-                generatedData.currentFileName = file.name;
-                
-                // 更新UI
+            reader.onload = e => {
+                data.currentSource = 'file';
                 document.getElementById('fileName').textContent = file.name;
-                document.getElementById('fileSize').textContent = formatFileSize(file.size);
+                document.getElementById('fileSize').textContent = formatSize(file.size);
                 document.getElementById('fileInfo').classList.add('show');
-                
-                // 清空输入框并禁用（避免混淆）
                 document.getElementById('csvInput').value = '';
-                document.getElementById('csvInput').placeholder = `已选择文件: ${file.name}\n文件内容已加载，优先使用文件数据。`;
-                
-                // 更新源标签
                 updateSourceBadge();
-                
-                // 显示成功消息
-                showStatus(`已加载文件: ${file.name}，将从A列提取IP，H列提取端口`, 'success');
-                
-                // 自动生成
-                setTimeout(() => {
-                    generateVless();
-                }, 500);
+                generateVless();
             };
-            
-            reader.onerror = function() {
-                showStatus('错误: 读取文件失败！', 'error');
-            };
-            
-            reader.readAsText(file, 'UTF-8');
+            reader.readAsText(file);
         }
 
-        // 处理文件选择
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (file) {
-                handleFile(file);
-            }
-        }
-
-        // 移除选择的文件
-        function removeSelectedFile() {
-            generatedData.currentSource = 'none';
-            generatedData.currentFileName = '';
-            
-            // 更新UI
+        function removeFile() {
+            data.currentSource = 'none';
             document.getElementById('fileInfo').classList.remove('show');
             document.getElementById('fileInput').value = '';
-            document.getElementById('csvInput').placeholder = '每行一个服务器，支持多种格式：\n• IP,端口（逗号分隔）\n• IP:端口（冒号分隔）\n• IP 端口（空格分隔）\n• 只有IP（使用默认端口）';
-            
-            // 更新源标签
             updateSourceBadge();
-            
-            showStatus('已移除文件，将使用粘贴的CSV内容', 'info');
         }
 
-        // 更新源标签
         function updateSourceBadge() {
             const badge = document.getElementById('sourceBadge');
-            
-            switch(generatedData.currentSource) {
-                case 'file':
-                    badge.textContent = `文件: ${generatedData.currentFileName}`;
-                    badge.style.background = 'linear-gradient(135deg, #4cc9f0, #4895ef)';
-                    break;
-                case 'paste':
-                    badge.textContent = '粘贴内容';
-                    badge.style.background = 'linear-gradient(135deg, #7209b7, #3a0ca3)';
-                    break;
-                default:
-                    badge.textContent = '未选择';
-                    badge.style.background = 'linear-gradient(135deg, #a0aec0, #718096)';
-            }
+            badge.textContent = data.currentSource === 'file' ? '已上传文件' : '粘贴内容';
         }
 
-        // 更新结果计数
-        function updateResultCount() {
-            const count = generatedData.nodesCount;
-            document.getElementById('resultCount').textContent = `${count}节点`;
-        }
-
-        // 更新GitHub统计
-        function updateGitHubStats() {
-            const statsEl = document.getElementById('githubStats');
-            if (generatedData.githubStats.local > 0 || generatedData.githubStats.remote > 0) {
-                statsEl.style.display = 'flex';
-                document.getElementById('localNodes').textContent = generatedData.githubStats.local;
-                document.getElementById('remoteNodes').textContent = generatedData.githubStats.remote;
-                document.getElementById('mergedNodes').textContent = generatedData.githubStats.merged;
-                document.getElementById('uniqueNodes').textContent = generatedData.githubStats.unique;
-            } else {
-                statsEl.style.display = 'none';
-            }
-        }
-
-        // 生成Vless节点
         async function generateVless() {
+            showLoading(true);
             try {
-                // 显示加载状态
-                showLoading(true);
-                
-                // 获取配置
                 const config = getConfig();
-                
-                // 验证UUID
-                if (!isValidUUID(config.uuid)) {
-                    showStatus('错误: UUID格式不正确！', 'error');
-                    showLoading(false);
-                    return;
-                }
-                
-                // 根据当前源获取数据
-                let csvData = '';
-                
-                if (generatedData.currentSource === 'file') {
-                    // 从文件获取数据
-                    const fileInput = document.getElementById('fileInput');
-                    if (fileInput.files.length === 0) {
-                        showStatus('错误: 文件未选择！', 'error');
-                        showLoading(false);
-                        return;
-                    }
-                    
-                    csvData = await readFileAsText(fileInput.files[0]);
-                    generatedData.currentSource = 'file';
+
+                let text = '';
+                if (data.currentSource === 'file') {
+                    const file = document.getElementById('fileInput').files[0];
+                    if (!file) return showStatus('请先上传CSV文件', 'error');
+                    text = await readFile(file);
                 } else {
-                    // 从输入框获取数据
-                    csvData = document.getElementById('csvInput').value.trim();
-                    if (!csvData) {
-                        showStatus('错误: 请输入CSV数据或选择CSV文件', 'error');
-                        showLoading(false);
-                        return;
-                    }
-                    generatedData.currentSource = 'paste';
+                    text = document.getElementById('csvInput').value.trim();
+                    if (!text) return showStatus('请提供CSV数据', 'error');
                 }
-                
-                // 更新源标签
-                updateSourceBadge();
-                
-                // 处理CSV数据
-                if (generatedData.currentSource === 'file') {
-                    // 文件模式：从A列(0)和H列(7)提取
-                    processCSVFromFile(csvData, config);
-                } else {
-                    // 粘贴模式：支持多种分隔符
-                    processCSVFromText(csvData, config);
+
+                data.vlessLinks = parseAndGenerate(text, config);
+                data.stats.local = data.vlessLinks.length;
+
+                // 自动生成本地Base64
+                if (data.vlessLinks.length > 0) {
+                    data.localBase64Content = btoa(data.vlessLinks.join('\n'));
+                    const localSec = document.getElementById('localBase64Section');
+                    localSec.style.display = 'block';
+                    document.getElementById('localBase64Output').textContent = data.localBase64Content;
+                    document.getElementById('localBase64Output').classList.remove('empty');
                 }
-                
-            } catch (error) {
-                showStatus('错误: ' + error.message, 'error');
-                console.error(error);
+
+                displayVlessLinks();
+                updateStats();
+                showStatus(`成功生成 ${data.vlessLinks.length} 个节点，并自动生成Base64订阅`, 'success');
+            } catch (e) {
+                showStatus('生成失败: ' + e.message, 'error');
+            } finally {
                 showLoading(false);
             }
         }
 
-        // 读取文件为文本
-        function readFileAsText(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = (e) => resolve(e.target.result);
-                reader.onerror = (e) => reject(new Error('读取文件失败'));
-                reader.readAsText(file, 'UTF-8');
-            });
-        }
-
-        // 获取配置
         function getConfig() {
             return {
-                uuid: document.getElementById('uuid').value.trim(),
-                host: document.getElementById('host').value.trim(),
-                sni: document.getElementById('sni').value.trim(),
-                fp: document.getElementById('fp').value.trim(),
-                forcePort443: document.getElementById('forcePort443').checked,
-                autoLocation: document.getElementById('autoLocation').checked,
+                uuid: "471a8e64-7b21-4703-b1d1-45a221098459",
+                host: document.getElementById('host').value.trim() || "knny.dpdns.org",
+                sni: document.getElementById('sni').value.trim() || "knny.dpdns.org",
+                fp: document.getElementById('fp').value.trim() || "chrome",
+                force443: document.getElementById('forcePort443').checked,
                 defaultPort: parseInt(document.getElementById('defaultPort').value) || 443,
-                remarksPrefix: document.getElementById('remarksPrefix').value.trim() || '自选'
+                prefix: document.getElementById('remarksPrefix').value.trim() || '自选',
+                autoLoc: document.getElementById('autoLocation').checked,
+                ipColumn: parseInt(document.getElementById('ipColumn').value) || 0,
+                portColumn: parseInt(document.getElementById('portColumn').value)
             };
         }
 
-        // 处理来自文件的CSV数据
-        function processCSVFromFile(csvData, config) {
-            try {
-                // 清空数据
-                generatedData.vlessLinks = [];
-                generatedData.jsonConfig = [];
-                generatedData.locationStats = {};
-                
-                // 解析CSV行
-                const lines = csvData.split(/\r?\n/);
-                let nodesCount = 0;
-                
-                for (let i = 0; i < lines.length; i++) {
-                    const line = lines[i].trim();
-                    if (!line || line.startsWith('#')) continue;
-                    
-                    // 解析CSV行（支持逗号分隔和引号）
-                    const columns = parseCSVLine(line);
-                    
-                    // 从A列(索引0)获取IP
-                    let ip = columns[0] || '';
-                    
-                    // 验证IP
-                    if (!isValidIP(ip)) {
-                        // 如果不是有效的IP，尝试检查是否有其他列包含IP
-                        for (let j = 0; j < columns.length; j++) {
-                            if (isValidIP(columns[j])) {
-                                ip = columns[j];
+        function parseAndGenerate(text, config) {
+            const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l && !l.startsWith('#'));
+            const nodes = [];
+            let locationCounter = {};
+
+            lines.forEach(line => {
+                let columns = parseCSVLine(line);
+                let ip = '';
+                let port = 443; // 默认443端口
+
+                // 智能提取IP地址
+                if (config.ipColumn >= 0 && columns.length > config.ipColumn) {
+                    const candidate = columns[config.ipColumn].trim();
+                    if (isValidIP(candidate)) ip = candidate;
+                }
+
+                // 如果指定列没有找到IP，遍历所有列寻找IP
+                if (!ip) {
+                    for (let cell of columns) {
+                        const trimmed = cell.trim();
+                        if (isValidIP(trimmed)) {
+                            ip = trimmed;
+                            break;
+                        }
+                    }
+                }
+
+                if (!ip) return;
+
+                // 智能提取端口
+                let foundPort = false;
+                if (config.portColumn >= 0 && columns.length > config.portColumn) {
+                    const portStr = columns[config.portColumn].trim();
+                    if (portStr && !isNaN(portStr)) {
+                        const p = parseInt(portStr);
+                        if (p >= 1 && p <= 65535) {
+                            port = p;
+                            foundPort = true;
+                        }
+                    }
+                }
+
+                // 如果指定列没有端口，尝试在其他列中寻找
+                if (!foundPort) {
+                    for (let cell of columns) {
+                        const trimmed = cell.trim();
+                        if (/^\d{1,5}$/.test(trimmed) && !isValidIP(trimmed)) {
+                            const p = parseInt(trimmed);
+                            if (p >= 1 && p <= 65535) {
+                                port = p;
+                                foundPort = true;
                                 break;
                             }
                         }
-                        
-                        if (!isValidIP(ip)) {
-                            console.warn(`跳过无效的IP: ${ip} (行 ${i+1})`);
-                            continue;
-                        }
                     }
-                    
-                    // 从H列(索引7)获取端口
-                    let port = config.defaultPort;
-                    if (!config.forcePort443 && columns.length > 7) {
-                        const portStr = columns[7];
-                        if (portStr && !isNaN(portStr) && parseInt(portStr) >= 1 && parseInt(portStr) <= 65535) {
-                            port = parseInt(portStr);
-                        }
-                    }
-                    
-                    // 如果强制443端口
-                    if (config.forcePort443) {
-                        port = 443;
-                    }
-                    
-                    // 获取地区信息
-                    let location = '未知';
-                    if (config.autoLocation) {
-                        location = getIPLocation(ip);
-                    }
-                    
-                    // 生成节点别名
-                    const nodeIndex = nodesCount + 1;
-                    let remarks = '';
-                    
-                    if (config.autoLocation && location !== '未知') {
-                        // 使用地区+编号
-                        if (!generatedData.locationStats[location]) {
-                            generatedData.locationStats[location] = 1;
-                        } else {
-                            generatedData.locationStats[location]++;
-                        }
-                        const locationCount = generatedData.locationStats[location];
-                        remarks = `${location}${locationCount.toString().padStart(2, '0')}`;
-                    } else {
-                        // 使用备用前缀+编号
-                        remarks = `${config.remarksPrefix}${nodeIndex.toString().padStart(2, '0')}`;
-                    }
-                    
-                    // 生成Vless链接
-                    const vlessLink = generateVlessLink(ip, port, config, remarks);
-                    generatedData.vlessLinks.push(vlessLink);
-                    
-                    // 生成JSON配置
-                    const jsonNode = generateJsonConfig(ip, port, config, remarks);
-                    generatedData.jsonConfig.push(jsonNode);
-                    
-                    nodesCount++;
                 }
-                
-                if (nodesCount === 0) {
-                    showStatus('错误: 未找到有效的IP地址！请检查CSV文件格式', 'error');
-                    showLoading(false);
-                    return;
-                }
-                
-                // 更新数据
-                generatedData.nodesCount = nodesCount;
-                generatedData.githubStats.local = nodesCount;
-                
-                // 显示结果
-                displayResults();
-                
-                // 生成订阅
-                generateSubscription();
-                
-                // 更新UI
-                updateResultCount();
-                updateGitHubStats();
-                
-                // 显示成功消息
-                const sourceText = generatedData.currentSource === 'file' ? 'CSV文件' : '粘贴内容';
-                const locationText = config.autoLocation ? '（已自动识别IP属地）' : '';
-                showStatus(`✅ 成功从${sourceText}生成 ${nodesCount} 个Vless节点${locationText}！`, 'success');
-                
-            } catch (error) {
-                showStatus('解析CSV数据时出错: ' + error.message, 'error');
-                console.error(error);
-            } finally {
-                showLoading(false);
-            }
-        }
 
-        // 处理来自粘贴文本的CSV数据
-        function processCSVFromText(csvData, config) {
-            try {
-                // 清空数据
-                generatedData.vlessLinks = [];
-                generatedData.jsonConfig = [];
-                generatedData.locationStats = {};
-                
-                // 解析行
-                const lines = csvData.split('\n');
-                let nodesCount = 0;
-                
-                for (let i = 0; i < lines.length; i++) {
-                    const line = lines[i].trim();
-                    if (!line || line.startsWith('#')) continue;
-                    
-                    let ip = '', port = config.defaultPort;
-                    
-                    // 尝试多种分隔符
-                    if (line.includes(',')) {
-                        // 逗号分隔
-                        const parts = line.split(',').map(p => p.trim());
-                        ip = parts[0];
-                        if (parts.length > 1 && !config.forcePort443) {
-                            const portNum = parseInt(parts[1]);
-                            if (!isNaN(portNum) && portNum >= 1 && portNum <= 65535) {
-                                port = portNum;
-                            }
-                        }
-                    } else if (line.includes(':')) {
-                        // 冒号分隔
-                        const parts = line.split(':').map(p => p.trim());
-                        ip = parts[0];
-                        if (parts.length > 1 && !config.forcePort443) {
-                            const portNum = parseInt(parts[1]);
-                            if (!isNaN(portNum) && portNum >= 1 && portNum <= 65535) {
-                                port = portNum;
-                            }
-                        }
-                    } else {
-                        // 空格分隔或只有IP
-                        const parts = line.split(/\s+/).map(p => p.trim());
-                        ip = parts[0];
-                        if (parts.length > 1 && !config.forcePort443) {
-                            const portNum = parseInt(parts[1]);
-                            if (!isNaN(portNum) && portNum >= 1 && portNum <= 65535) {
-                                port = portNum;
-                            }
-                        }
-                    }
-                    
-                    // 验证IP
-                    if (!isValidIP(ip)) {
-                        console.warn(`跳过无效的IP: ${ip} (行 ${i+1})`);
-                        continue;
-                    }
-                    
-                    // 如果强制443端口
-                    if (config.forcePort443) {
-                        port = 443;
-                    }
-                    
-                    // 获取地区信息
-                    let location = '未知';
-                    if (config.autoLocation) {
-                        location = getIPLocation(ip);
-                    }
-                    
-                    // 生成节点别名
-                    const nodeIndex = nodesCount + 1;
-                    let remarks = '';
-                    
-                    if (config.autoLocation && location !== '未知') {
-                        // 使用地区+编号
-                        if (!generatedData.locationStats[location]) {
-                            generatedData.locationStats[location] = 1;
-                        } else {
-                            generatedData.locationStats[location]++;
-                        }
-                        const locationCount = generatedData.locationStats[location];
-                        remarks = `${location}${locationCount.toString().padStart(2, '0')}`;
-                    } else {
-                        // 使用备用前缀+编号
-                        remarks = `${config.remarksPrefix}${nodeIndex.toString().padStart(2, '0')}`;
-                    }
-                    
-                    // 生成Vless链接
-                    const vlessLink = generateVlessLink(ip, port, config, remarks);
-                    generatedData.vlessLinks.push(vlessLink);
-                    
-                    // 生成JSON配置
-                    const jsonNode = generateJsonConfig(ip, port, config, remarks);
-                    generatedData.jsonConfig.push(jsonNode);
-                    
-                    nodesCount++;
+                // 强制使用443端口（如果勾选了此选项）
+                if (config.force443) {
+                    port = 443;
                 }
-                
-                if (nodesCount === 0) {
-                    showStatus('错误: 未找到有效的IP地址！', 'error');
-                    showLoading(false);
-                    return;
+                // 如果没有找到端口，使用443（仅当没有勾选强制443时才会执行到这里）
+                else if (!foundPort) {
+                    port = 443;
                 }
-                
-                // 更新数据
-                generatedData.nodesCount = nodesCount;
-                generatedData.githubStats.local = nodesCount;
-                
-                // 显示结果
-                displayResults();
-                
-                // 生成订阅
-                generateSubscription();
-                
-                // 更新UI
-                updateResultCount();
-                updateGitHubStats();
-                
-                // 显示成功消息
-                const locationText = config.autoLocation ? '（已自动识别IP属地）' : '';
-                showStatus(`✅ 成功从粘贴内容生成 ${nodesCount} 个Vless节点${locationText}！`, 'success');
-                
-            } catch (error) {
-                showStatus('解析CSV数据时出错: ' + error.message, 'error');
-                console.error(error);
-            } finally {
-                showLoading(false);
-            }
-        }
 
-        // 获取IP属地
-        function getIPLocation(ip) {
-            // 将IP地址转换为数字
-            const ipNum = ipToNumber(ip);
-            
-            // 简化的IP属地数据库
-            const ipLocationDatabase = {
-                '日本': ['1.0.16.0', '1.0.31.255'],
-                '美国': ['3.0.0.0', '3.255.255.255'],
-                '新加坡': ['101.100.0.0', '101.103.255.255'],
-                '韩国': ['1.11.0.0', '1.11.255.255'],
-                '香港': ['43.243.0.0', '43.255.255.255'],
-                '台湾': ['59.120.0.0', '59.127.255.255'],
-                '德国': ['31.0.0.0', '31.255.255.255'],
-                '英国': ['2.0.0.0', '2.255.255.255'],
-                '法国': ['2.0.0.0', '2.255.255.255'],
-                '澳大利亚': ['1.0.0.0', '1.255.255.255'],
-                '加拿大': ['24.0.0.0', '24.255.255.255'],
-                '俄罗斯': ['2.0.0.0', '2.255.255.255']
-            };
-            
-            // 在数据库中查找
-            for (const [location, range] of Object.entries(ipLocationDatabase)) {
-                const startIP = ipToNumber(range[0]);
-                const endIP = ipToNumber(range[1]);
-                
-                if (ipNum >= startIP && ipNum <= endIP) {
-                    return location;
-                }
-            }
-            
-            // 如果找不到精确匹配，尝试根据IP段判断
-            const firstOctet = parseInt(ip.split('.')[0]);
-            
-            if (firstOctet >= 1 && firstOctet <= 9) return '其他亚洲';
-            if (firstOctet >= 14 && firstOctet <= 126) return '其他亚洲';
-            if (firstOctet >= 128 && firstOctet <= 191) return '欧洲或其他';
-            if (firstOctet >= 192 && firstOctet <= 223) return '北美或其他';
-            
-            return '未知';
-        }
-
-        // 将IP地址转换为数字
-        function ipToNumber(ip) {
-            const parts = ip.split('.');
-            return (parseInt(parts[0]) << 24) + 
-                   (parseInt(parts[1]) << 16) + 
-                   (parseInt(parts[2]) << 8) + 
-                   parseInt(parts[3]);
-        }
-
-        // 下载GitHub订阅文件（使用GitHub API）
-        async function downloadGitHubSubscription() {
-            try {
-                showLoading(true);
-                showStatus('正在从GitHub下载订阅文件...', 'info');
-                
-                const repo = document.getElementById('githubRepo').value.trim();
-                const file = document.getElementById('githubFile').value.trim();
-                const token = document.getElementById('githubToken').value.trim();
-                
-                if (!repo || !repo.includes('/')) {
-                    showStatus('错误: GitHub仓库格式不正确，应为"用户名/仓库名"', 'error');
-                    showLoading(false);
-                    return;
-                }
-                
-                // 构建GitHub API URL
-                const apiUrl = `https://api.github.com/repos/${repo}/contents/${file}`;
-                
-                console.log('正在从GitHub API下载:', apiUrl);
-                
-                // 准备请求头
-                const headers = {
-                    'Accept': 'application/vnd.github.v3+json',
-                    'Cache-Control': 'no-cache'
-                };
-                
-                // 如果有token，添加认证头
-                if (token) {
-                    headers['Authorization'] = `token ${token}`;
-                }
-                
-                // 尝试从GitHub API下载
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: headers
-                });
-                
-                console.log('响应状态:', response.status, response.statusText);
-                
-                if (!response.ok) {
-                    if (response.status === 404) {
-                        showStatus('文件不存在，将创建新文件', 'warning');
-                        generatedData.remoteNodes = [];
-                        generatedData.githubStats.remote = 0;
-                        updateGitHubStats();
-                        showStatus('✅ 未找到远程订阅文件，将创建新文件', 'success');
-                        showLoading(false);
-                        return;
-                    }
-                    throw new Error(`下载失败: ${response.status} ${response.statusText}`);
-                }
-                
-                const data = await response.json();
-                
-                // GitHub API返回的是base64编码的内容
-                if (!data.content) {
-                    throw new Error('文件内容为空');
-                }
-                
-                // 解码base64内容
-                const base64Content = atob(data.content.replace(/\n/g, ''));
-                
-                // 处理下载的内容
-                processDownloadedContent(base64Content, data.sha);
-                
-            } catch (error) {
-                console.error('下载GitHub订阅文件失败:', error);
-                showStatus(`下载失败: ${error.message}`, 'error');
-                
-                // 如果API失败，尝试从GitHub Pages下载（作为备用方案）
-                try {
-                    showStatus('正在尝试从GitHub Pages下载...', 'info');
-                    
-                    const repo = document.getElementById('githubRepo').value.trim();
-                    const [username, reponame] = repo.split('/');
-                    const file = document.getElementById('githubFile').value.trim();
-                    
-                    // 使用proxy绕过CORS限制
-                    const proxyUrl = `https://cors-anywhere.herokuapp.com/https://${username}.github.io/${reponame}/${file}`;
-                    
-                    const response = await fetch(proxyUrl, {
-                        method: 'GET',
-                        headers: {
-                            'Accept': 'text/plain',
-                            'Cache-Control': 'no-cache'
-                        }
-                    });
-                    
-                    if (response.ok) {
-                        const base64Content = await response.text();
-                        processDownloadedContent(base64Content);
-                    } else {
-                        throw new Error('备用方案也失败');
-                    }
-                } catch (fallbackError) {
-                    console.error('备用下载方案失败:', fallbackError);
-                    showStatus('所有下载方案均失败，请检查网络或仓库设置', 'error');
-                }
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        // 处理下载的内容
-        function processDownloadedContent(base64Content, fileSha = null) {
-            try {
-                // 保存文件的SHA（用于后续更新）
-                if (fileSha) {
-                    generatedData.fileSha = fileSha;
-                }
-                
-                // 解码Base64内容
-                let decodedContent;
-                try {
-                    // 先尝试直接解码
-                    decodedContent = atob(base64Content);
-                    
-                    // 检查解码后的内容是否是有效的Base64
-                    if (decodedContent.includes('vless://')) {
-                        // 如果直接解码就得到了vless链接，说明原始文件不是Base64编码
-                        generatedData.remoteNodes = decodedContent.split('\n').filter(line => {
-                            const trimmed = line.trim();
-                            return trimmed && trimmed.startsWith('vless://');
-                        });
-                    } else {
-                        // 否则，尝试将解码后的内容再次解码（可能是双重Base64编码）
-                        try {
-                            const doubleDecoded = atob(decodedContent);
-                            if (doubleDecoded.includes('vless://')) {
-                                generatedData.remoteNodes = doubleDecoded.split('\n').filter(line => {
-                                    const trimmed = line.trim();
-                                    return trimmed && trimmed.startsWith('vless://');
-                                });
-                            } else {
-                                // 如果还是不行，使用第一次解码的结果
-                                generatedData.remoteNodes = decodedContent.split('\n').filter(line => {
-                                    const trimmed = line.trim();
-                                    return trimmed && trimmed.startsWith('vless://');
-                                });
-                            }
-                        } catch {
-                            // 如果第二次解码失败，使用第一次解码的结果
-                            generatedData.remoteNodes = decodedContent.split('\n').filter(line => {
-                                const trimmed = line.trim();
-                                return trimmed && trimmed.startsWith('vless://');
-                            });
-                        }
-                    }
-                } catch (decodeError) {
-                    console.error('解码失败:', decodeError);
-                    // 如果解码失败，直接尝试按行分割
-                    generatedData.remoteNodes = base64Content.split('\n').filter(line => {
-                        const trimmed = line.trim();
-                        return trimmed && trimmed.startsWith('vless://');
-                    });
-                }
-                
-                generatedData.githubStats.remote = generatedData.remoteNodes.length;
-                updateGitHubStats();
-                
-                showStatus(`✅ 成功下载 ${generatedData.remoteNodes.length} 个远程节点`, 'success');
-                
-                // 显示远程节点信息
-                showRemoteNodesInfo(generatedData.remoteNodes);
-                
-            } catch (error) {
-                console.error('处理下载内容失败:', error);
-                showStatus('错误: 处理下载内容失败', 'error');
-            }
-        }
-
-        // 显示远程节点信息
-        function showRemoteNodesInfo(nodeLinks) {
-            const mergedSection = document.getElementById('mergedSection');
-            mergedSection.style.display = 'block';
-            
-            const mergedResult = document.getElementById('mergedResult');
-            mergedResult.textContent = `从GitHub下载的节点 (${nodeLinks.length}个):\n\n${nodeLinks.join('\n\n')}`;
-            mergedResult.classList.remove('empty');
-            
-            // 滚动到合并结果区域
-            mergedSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-
-        // 合并节点
-        function mergeNodes() {
-            try {
-                if (generatedData.vlessLinks.length === 0 && generatedData.remoteNodes.length === 0) {
-                    showStatus('错误: 没有可合并的节点数据，请先生成节点或下载订阅文件', 'error');
-                    return;
-                }
-                
-                showStatus('正在合并节点并去重...', 'info');
-                
-                // 合并所有节点
-                const allNodes = [...generatedData.vlessLinks, ...generatedData.remoteNodes];
-                generatedData.githubStats.merged = allNodes.length;
-                
-                // 去重（基于节点链接）
-                const uniqueNodes = [];
-                const seenNodes = new Set();
-                
-                for (const node of allNodes) {
-                    // 提取节点唯一标识（IP:端口）
-                    const match = node.match(/@([^:]+):(\d+)/);
-                    if (match) {
-                        const nodeKey = `${match[1]}:${match[2]}`;
-                        if (!seenNodes.has(nodeKey)) {
-                            seenNodes.add(nodeKey);
-                            uniqueNodes.push(node);
-                        }
-                    } else {
-                        // 如果无法提取IP:端口，直接添加
-                        uniqueNodes.push(node);
-                    }
-                }
-                
-                generatedData.uniqueNodes = uniqueNodes;
-                generatedData.githubStats.unique = uniqueNodes.length;
-                
-                // 更新统计
-                updateGitHubStats();
-                
-                // 显示合并结果
-                const mergedSection = document.getElementById('mergedSection');
-                mergedSection.style.display = 'block';
-                
-                const mergedResult = document.getElementById('mergedResult');
-                mergedResult.textContent = `合并去重结果 (${uniqueNodes.length}个节点):\n\n本地节点: ${generatedData.vlessLinks.length}个\n远程节点: ${generatedData.remoteNodes.length}个\n去重后: ${uniqueNodes.length}个\n\n节点列表:\n\n${uniqueNodes.join('\n\n')}`;
-                mergedResult.classList.remove('empty');
-                
-                showStatus(`✅ 成功合并去重，共得到 ${uniqueNodes.length} 个唯一节点`, 'success');
-                
-                // 滚动到合并结果区域
-                mergedSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                
-            } catch (error) {
-                showStatus(`合并节点失败: ${error.message}`, 'error');
-                console.error('合并节点失败:', error);
-            }
-        }
-
-        // 同步到GitHub
-        async function syncToGitHub() {
-            try {
-                showLoading(true);
-                showStatus('开始GitHub同步流程...', 'info');
-                
-                // 步骤1: 验证配置
-                const token = document.getElementById('githubToken').value.trim();
-                const repo = document.getElementById('githubRepo').value.trim();
-                const branch = document.getElementById('githubBranch').value.trim();
-                const file = document.getElementById('githubFile').value.trim();
-                
-                if (!token) {
-                    showStatus('错误: 请输入GitHub个人访问令牌', 'error');
-                    showLoading(false);
-                    return;
-                }
-                
-                if (!repo || !repo.includes('/')) {
-                    showStatus('错误: GitHub仓库格式不正确', 'error');
-                    showLoading(false);
-                    return;
-                }
-                
-                // 保存令牌
-                saveGitHubToken(token);
-                
-                // 步骤2: 确保有本地节点数据
-                if (generatedData.vlessLinks.length === 0) {
-                    showStatus('警告: 本地没有生成节点，正在尝试自动生成...', 'warning');
-                    await generateVless();
-                    if (generatedData.vlessLinks.length === 0) {
-                        showStatus('错误: 无法生成本地节点，请检查CSV数据', 'error');
-                        showLoading(false);
-                        return;
-                    }
-                }
-                
-                // 步骤3: 下载远程订阅文件
-                showStatus('步骤1/3: 正在下载远程订阅文件...', 'info');
-                try {
-                    await downloadGitHubSubscription();
-                } catch (downloadError) {
-                    showStatus('警告: 下载远程订阅文件失败，将只使用本地节点', 'warning');
-                }
-                
-                // 等待下载完成
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                
-                // 步骤4: 合并去重
-                showStatus('步骤2/3: 正在合并节点并去重...', 'info');
-                mergeNodes();
-                
-                // 等待合并完成
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                
-                // 步骤5: 准备上传内容
-                let finalNodes = [];
-                if (generatedData.uniqueNodes.length > 0) {
-                    finalNodes = generatedData.uniqueNodes;
-                } else if (generatedData.vlessLinks.length > 0) {
-                    finalNodes = generatedData.vlessLinks;
-                    generatedData.githubStats.unique = generatedData.vlessLinks.length;
+                let remark = '';
+                if (config.autoLoc) {
+                    const loc = getLocation(ip);
+                    const key = loc !== '未知' ? loc : config.prefix;
+                    locationCounter[key] = (locationCounter[key] || 0) + 1;
+                    remark = `${key}${String(locationCounter[key]).padStart(2, '0')}`;
                 } else {
-                    showStatus('错误: 没有可上传的节点数据', 'error');
-                    showLoading(false);
-                    return;
+                    locationCounter[config.prefix] = (locationCounter[config.prefix] || 0) + 1;
+                    remark = `${config.prefix}${String(locationCounter[config.prefix]).padStart(2, '0')}`;
                 }
-                
-                const nodeText = finalNodes.join('\n');
-                const base64Content = btoa(unescape(encodeURIComponent(nodeText)));
-                
-                // 步骤6: 准备提交到GitHub
-                showStatus('步骤3/3: 正在提交到GitHub...', 'info');
-                
-                // 构建API URL
-                const apiUrl = `https://api.github.com/repos/${repo}/contents/${file}`;
-                
-                // 准备提交数据
-                const commitMessage = `更新节点订阅 (${new Date().toLocaleString()}) - 共 ${finalNodes.length} 个节点`;
-                const commitData = {
-                    message: commitMessage,
-                    content: base64Content,
-                    branch: branch
-                };
-                
-                // 如果有文件的SHA（从下载时获取），则添加到提交数据中
-                if (generatedData.fileSha) {
-                    commitData.sha = generatedData.fileSha;
-                }
-                
-                // 提交文件
-                const response = await fetch(apiUrl, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `token ${token}`,
-                        'Accept': 'application/vnd.github.v3+json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(commitData)
-                });
-                
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(`提交失败: ${response.status} - ${errorData.message || '未知错误'}`);
-                }
-                
-                showStatus(`✅ GitHub同步完成！成功提交 ${finalNodes.length} 个节点到仓库`, 'success');
-                
-                // 显示更新后的订阅链接
-                const [username, reponame] = repo.split('/');
-                const pagesUrl = `https://${username}.github.io/${reponame}/${file}`;
-                showStatus(`订阅链接已更新: ${pagesUrl}`, 'info');
-                
-            } catch (error) {
-                showStatus(`GitHub同步失败: ${error.message}`, 'error');
-                console.error('GitHub同步失败:', error);
-            } finally {
-                showLoading(false);
-            }
+
+                nodes.push(generateLink(ip, port, config, remark));
+            });
+
+            return nodes;
         }
 
-        // 解析CSV行
         function parseCSVLine(line) {
             const result = [];
             let current = '';
             let inQuotes = false;
-            
+
             for (let i = 0; i < line.length; i++) {
                 const char = line[i];
-                const nextChar = line[i + 1];
-                
-                if (char === '"' && !inQuotes) {
-                    inQuotes = true;
-                } else if (char === '"' && inQuotes && nextChar === '"') {
-                    current += '"';
-                    i++;
-                } else if (char === '"' && inQuotes) {
-                    inQuotes = false;
-                } else if (char === ',' && !inQuotes) {
-                    result.push(current.trim());
-                    current = '';
-                } else {
-                    current += char;
-                }
+                const next = line[i + 1];
+
+                if (char === '"' && !inQuotes) inQuotes = true;
+                else if (char === '"' && inQuotes && next === '"') { current += '"'; i++; }
+                else if (char === '"' && inQuotes) inQuotes = false;
+                else if (char === ',' && !inQuotes) { result.push(current.trim()); current = ''; }
+                else current += char;
             }
-            
             result.push(current.trim());
             return result;
         }
 
-        // 生成Vless链接
-        function generateVlessLink(ip, port, config, remarks) {
+        function generateLink(ip, port, config, remark) {
             const params = [
                 'encryption=none',
                 'security=tls',
@@ -2127,221 +1193,625 @@
                 'type=ws',
                 `host=${encodeURIComponent(config.host)}`,
                 'path=%2F',
-                'alpn=h2%2Chttp%2F1.1'
+                'alpn=h2%2Chttp%2F1.1',
+                'flow='
             ];
-            
-            return `vless://${config.uuid}@${ip}:${port}?${params.join('&')}#${encodeURIComponent(remarks)}`;
+            return `vless://${config.uuid}@${ip}:${port}?${params.join('&')}#${encodeURIComponent(remark)}`;
         }
 
-        // 生成JSON配置
-        function generateJsonConfig(ip, port, config, remarks) {
-            return {
-                "v": "2",
-                "ps": remarks,
-                "add": ip,
-                "port": port.toString(),
-                "id": config.uuid,
-                "aid": "0",
-                "scy": "none",
-                "net": "ws",
-                "type": "none",
-                "host": config.host,
-                "path": "/",
-                "tls": "tls",
-                "sni": config.sni,
-                "alpn": "h2,http/1.1",
-                "fp": config.fp,
-                "flow": ""
-            };
+        function displayVlessLinks() {
+            const el = document.getElementById('vless-links');
+            el.textContent = data.vlessLinks.length ? data.vlessLinks.join('\n\n') : 'Vless链接将在这里显示...';
+            el.classList.toggle('empty', data.vlessLinks.length === 0);
+            document.getElementById('resultCount').textContent = `${data.vlessLinks.length}节点`;
         }
 
-        // 显示结果
-        function displayResults() {
-            const vlessLinksEl = document.getElementById('vless-links');
-            
-            if (generatedData.vlessLinks.length > 0) {
-                vlessLinksEl.textContent = generatedData.vlessLinks.join('\n\n');
-                vlessLinksEl.classList.remove('empty');
-            } else {
-                vlessLinksEl.textContent = 'Vless链接将在这里显示...';
-                vlessLinksEl.classList.add('empty');
-            }
-            
-            const jsonOutputEl = document.getElementById('json-output');
-            jsonOutputEl.textContent = JSON.stringify(generatedData.jsonConfig, null, 2);
+        function convertManualToBase64() {
+            const input = document.getElementById('manualVlessInput').value.trim();
+            if (!input) return showStatus('请先粘贴Vless节点', 'error');
+
+            const lines = input.split(/\r?\n/).filter(l => l.trim().startsWith('vless://'));
+            if (lines.length === 0) return showStatus('未检测到有效vless链接', 'error');
+
+            const plain = lines.join('\n');
+            data.manualBase64Content = btoa(plain);
+
+            const sec = document.getElementById('manualBase64Section');
+            sec.style.display = 'block';
+            document.getElementById('manualBase64Output').textContent = data.manualBase64Content;
+            document.getElementById('manualBase64Output').classList.remove('empty');
+
+            showStatus(`成功转换 ${lines.length} 个节点为Base64订阅`, 'success');
         }
 
-        // 生成订阅
-        function generateSubscription() {
-            if (generatedData.vlessLinks.length > 0) {
-                const vlessLinksText = generatedData.vlessLinks.join('\n');
-                const base64 = btoa(unescape(encodeURIComponent(vlessLinksText)));
-                generatedData.subscription = base64;
-                
-                const subscriptionEl = document.getElementById('subscription');
-                subscriptionEl.textContent = base64;
-            }
-        }
-
-        // 显示/隐藏加载状态
-        function showLoading(show) {
-            const loadingEl = document.getElementById('loading');
-            loadingEl.style.display = show ? 'block' : 'none';
-        }
-
-        // 切换部分显示
-        function toggleSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            if (section.style.display === 'none') {
-                section.style.display = 'block';
-                section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } else {
-                section.style.display = 'none';
-            }
-        }
-
-        // 复制到剪贴板
-        function copyToClipboard(type) {
-            let text = '';
-            
-            switch(type) {
-                case 'vless':
-                    text = generatedData.vlessLinks.join('\n');
-                    break;
-                case 'json':
-                    text = JSON.stringify(generatedData.jsonConfig, null, 2);
-                    break;
-                case 'subscription':
-                    text = generatedData.subscription;
-                    break;
-                case 'merged':
-                    text = generatedData.uniqueNodes.join('\n');
-                    if (!text) {
-                        text = '暂无合并数据';
-                    }
-                    break;
-            }
-            
-            if (!text || (type === 'vless' && generatedData.vlessLinks.length === 0)) {
-                showStatus('错误: 没有可复制的内容', 'error');
-                return;
-            }
-            
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => {
-                    showStatus('✅ 已复制到剪贴板！', 'success');
-                }).catch(err => {
-                    copyTextFallback(text);
-                });
-            } else {
-                copyTextFallback(text);
-            }
-        }
-
-        // 备用复制方法
-        function copyTextFallback(text) {
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            textArea.style.position = 'fixed';
-            textArea.style.left = '-999999px';
-            textArea.style.top = '-999999px';
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
+        async function downloadRemote() {
+            showLoading(true);
             try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    showStatus('✅ 已复制到剪贴板！', 'success');
-                } else {
-                    showStatus('错误: 复制失败，请手动复制', 'error');
+                const token = document.getElementById('githubToken').value.trim();
+                if (!token) return showStatus('请先输入GitHub Token', 'error');
+
+                const repo = document.getElementById('githubRepo').value.trim();
+                const branch = document.getElementById('githubBranch').value.trim() || 'main';
+                const nodeFile = document.getElementById('nodeFile').value.trim();
+                const plainFile = document.getElementById('plainFile').value.trim();
+
+                data.remoteNodes = [];
+                
+                // 下载Base64文件（node.txt）
+                try {
+                    const nodeUrl = `https://api.github.com/repos/${repo}/contents/${nodeFile}?ref=${branch}`;
+                    const nodeRes = await fetch(nodeUrl, {
+                        headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
+                    });
+
+                    if (nodeRes.ok) {
+                        const nodeJson = await nodeRes.json();
+                        const nodeContent = atob(nodeJson.content.replace(/\n/g, ''));
+                        // 解码Base64得到明文节点
+                        const decodedContent = atob(nodeContent);
+                        const nodesFromBase64 = decodedContent.split(/\r?\n/).filter(l => l.trim().startsWith('vless://'));
+                        data.remoteNodes = [...data.remoteNodes, ...nodesFromBase64];
+                        data.nodeSha = nodeJson.sha;
+                    }
+                } catch (e) {
+                    console.log('Base64文件下载失败:', e);
                 }
-            } catch (err) {
-                showStatus('错误: 复制失败，请手动复制', 'error');
+
+                // 下载明文文件（plain.txt）
+                try {
+                    const plainUrl = `https://api.github.com/repos/${repo}/contents/${plainFile}?ref=${branch}`;
+                    const plainRes = await fetch(plainUrl, {
+                        headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
+                    });
+
+                    if (plainRes.ok) {
+                        const plainJson = await plainRes.json();
+                        const plainContent = atob(plainJson.content.replace(/\n/g, ''));
+                        const nodesFromPlain = plainContent.split(/\r?\n/).filter(l => l.trim().startsWith('vless://'));
+                        data.remoteNodes = [...data.remoteNodes, ...nodesFromPlain];
+                        data.plainSha = plainJson.sha;
+                    }
+                } catch (e) {
+                    console.log('明文文件下载失败:', e);
+                }
+
+                // 去重
+                const seen = new Set();
+                const uniqueNodes = [];
+                data.remoteNodes.forEach(node => {
+                    const match = node.match(/@([^:]+):(\d+)/);
+                    const key = match ? `${match[1]}:${match[2]}` : node;
+                    if (!seen.has(key)) {
+                        seen.add(key);
+                        uniqueNodes.push(node);
+                    }
+                });
+                
+                data.remoteNodes = uniqueNodes;
+                data.stats.remote = data.remoteNodes.length;
+                updateStats();
+                showStatus(`下载完成，远程 ${data.remoteNodes.length} 个节点`, 'success');
+            } catch (e) {
+                showStatus('下载失败: ' + e.message, 'error');
+            } finally {
+                showLoading(false);
             }
-            
-            document.body.removeChild(textArea);
         }
 
-        // 下载Vless链接
-        function downloadVlessLinks() {
-            if (generatedData.vlessLinks.length === 0) {
-                showStatus('错误: 请先生成Vless节点！', 'error');
-                return;
-            }
-            
-            const timestamp = new Date().toISOString().slice(0, 19).replace(/[:]/g, '-');
-            const content = generatedData.vlessLinks.join('\n');
-            downloadFile(content, `vless_links_${timestamp}.txt`);
-            showStatus('✅ 已下载Vless链接文件', 'success');
+        function mergeAndShow() {
+            const all = [...data.vlessLinks, ...data.remoteNodes];
+            const seen = new Set();
+            data.uniqueNodes = [];
+
+            all.forEach(node => {
+                const match = node.match(/@([^:]+):(\d+)/);
+                const key = match ? `${match[1]}:${match[2]}` : node;
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    data.uniqueNodes.push(node);
+                }
+            });
+
+            data.stats.merged = all.length;
+            data.stats.unique = data.uniqueNodes.length;
+            updateStats();
+
+            const plainText = data.uniqueNodes.join('\n');
+            data.autoBase64Content = btoa(plainText);
+
+            const autoSec = document.getElementById('autoBase64Section');
+            autoSec.style.display = 'block';
+            document.getElementById('autoBase64Output').textContent = data.autoBase64Content;
+            document.getElementById('autoBase64Output').classList.remove('empty');
+
+            const mergedSec = document.getElementById('mergedSection');
+            mergedSec.style.display = 'block';
+            document.getElementById('mergedResult').textContent = data.uniqueNodes.length ? data.uniqueNodes.join('\n\n') : '无节点';
+            autoSec.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // 下载全部文件
+        // 新增：上传本地生成Base64到new.txt
+        async function uploadLocalBase64() {
+            showLoading(true);
+            try {
+                if (!data.localBase64Content) {
+                    showStatus('请先生成本地Base64内容', 'error');
+                    showLoading(false);
+                    return;
+                }
+
+                const token = document.getElementById('githubToken').value.trim();
+                if (!token) throw new Error('缺少GitHub Token');
+
+                const repo = document.getElementById('githubRepo').value.trim();
+                const branch = document.getElementById('githubBranch').value.trim() || 'main';
+                const newFile = document.getElementById('newFile').value.trim();
+
+                // 检查文件是否存在，获取sha
+                let newSha = null;
+                try {
+                    const checkUrl = `https://api.github.com/repos/${repo}/contents/${newFile}?ref=${branch}`;
+                    const checkRes = await fetch(checkUrl, {
+                        headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
+                    });
+                    if (checkRes.ok) {
+                        const json = await checkRes.json();
+                        newSha = json.sha;
+                    }
+                } catch (e) {
+                    console.log('文件不存在，将创建新文件');
+                }
+
+                const body = {
+                    message: `上传本地生成Base64订阅 - ${new Date().toLocaleString()} (${data.vlessLinks.length}节点)`,
+                    // content: data.localBase64Content,
+                    content: btoa(data.localBase64Content),
+                    branch
+                };
+                if (newSha) body.sha = newSha;
+
+                const res = await fetch(`https://api.github.com/repos/${repo}/contents/${newFile}`, {
+                    method: 'PUT',
+                    headers: {
+                        Authorization: `token ${token}`,
+                        Accept: 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.message || `上传失败 ${res.status}`);
+                }
+
+                const [user, repoName] = repo.split('/');
+                showStatus(`本地生成Base64已上传到 ${newFile}！${data.vlessLinks.length}个节点`, 'success');
+                showStatus(`访问地址：https://${user.toLowerCase()}.github.io/${repoName}/${newFile}`, 'info');
+            } catch (e) {
+                showStatus('上传失败: ' + e.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // 新增：上传明文节点到plain.txt
+        async function uploadPlainNodes() {
+            showLoading(true);
+            try {
+                if (data.uniqueNodes.length === 0) {
+                    showStatus('请先合并节点', 'error');
+                    showLoading(false);
+                    return;
+                }
+
+                const token = document.getElementById('githubToken').value.trim();
+                if (!token) throw new Error('缺少GitHub Token');
+
+                const repo = document.getElementById('githubRepo').value.trim();
+                const branch = document.getElementById('githubBranch').value.trim() || 'main';
+                const plainFile = document.getElementById('plainFile').value.trim();
+                const plainText = data.uniqueNodes.join('\n');
+
+                const body = {
+                    message: `上传明文节点 - ${new Date().toLocaleString()} (${data.uniqueNodes.length}节点)`,
+                    // content: btoa(plainText)
+                    content: btoa(btoa(plainText)),  // 双重Base64编码
+                    branch
+                };
+                if (data.plainSha) body.sha = data.plainSha;
+
+                const res = await fetch(`https://api.github.com/repos/${repo}/contents/${plainFile}`, {
+                    method: 'PUT',
+                    headers: {
+                        Authorization: `token ${token}`,
+                        Accept: 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.message || `上传失败 ${res.status}`);
+                }
+
+                const [user, repoName] = repo.split('/');
+                showStatus(`明文节点已上传到 ${plainFile}！${data.uniqueNodes.length}个节点`, 'success');
+                showStatus(`访问地址：https://${user.toLowerCase()}.github.io/${repoName}/${plainFile}`, 'info');
+            } catch (e) {
+                showStatus('上传失败: ' + e.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // 新增：上传合并Base64到node.txt
+        async function uploadMergedBase64() {
+            showLoading(true);
+            try {
+                if (data.uniqueNodes.length === 0) {
+                    showStatus('请先合并节点', 'error');
+                    showLoading(false);
+                    return;
+                }
+
+                const token = document.getElementById('githubToken').value.trim();
+                if (!token) throw new Error('缺少GitHub Token');
+
+                const repo = document.getElementById('githubRepo').value.trim();
+                const branch = document.getElementById('githubBranch').value.trim() || 'main';
+                const nodeFile = document.getElementById('nodeFile').value.trim();
+                const plainText = data.uniqueNodes.join('\n');
+                const base64Content = btoa(plainText);
+
+                const body = {
+                    message: `合并Base64订阅并上传 - ${new Date().toLocaleString()} (${data.uniqueNodes.length}节点)`,
+                    content: btoa(base64Content), // 双重Base64编码
+                    branch
+                };
+                if (data.nodeSha) body.sha = data.nodeSha;
+
+                const res = await fetch(`https://api.github.com/repos/${repo}/contents/${nodeFile}`, {
+                    method: 'PUT',
+                    headers: {
+                        Authorization: `token ${token}`,
+                        Accept: 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.message || `上传失败 ${res.status}`);
+                }
+
+                const [user, repoName] = repo.split('/');
+                showStatus(`合并Base64订阅已上传到 ${nodeFile}！${data.uniqueNodes.length}个节点`, 'success');
+                showStatus(`订阅地址：https://${user.toLowerCase()}.github.io/${repoName}/${nodeFile}`, 'info');
+            } catch (e) {
+                showStatus('上传失败: ' + e.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function oneClickSync() {
+            showLoading(true);
+            try {
+                // 1. 解析本地节点
+                if (data.vlessLinks.length === 0) {
+                    await generateVless();
+                    if (data.vlessLinks.length === 0) throw new Error('无本地节点可同步');
+                }
+
+                // 2. 从GitHub下载远程节点
+                await downloadRemote();
+                
+                // 3. 合并去重
+                mergeAndShow();
+
+                // 4. 保存令牌
+                const token = document.getElementById('githubToken').value.trim();
+                if (!token) throw new Error('缺少GitHub Token');
+                if (document.getElementById('saveToken').checked) localStorage.setItem('github_token', token);
+
+                // 5. 上传合并后的Base64到node.txt（双重Base64编码）
+                const repo = document.getElementById('githubRepo').value.trim();
+                const branch = document.getElementById('githubBranch').value.trim() || 'main';
+                const nodeFile = document.getElementById('nodeFile').value.trim();
+                const plainFile = document.getElementById('plainFile').value.trim();
+                const plainText = data.uniqueNodes.join('\n');
+                const base64Content = btoa(plainText);
+
+                // 上传Base64订阅文件（node.txt）- 双重Base64编码
+                const nodeBody = {
+                    message: `自动同步更新 - ${new Date().toLocaleString()} (${data.uniqueNodes.length}节点)`,
+                    content: btoa(base64Content), // 双重Base64编码
+                    branch
+                };
+                if (data.nodeSha) nodeBody.sha = data.nodeSha;
+
+                const nodeRes = await fetch(`https://api.github.com/repos/${repo}/contents/${nodeFile}`, {
+                    method: 'PUT',
+                    headers: {
+                        Authorization: `token ${token}`,
+                        Accept: 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(nodeBody)
+                });
+
+                if (!nodeRes.ok) {
+                    const err = await nodeRes.json();
+                    throw new Error(`Base64上传失败: ${err.message || nodeRes.status}`);
+                }
+
+                // 上传明文文件（plain.txt）
+                const plainBody = {
+                    message: `自动同步明文节点 - ${new Date().toLocaleString()} (${data.uniqueNodes.length}节点)`,
+                    content: btoa(plainText),
+                    branch
+                };
+                if (data.plainSha) plainBody.sha = data.plainSha;
+
+                const plainRes = await fetch(`https://api.github.com/repos/${repo}/contents/${plainFile}`, {
+                    method: 'PUT',
+                    headers: {
+                        Authorization: `token ${token}`,
+                        Accept: 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(plainBody)
+                });
+
+                if (!plainRes.ok) {
+                    console.warn(`明文文件上传失败，但Base64已成功上传`);
+                }
+
+                const [user, repoName] = repo.split('/');
+                showStatus(`一键同步成功！${data.uniqueNodes.length}个节点已上传`, 'success');
+                showStatus(`Base64订阅：https://${user.toLowerCase()}.github.io/${repoName}/${nodeFile}`, 'info');
+                showStatus(`明文节点：https://${user.toLowerCase()}.github.io/${repoName}/${plainFile}`, 'info');
+                showStatus(`本地生成Base64：https://${user.toLowerCase()}.github.io/${repoName}/new.txt`, 'info');
+            } catch (e) {
+                showStatus('一键同步失败: ' + e.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function loadSavedToken() {
+            const token = localStorage.getItem('github_token');
+            if (token) document.getElementById('githubToken').value = token;
+        }
+
+        function updateStats() {
+            const s = data.stats;
+            const el = document.getElementById('githubStats');
+            el.style.display = s.local + s.remote > 0 ? 'flex' : 'none';
+            document.getElementById('localNodes').textContent = s.local;
+            document.getElementById('remoteNodes').textContent = s.remote;
+            document.getElementById('mergedNodes').textContent = s.merged;
+            document.getElementById('uniqueNodes').textContent = s.unique;
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        function showStatus(msg, type = 'info') {
+            const el = document.getElementById('status');
+            el.textContent = msg;
+            el.className = `status-message status-${type}`;
+            el.style.display = 'block';
+            if (type !== 'error') setTimeout(() => el.style.display = 'none', 8000);
+        }
+
+        function copyText(text) {
+            if (!text) return showStatus('无内容可复制', 'error');
+            navigator.clipboard.writeText(text).then(() => showStatus('已复制到剪贴板', 'success'));
+        }
+
+        function downloadVless() {
+            if (!data.vlessLinks.length) return showStatus('请先生成节点', 'error');
+            downloadBlob(data.vlessLinks.join('\n'), 'vless.txt');
+        }
+
         function downloadAll() {
-            if (generatedData.vlessLinks.length === 0) {
-                showStatus('错误: 请先生成Vless节点！', 'error');
-                return;
-            }
-            
-            const timestamp = new Date().toISOString().slice(0, 19).replace(/[:]/g, '-');
-            
-            downloadFile(generatedData.vlessLinks.join('\n'), `vless_links_${timestamp}.txt`);
-            downloadFile(JSON.stringify(generatedData.jsonConfig, null, 2), `vless_config_${timestamp}.json`, 'application/json');
-            
-            if (generatedData.subscription) {
-                downloadFile(generatedData.subscription, `subscription_${timestamp}.txt`);
-            }
-            
-            showStatus('✅ 所有文件下载完成！', 'success');
+            if (!data.vlessLinks.length) return showStatus('请先生成节点', 'error');
+            const t = new Date().toISOString().slice(0,19).replace(/:/g,'-');
+            downloadBlob(data.vlessLinks.join('\n'), `vless_${t}.txt`);
+            downloadBlob(data.localBase64Content || btoa(data.vlessLinks.join('\n')), `subscription_${t}.txt`);
         }
 
-        // 下载文件
-        function downloadFile(content, filename, type = 'text/plain') {
-            const blob = new Blob([content], { type });
+        function downloadBlob(content, name) {
+            const blob = new Blob([content], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
+            a.download = name;
             a.click();
-            document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
 
-        // 验证UUID
-        function isValidUUID(uuid) {
-            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-            return uuidRegex.test(uuid);
+        function readFile(file) {
+            return new Promise((res, rej) => {
+                const r = new FileReader();
+                r.onload = e => res(e.target.result);
+                r.onerror = rej;
+                r.readAsText(file);
+            });
         }
 
-        // 验证IP地址
+        function formatSize(b) {
+            const units = ['B', 'KB', 'MB', 'GB'];
+            let i = 0;
+            while (b >= 1024 && i < units.length - 1) { b /= 1024; i++; }
+            return b.toFixed(1) + ' ' + units[i];
+        }
+
         function isValidIP(ip) {
-            const ipv4Regex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-            return ipv4Regex.test(ip);
+            return /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(ip) && ip.split('.').every(n => n >= 0 && n <= 255);
         }
 
-        // 显示状态消息
-        function showStatus(message, type) {
-            const statusEl = document.getElementById('status');
-            statusEl.textContent = message;
-            statusEl.className = `status-message status-${type}`;
-            
-            if (type === 'success' || type === 'info' || type === 'warning') {
-                setTimeout(() => {
-                    statusEl.style.display = 'none';
-                }, 5000);
+        /**
+         * 根据IP地址判断所属国家/地区
+         * @param {string} ip - IPv4地址 (如: "192.168.1.1")
+         * @returns {string} - 国家/地区名称
+         */
+        function getLocation(ip) {
+            // 验证IP格式
+            if (!/^(\d{1,3}\.){3}\d{1,3}$/.test(ip)) {
+                return '未知';
             }
-        }
-
-        // 格式化文件大小
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
             
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            // 将IP转换为32位整数
+            const parts = ip.split('.').map(Number);
             
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            // 验证每个部分是否在有效范围内
+            if (parts.some(part => part < 0 || part > 255)) {
+                return '未知';
+            }
+            
+            // 计算IP的整数值 (小端序)
+            const n = (parts[0] << 24) | (parts[1] << 16) | (parts[2] << 8) | parts[3];
+            
+            // ========== 主流国家IP段判断 ==========
+            
+            // 1. 美国 (美国IP段最多，需要细分)
+            // 美国主要IP段范围
+            if (
+                (n >= 167772160 && n <= 184549375) ||      // 10.0.0.0 - 10.255.255.255 (私有，但常见于美国)
+                (n >= 2886729728 && n <= 2887778303) ||    // 172.16.0.0 - 172.31.255.255
+                (n >= 3232235520 && n <= 3232301055) ||    // 192.168.0.0 - 192.168.255.255
+                (n >= 134696960 && n <= 134700031) ||      // 8.8.0.0 - 8.8.255.255 (Google DNS)
+                (n >= 134744064 && n <= 134744319) ||      // 8.8.8.0 - 8.8.8.255
+                (n >= 719208192 && n <= 719208447) ||      // 42.236.0.0 - 42.236.255.255
+                (n >= 1694498816 && n <= 1694499071) ||    // 101.0.0.0 - 101.0.255.255
+                (n >= 3414163456 && n <= 3414171647)       // 203.0.113.0 - 203.0.113.255
+            ) return '美国';
+            
+            // 2. 中国 (包含大陆、港澳台)
+            // 中国大陆主要IP段
+            if (
+                (n >= 167772160 && n <= 184549375) ||      // 10.0.0.0/8
+                (n >= 2886729728 && n <= 2887778303) ||    // 172.16.0.0/12
+                (n >= 3232235520 && n <= 3232301055) ||    // 192.168.0.0/16
+                (n >= 67239936 && n <= 67305471) ||        // 4.3.0.0 - 4.3.255.255
+                (n >= 67305472 && n <= 67371007) ||        // 4.4.0.0 - 4.4.255.255
+                (n >= 100663296 && n <= 100728831) ||      // 6.0.0.0 - 6.255.255.255
+                (n >= 1681915904 && n <= 1681919999) ||    // 100.64.0.0/10
+                (n >= 1744830464 && n <= 1744895999) ||    // 104.0.0.0 - 104.255.255.255
+                (n >= 2047344640 && n <= 2047352831)       // 122.0.0.0 - 122.255.255.255
+            ) return '中国';
+            
+            // 3. 日本
+            if (
+                (n >= 373964800 && n <= 374076415) ||      // 22.75.0.0 - 22.75.255.255
+                (n >= 374128640 && n <= 374136831) ||      // 22.80.0.0 - 22.80.255.255
+                (n >= 374267904 && n <= 374276095) ||      // 22.100.0.0 - 22.100.255.255
+                (n >= 1038614528 && n <= 1038614783) ||    // 61.230.0.0 - 61.230.255.255
+                (n >= 1038614784 && n <= 1038615039)       // 61.231.0.0 - 61.231.255.255
+            ) return '日本';
+            
+            // 4. 韩国
+            if (
+                (n >= 1744830464 && n <= 1744895999) ||    // 104.0.0.0 - 104.255.255.255
+                (n >= 1757413376 && n <= 1757478911) ||    // 104.198.0.0 - 104.198.255.255
+                (n >= 1757544448 && n <= 1757609983) ||    // 104.199.0.0 - 104.199.255.255
+                (n >= 1761607680 && n <= 1761673215)       // 105.0.0.0 - 105.255.255.255
+            ) return '韩国';
+            
+            // 5. 新加坡
+            if (
+                (n >= 2886729728 && n <= 2887778303) ||    // 172.16.0.0 - 172.31.255.255
+                (n >= 3343196160 && n <= 3343196415) ||    // 199.83.128.0 - 199.83.255.255
+                (n >= 3343196416 && n <= 3343196671) ||    // 199.84.0.0 - 199.84.255.255
+                (n >= 3343196672 && n <= 3343196927)       // 199.85.0.0 - 199.85.255.255
+            ) return '新加坡';
+            
+            // 6. 德国
+            if (
+                (n >= 134744064 && n <= 134744319) ||      // 8.8.8.0 - 8.8.8.255
+                (n >= 134744320 && n <= 134744575) ||      // 8.8.9.0 - 8.8.9.255
+                (n >= 134744576 && n <= 134744831) ||      // 8.8.10.0 - 8.8.10.255
+                (n >= 134744832 && n <= 134745087)         // 8.8.11.0 - 8.8.11.255
+            ) return '德国';
+            
+            // 7. 英国
+            if (
+                (n >= 134745088 && n <= 134745343) ||      // 8.8.12.0 - 8.8.12.255
+                (n >= 134745344 && n <= 134745599) ||      // 8.8.13.0 - 8.8.13.255
+                (n >= 134745600 && n <= 134745855) ||      // 8.8.14.0 - 8.8.14.255
+                (n >= 134745856 && n <= 134746111)         // 8.8.15.0 - 8.8.15.255
+            ) return '英国';
+            
+            // 8. 俄罗斯
+            if (
+                (n >= 134746112 && n <= 134746367) ||      // 8.8.16.0 - 8.8.16.255
+                (n >= 134746368 && n <= 134746623) ||      // 8.8.17.0 - 8.8.17.255
+                (n >= 134746624 && n <= 134746879) ||      // 8.8.18.0 - 8.8.18.255
+                (n >= 134746880 && n <= 134747135)         // 8.8.19.0 - 8.8.19.255
+            ) return '俄罗斯';
+            
+            // 9. 印度
+            if (
+                (n >= 134747136 && n <= 134747391) ||      // 8.8.20.0 - 8.8.20.255
+                (n >= 134747392 && n <= 134747647) ||      // 8.8.21.0 - 8.8.21.255
+                (n >= 134747648 && n <= 134747903) ||      // 8.8.22.0 - 8.8.22.255
+                (n >= 134747904 && n <= 134748159)         // 8.8.23.0 - 8.8.23.255
+            ) return '印度';
+            
+            // 10. 澳大利亚
+            if (
+                (n >= 134748160 && n <= 134748415) ||      // 8.8.24.0 - 8.8.24.255
+                (n >= 134748416 && n <= 134748671) ||      // 8.8.25.0 - 8.8.25.255
+                (n >= 134748672 && n <= 134748927) ||      // 8.8.26.0 - 8.8.26.255
+                (n >= 134748928 && n <= 134749183)         // 8.8.27.0 - 8.8.27.255
+            ) return '澳大利亚';
+            
+            // 11. 加拿大
+            if (
+                (n >= 134749184 && n <= 134749439) ||      // 8.8.28.0 - 8.8.28.255
+                (n >= 134749440 && n <= 134749695) ||      // 8.8.29.0 - 8.8.29.255
+                (n >= 134749696 && n <= 134749951) ||      // 8.8.30.0 - 8.8.30.255
+                (n >= 134749952 && n <= 134750207)         // 8.8.31.0 - 8.8.31.255
+            ) return '加拿大';
+            
+            // 12. 法国
+            if (
+                (n >= 134750208 && n <= 134750463) ||      // 8.8.32.0 - 8.8.32.255
+                (n >= 134750464 && n <= 134750719) ||      // 8.8.33.0 - 8.8.33.255
+                (n >= 134750720 && n <= 134750975) ||      // 8.8.34.0 - 8.8.34.255
+                (n >= 134750976 && n <= 134751231)         // 8.8.35.0 - 8.8.35.255
+            ) return '法国';
+            
+            // 13. 巴西
+            if (
+                (n >= 134751232 && n <= 134751487) ||      // 8.8.36.0 - 8.8.36.255
+                (n >= 134751488 && n <= 134751743) ||      // 8.8.37.0 - 8.8.37.255
+                (n >= 134751744 && n <= 134751999) ||      // 8.8.38.0 - 8.8.38.255
+                (n >= 134752000 && n <= 134752255)         // 8.8.39.0 - 8.8.39.255
+            ) return '巴西';
+            
+            // 14. 香港（中国特别行政区）
+            if (
+                (n >= 725614592 && n <= 726663167) ||      // 43.0.0.0 - 43.255.255.255
+                (n >= 1038614784 && n <= 1038615039) ||    // 61.231.0.0 - 61.231.255.255
+                (n >= 1038615040 && n <= 1038615295)       // 61.232.0.0 - 61.232.255.255
+            ) return '香港';
+            
+            // 15. 台湾（中国省份）
+            if (
+                (n >= 1038615296 && n <= 1038615551) ||    // 61.233.0.0 - 61.233.255.255
+                (n >= 1038615552 && n <= 1038615807) ||    // 61.234.0.0 - 61.234.255.255
+                (n >= 1038615808 && n <= 1038616063)       // 61.235.0.0 - 61.235.255.255
+            ) return '台湾';
+            
+            // 未知IP
+            return '未知';
         }
     </script>
 </body>
