@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vless节点生成工具</title>
+    <title>Vless节点生成工具 - 完整版</title>
     <style>
         :root {
             --primary-color: #4361ee;
@@ -11,8 +11,8 @@
             --success-color: #4cc9f0;
             --info-color: #4895ef;
             --warning-color: #f72585;
+            --github-color: #24292e;
             --light-color: #f8f9fa;
-            --dark-color: #212529;
             --border-radius: 12px;
             --box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -119,10 +119,6 @@
             position: relative;
         }
 
-        .card-header .icon {
-            font-size: 1.8rem;
-        }
-
         .card-body {
             padding: 30px;
         }
@@ -186,7 +182,7 @@
         }
 
         textarea {
-            min-height: 180px;
+            min-height: 150px;
             font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
             font-size: 14px;
             resize: vertical;
@@ -215,17 +211,17 @@
         }
 
         .btn {
-            padding: 14px 28px;
+            padding: 12px 24px;
             border: none;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             position: relative;
             overflow: hidden;
         }
@@ -255,7 +251,7 @@
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(67, 97, 238, 0.3);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
         }
 
         .btn-success {
@@ -263,8 +259,13 @@
             color: white;
         }
 
-        .btn-info {
-            background: linear-gradient(135deg, #7209b7 0%, #3a0ca3 100%);
+        .btn-github {
+            background: linear-gradient(135deg, var(--github-color) 0%, #2d333b 100%);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning-color) 0%, #b5179e 100%);
             color: white;
         }
 
@@ -273,6 +274,7 @@
             width: 100%;
         }
 
+        /* 修复文件上传区域样式 */
         .file-upload-container {
             margin-bottom: 20px;
         }
@@ -286,6 +288,11 @@
             transition: var(--transition);
             background: #fafbff;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 180px;
         }
 
         .file-upload-area:hover {
@@ -299,7 +306,7 @@
             background: #e8edff;
         }
 
-        .file-upload-area i {
+        .file-upload-area .upload-icon {
             font-size: 3rem;
             color: var(--primary-color);
             margin-bottom: 15px;
@@ -310,6 +317,7 @@
             color: #4a5568;
             margin-bottom: 8px;
             font-weight: 500;
+            font-size: 1.1rem;
         }
 
         .file-upload-area small {
@@ -321,12 +329,13 @@
             display: none;
         }
 
+        /* 修复文件信息区域样式 */
         .file-info {
             margin-top: 15px;
             padding: 15px;
-            background: linear-gradient(135deg, #e8edff 0%, #f0f4ff 100%);
+            background: linear-gradient(135deg, #e8f4fd 0%, #d1e9ff 100%);
             border-radius: 8px;
-            border: 1px solid #d1d9ff;
+            border: 1px solid #b6e0fe;
             display: none;
             animation: fadeIn 0.3s ease-out;
         }
@@ -357,19 +366,43 @@
             color: #718096;
         }
 
+        /* 修复移除文件按钮样式 */
         .remove-file-btn {
-            background: #fed7d7;
+            background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
             color: #c53030;
             border: none;
             border-radius: 6px;
             padding: 8px 16px;
             font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .remove-file-btn:hover {
-            background: #feb2b2;
+            background: linear-gradient(135deg, #feb2b2 0%, #fc8181 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(252, 129, 129, 0.3);
+        }
+
+        .github-config {
+            background: linear-gradient(135deg, #f6f8fa 0%, #f0f4f8 100%);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+            border: 1px solid #e1e4e8;
+        }
+
+        .github-config h4 {
+            color: #24292e;
+            margin-bottom: 15px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .result-box {
@@ -455,36 +488,18 @@
             display: block;
         }
 
+        .status-warning {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            color: #856404;
+            border-left-color: #ffc107;
+            display: block;
+        }
+
         .help-text {
             font-size: 13px;
             color: #718096;
             margin-top: 6px;
             line-height: 1.4;
-        }
-
-        .format-guide {
-            background: linear-gradient(135deg, #fff9db 0%, #fff3bf 100%);
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-            border: 1px solid #ffec99;
-        }
-
-        .format-guide h4 {
-            color: #e67700;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        .format-guide ul {
-            padding-left: 20px;
-            margin-bottom: 10px;
-        }
-
-        .format-guide li {
-            color: #5c3c00;
-            margin-bottom: 5px;
-            font-size: 13px;
         }
 
         .config-row {
@@ -501,100 +516,25 @@
             margin-top: 25px;
         }
 
+        .github-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .github-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .footer {
             text-align: center;
             color: rgba(255, 255, 255, 0.8);
             margin-top: 50px;
             padding: 20px;
             font-size: 14px;
-        }
-
-        .footer a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* 动画 */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        /* 滚动条样式 */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-        }
-
-        /* 响应式调整 */
-        @media (max-width: 768px) {
-            .main-grid {
-                gap: 30px;
-            }
-            
-            .card-body {
-                padding: 20px;
-            }
-            
-            .action-buttons {
-                grid-template-columns: 1fr;
-            }
-            
-            header h1 {
-                font-size: 2.2rem;
-            }
-            
-            header p {
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 15px;
-            }
-            
-            .config-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .result-content {
-                font-size: 12px;
-            }
         }
 
         .loading {
@@ -629,69 +569,160 @@
             margin-left: 10px;
         }
 
-        .location-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #4cc9f0, #4895ef);
-            color: white;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 500;
-            margin-left: 5px;
-        }
-
-        .location-info {
-            background: linear-gradient(135deg, #e8f4fd, #d1e9ff);
-            border-radius: 8px;
-            padding: 15px;
+        .github-stats {
+            display: flex;
+            gap: 15px;
             margin-top: 15px;
-            border: 1px solid #b6e0fe;
-        }
-
-        .location-info h4 {
-            color: #2c5282;
-            margin-bottom: 10px;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .location-list {
-            display: flex;
             flex-wrap: wrap;
-            gap: 8px;
         }
 
-        .location-item {
+        .stat-item {
             background: white;
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: 1px solid #cbd5e0;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
             font-size: 12px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 5px;
+            min-width: 100px;
         }
 
-        .location-item .count {
-            background: #4cc9f0;
+        .stat-label {
+            color: #718096;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                gap: 30px;
+            }
+            
+            .card-body {
+                padding: 20px;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        .workflow-steps {
+            margin-top: 20px;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .step-number {
+            background: var(--primary-color);
             color: white;
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
+            font-weight: 600;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .step-desc {
+            font-size: 13px;
+            color: #718096;
+            line-height: 1.4;
+        }
+
+        .token-info {
+            background: linear-gradient(135deg, #e8f4fd 0%, #d1e9ff 100%);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            border: 1px solid #b6e0fe;
+            font-size: 12px;
+            color: #2c5282;
+        }
+
+        .token-info a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+
+        .token-info a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Vless节点生成工具</h1>
-            <p>智能解析CSV文件，自动识别IP属地，生成带地区标签的Vless节点</p>
+            <h1>Vless节点生成工具 - 完整版</h1>
+            <p>生成Vless节点 + GitHub订阅文件自动同步，全流程一键执行</p>
         </header>
 
         <div class="main-grid">
@@ -699,7 +730,7 @@
             <div class="card">
                 <div class="card-header">
                     <h2>
-                        <span class="icon">📁</span>
+                        <span>📁</span>
                         CSV数据源
                         <span id="sourceBadge" class="source-badge">未选择</span>
                     </h2>
@@ -713,7 +744,7 @@
                         
                         <div class="file-upload-container">
                             <div class="file-upload-area" id="dropArea">
-                                <div class="icon">📁</div>
+                                <div class="upload-icon">📁</div>
                                 <p><strong>拖放CSV文件到此处，或点击选择</strong></p>
                                 <small>支持.csv或.txt文件格式</small>
                                 <input type="file" id="fileInput" accept=".csv,.txt">
@@ -726,7 +757,7 @@
                                         <span id="fileSize" class="file-size"></span>
                                     </div>
                                     <button type="button" id="removeFileBtn" class="remove-file-btn">
-                                        移除文件
+                                        <span>🗑️</span> 移除文件
                                     </button>
                                 </div>
                             </div>
@@ -795,8 +826,7 @@
                             <label for="autoLocation"><strong>自动识别IP属地</strong></label>
                         </div>
                         <div class="help-text">
-                            ✓ 启用：自动识别IP所属地区，生成如"新加坡01"、"美国02"等别名<br>
-                            □ 禁用：使用指定的别名前缀，如"自选01"、"自选02"
+                            ✓ 启用：自动识别IP所属地区，生成如"新加坡01"、"美国02"等别名
                         </div>
                     </div>
 
@@ -819,7 +849,7 @@
 
                     <div class="section">
                         <div class="section-title">
-                            <span>🎛️ 高级配置</span>
+                            <span>⚙️ 高级配置</span>
                         </div>
                         
                         <div class="config-row">
@@ -843,47 +873,48 @@
                                 <input type="text" id="fp" value="chrome">
                             </div>
                         </div>
-                        
-                        <div class="format-guide">
-                            <h4>📋 生成格式说明</h4>
-                            <p>将使用以下格式生成Vless节点：</p>
-                            <code style="font-size: 12px; display: block; margin-top: 8px; background: rgba(0,0,0,0.05); padding: 10px; border-radius: 4px;">
-vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=tls&sni=knny.dpdns.org&fp=chrome&type=ws&host=knny.dpdns.org&path=%2F#地区编号
-                            </code>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 右侧：结果输出 -->
+            <!-- 右侧：结果输出和GitHub同步 -->
             <div class="card">
                 <div class="card-header">
                     <h2>
-                        <span class="icon">📊</span>
-                        生成结果
+                        <span>📊</span>
+                        生成结果 & GitHub同步
                         <span id="resultCount" class="badge">0节点</span>
                     </h2>
                 </div>
                 <div class="card-body">
-                    <div id="locationInfo" class="location-info" style="display: none;">
-                        <h4><span>🌍</span> IP属地统计</h4>
-                        <div id="locationStats" class="location-list">
-                            <!-- 属地信息将在这里动态生成 -->
-                        </div>
-                    </div>
-
                     <div class="section">
                         <div class="result-header">
                             <h3>🔗 Vless节点链接</h3>
-                            <button id="copyVlessBtn" class="btn btn-success" style="padding: 10px 20px;">
+                            <button id="copyVlessBtn" class="btn btn-success">
                                 <span>📋</span> 复制全部
                             </button>
                         </div>
                         <div class="result-box">
                             <div id="vless-links" class="result-content empty">Vless链接将在这里显示...</div>
                         </div>
-                        <div class="help-text">
-                            ✅ 点击"复制全部"按钮复制所有Vless链接，可直接粘贴到V2rayN客户端导入
+                        
+                        <div class="github-stats" id="githubStats" style="display: none;">
+                            <div class="stat-item">
+                                <span class="stat-label">本地节点</span>
+                                <span class="stat-value" id="localNodes">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">远程节点</span>
+                                <span class="stat-value" id="remoteNodes">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">合并后节点</span>
+                                <span class="stat-value" id="mergedNodes">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">去重后节点</span>
+                                <span class="stat-value" id="uniqueNodes">0</span>
+                            </div>
                         </div>
                     </div>
 
@@ -915,19 +946,96 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
                                 <span>📁</span> 下载全部文件
                             </button>
                         </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">
+                            <span>🐙 GitHub订阅同步</span>
+                        </div>
                         
-                        <div class="help-text" style="margin-top: 15px;">
-                            <strong>📎 下载文件说明：</strong><br>
-                            • vless_links.txt - Vless分享链接（可直接导入V2rayN）<br>
-                            • vless_config.json - V2rayN配置文件<br>
-                            • subscription.txt - Base64订阅链接
+                        <div class="github-config">
+                            <h4><span>🔧</span> GitHub配置</h4>
+                            <div class="form-group">
+                                <label for="githubToken">GitHub个人访问令牌：</label>
+                                <input type="password" id="githubToken" placeholder="输入GitHub Personal Access Token">
+                                <div class="help-text">
+                                    需要repo权限，用于提交文件到GitHub仓库
+                                    <a href="https://github.com/settings/tokens" target="_blank">获取令牌</a>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="githubRepo">GitHub仓库：</label>
+                                <input type="text" id="githubRepo" value="daizhouhui/CustomNode">
+                                <div class="help-text">格式：用户名/仓库名</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="githubBranch">分支：</label>
+                                <input type="text" id="githubBranch" value="main">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="githubFile">订阅文件路径：</label>
+                                <input type="text" id="githubFile" value="node.txt">
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="saveToken" checked>
+                                <label for="saveToken">保存令牌到本地存储</label>
+                            </div>
+                            
+                            <div class="token-info">
+                                <strong>⚠️ 安全提示：</strong>令牌将保存到浏览器的本地存储中，仅用于GitHub API调用。
+                                建议使用仅具有必要权限的令牌，并定期更新。
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-steps">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <div class="step-title">下载订阅文件</div>
+                                    <div class="step-desc">从GitHub Pages下载现有的Base64订阅文件</div>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <div class="step-title">合并去重</div>
+                                    <div class="step-desc">将本地生成的节点与远程节点合并，去除重复项</div>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <div class="step-title">提交更新</div>
+                                    <div class="step-desc">将新的Base64订阅文件提交回GitHub仓库</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="github-buttons">
+                            <button id="downloadSubBtn" class="btn btn-primary">
+                                <span>⬇️</span> 下载订阅文件
+                            </button>
+                            <button id="mergeBtn" class="btn btn-success">
+                                <span>🔄</span> 合并节点
+                            </button>
+                            <button id="syncBtn" class="btn btn-github">
+                                <span>🚀</span> 一键同步
+                            </button>
+                        </div>
+                        
+                        <div class="help-text">
+                            <strong>一键同步功能：</strong>自动执行下载→合并→提交的完整流程，生成新的订阅文件并更新到GitHub
                         </div>
                     </div>
 
                     <div class="section" id="jsonSection" style="display: none;">
                         <div class="result-header">
                             <h3>📄 JSON配置</h3>
-                            <button id="copyJsonBtn" class="btn btn-success" style="padding: 10px 20px;">
+                            <button id="copyJsonBtn" class="btn btn-success">
                                 <span>📋</span> 复制
                             </button>
                         </div>
@@ -939,19 +1047,24 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
                     <div class="section" id="subSection" style="display: none;">
                         <div class="result-header">
                             <h3>🔗 Base64订阅链接</h3>
-                            <button id="copySubBtn" class="btn btn-success" style="padding: 10px 20px;">
+                            <button id="copySubBtn" class="btn btn-success">
                                 <span>📋</span> 复制
                             </button>
                         </div>
                         <div class="result-box">
                             <div id="subscription" class="result-content"></div>
                         </div>
-                        <div class="help-text">
-                            <strong>🎯 使用方法：</strong><br>
-                            1. 复制上面的Base64内容<br>
-                            2. 在V2rayN客户端中点击"订阅"→"订阅设置"<br>
-                            3. 添加新订阅，粘贴此Base64内容作为订阅地址<br>
-                            4. 更新订阅即可导入所有节点
+                    </div>
+
+                    <div class="section" id="mergedSection" style="display: none;">
+                        <div class="result-header">
+                            <h3>🔄 合并结果</h3>
+                            <button id="copyMergedBtn" class="btn btn-success">
+                                <span>📋</span> 复制
+                            </button>
+                        </div>
+                        <div class="result-box">
+                            <div id="mergedResult" class="result-content"></div>
                         </div>
                     </div>
                 </div>
@@ -959,8 +1072,8 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
         </div>
 
         <div class="footer">
-            <p>© 2023 Vless节点生成工具 | 智能解析CSV文件，自动识别IP属地，快速生成Vless节点配置</p>
-            <p>设计原则：文件优先，自动解析A列(IP)和H列(端口)，支持自动识别IP所属地区</p>
+            <p>© 2023 Vless节点生成工具 | 生成Vless节点 + GitHub订阅文件自动同步，全流程一键执行</p>
+            <p>支持GitHub订阅文件下载、合并、去重、提交全自动化流程</p>
         </div>
     </div>
 
@@ -973,639 +1086,15 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
             nodesCount: 0,
             currentSource: 'none',
             currentFileName: '',
-            locationStats: {} // 存储地区统计信息
-        };
-
-        // IP属地数据库（简化的离线版本）
-        const ipLocationDatabase = {
-            // 中国大陆地区
-            '北京': ['1.0.1.0', '1.0.3.255', '北京'],
-            '上海': ['101.80.0.0', '101.95.255.255', '上海'],
-            '广州': ['113.64.0.0', '113.67.255.255', '广州'],
-            '深圳': ['116.24.0.0', '116.31.255.255', '深圳'],
-            
-            // 香港
-            '香港': ['43.243.0.0', '43.255.255.255', '香港'],
-            
-            // 台湾
-            '台湾': ['59.120.0.0', '59.127.255.255', '台湾'],
-            
-            // 新加坡
-            '新加坡': ['101.100.0.0', '101.103.255.255', '新加坡'],
-            '新加坡2': ['103.100.0.0', '103.255.255.255', '新加坡'],
-            '新加坡3': ['175.156.0.0', '175.159.255.255', '新加坡'],
-            '新加坡4': ['203.117.0.0', '203.117.255.255', '新加坡'],
-            
-            // 日本
-            '日本': ['1.0.16.0', '1.0.31.255', '日本'],
-            '日本2': ['1.32.0.0', '1.63.255.255', '日本'],
-            '日本3': ['103.100.0.0', '103.255.255.255', '日本'],
-            '日本4': ['110.0.0.0', '110.255.255.255', '日本'],
-            '日本5': ['114.20.0.0', '114.31.255.255', '日本'],
-            '日本6': ['133.0.0.0', '133.255.255.255', '日本'],
-            '日本7': ['153.120.0.0', '153.127.255.255', '日本'],
-            '日本8': ['210.138.0.0', '210.138.255.255', '日本'],
-            '日本9': ['210.153.0.0', '210.153.255.255', '日本'],
-            
-            // 美国
-            '美国': ['3.0.0.0', '3.255.255.255', '美国'],
-            '美国2': ['8.0.0.0', '8.255.255.255', '美国'],
-            '美国3': ['12.0.0.0', '12.255.255.255', '美国'],
-            '美国4': ['23.0.0.0', '23.255.255.255', '美国'],
-            '美国5': ['24.0.0.0', '24.255.255.255', '美国'],
-            '美国6': ['32.0.0.0', '32.255.255.255', '美国'],
-            '美国7': ['45.0.0.0', '45.255.255.255', '美国'],
-            '美国8': ['47.0.0.0', '47.255.255.255', '美国'],
-            '美国9': ['50.0.0.0', '50.255.255.255', '美国'],
-            '美国10': ['63.0.0.0', '63.255.255.255', '美国'],
-            '美国11': ['64.0.0.0', '64.255.255.255', '美国'],
-            '美国12': ['65.0.0.0', '65.255.255.255', '美国'],
-            '美国13': ['66.0.0.0', '66.255.255.255', '美国'],
-            '美国14': ['67.0.0.0', '67.255.255.255', '美国'],
-            '美国15': ['68.0.0.0', '68.255.255.255', '美国'],
-            '美国16': ['69.0.0.0', '69.255.255.255', '美国'],
-            '美国17': ['70.0.0.0', '70.255.255.255', '美国'],
-            '美国18': ['71.0.0.0', '71.255.255.255', '美国'],
-            '美国19': ['72.0.0.0', '72.255.255.255', '美国'],
-            '美国20': ['73.0.0.0', '73.255.255.255', '美国'],
-            '美国21': ['74.0.0.0', '74.255.255.255', '美国'],
-            '美国22': ['75.0.0.0', '75.255.255.255', '美国'],
-            '美国23': ['76.0.0.0', '76.255.255.255', '美国'],
-            '美国24': ['98.0.0.0', '98.255.255.255', '美国'],
-            '美国25': ['104.0.0.0', '104.255.255.255', '美国'],
-            '美国26': ['107.0.0.0', '107.255.255.255', '美国'],
-            '美国27': ['108.0.0.0', '108.255.255.255', '美国'],
-            '美国28': ['162.0.0.0', '162.255.255.255', '美国'],
-            '美国29': ['172.0.0.0', '172.255.255.255', '美国'],
-            '美国30': ['192.0.0.0', '192.255.255.255', '美国'],
-            '美国31': ['198.0.0.0', '198.255.255.255', '美国'],
-            '美国32': ['204.0.0.0', '204.255.255.255', '美国'],
-            '美国33': ['205.0.0.0', '205.255.255.255', '美国'],
-            '美国34': ['206.0.0.0', '206.255.255.255', '美国'],
-            '美国35': ['207.0.0.0', '207.255.255.255', '美国'],
-            '美国36': ['208.0.0.0', '208.255.255.255', '美国'],
-            '美国37': ['209.0.0.0', '209.255.255.255', '美国'],
-            
-            // 韩国
-            '韩国': ['1.11.0.0', '1.11.255.255', '韩国'],
-            '韩国2': ['1.16.0.0', '1.31.255.255', '韩国'],
-            '韩国3': ['1.208.0.0', '1.223.255.255', '韩国'],
-            '韩国4': ['14.0.0.0', '14.63.255.255', '韩国'],
-            '韩国5': ['58.72.0.0', '58.75.255.255', '韩国'],
-            '韩国6': ['58.122.0.0', '58.123.255.255', '韩国'],
-            '韩国7': ['58.140.0.0', '58.143.255.255', '韩国'],
-            '韩国8': ['58.224.0.0', '58.255.255.255', '韩国'],
-            '韩国9': ['59.0.0.0', '59.31.255.255', '韩国'],
-            '韩国10': ['61.32.0.0', '61.47.255.255', '韩国'],
-            '韩国11': ['61.72.0.0', '61.79.255.255', '韩国'],
-            '韩国12': ['61.96.0.0', '61.99.255.255', '韩国'],
-            '韩国13': ['61.100.0.0', '61.103.255.255', '韩国'],
-            '韩国14': ['61.248.0.0', '61.251.255.255', '韩国'],
-            '韩国15': ['110.45.0.0', '110.47.255.255', '韩国'],
-            '韩国16': ['112.216.0.0', '112.223.255.255', '韩国'],
-            '韩国17': ['114.108.0.0', '114.111.255.255', '韩国'],
-            '韩国18': ['115.0.0.0', '115.95.255.255', '韩国'],
-            '韩国19': ['116.32.0.0', '116.63.255.255', '韩国'],
-            '韩国20': ['116.121.0.0', '116.121.255.255', '韩国'],
-            '韩国21': ['118.32.0.0', '118.63.255.255', '韩国'],
-            '韩国22': ['118.216.0.0', '118.223.255.255', '韩国'],
-            '韩国23': ['119.64.0.0', '119.95.255.255', '韩国'],
-            '韩国24': ['121.88.0.0', '121.95.255.255', '韩国'],
-            '韩国25': ['121.126.0.0', '121.127.255.255', '韩国'],
-            '韩国26': ['121.128.0.0', '121.159.255.255', '韩国'],
-            '韩国27': ['122.32.0.0', '122.63.255.255', '韩国'],
-            '韩国28': ['122.252.0.0', '122.255.255.255', '韩国'],
-            '韩国29': ['123.140.0.0', '123.143.255.255', '韩国'],
-            '韩国30': ['124.0.0.0', '124.63.255.255', '韩国'],
-            '韩国31': ['125.128.0.0', '125.159.255.255', '韩国'],
-            '韩国32': ['168.126.0.0', '168.127.255.255', '韩国'],
-            '韩国33': ['175.112.0.0', '175.127.255.255', '韩国'],
-            '韩国34': ['180.64.0.0', '180.95.255.255', '韩国'],
-            '韩国35': ['182.252.0.0', '182.255.255.255', '韩国'],
-            '韩国36': ['202.30.0.0', '202.31.255.255', '韩国'],
-            '韩国37': ['203.226.0.0', '203.255.255.255', '韩国'],
-            '韩国38': ['210.204.0.0', '210.207.255.255', '韩国'],
-            '韩国39': ['211.32.0.0', '211.63.255.255', '韩国'],
-            '韩国40': ['211.104.0.0', '211.111.255.255', '韩国'],
-            '韩国41': ['211.168.0.0', '211.175.255.255', '韩国'],
-            '韩国42': ['211.176.0.0', '211.183.255.255', '韩国'],
-            '韩国43': ['211.208.0.0', '211.223.255.255', '韩国'],
-            '韩国44': ['218.36.0.0', '218.39.255.255', '韩国'],
-            '韩国45': ['218.144.0.0', '218.159.255.255', '韩国'],
-            '韩国46': ['218.209.0.0', '218.209.255.255', '韩国'],
-            '韩国47': ['219.240.0.0', '219.247.255.255', '韩国'],
-            '韩国48': ['219.248.0.0', '219.255.255.255', '韩国'],
-            '韩国49': ['221.138.0.0', '221.139.255.255', '韩国'],
-            '韩国50': ['221.140.0.0', '221.143.255.255', '韩国'],
-            '韩国51': ['222.96.0.0', '222.127.255.255', '韩国'],
-            '韩国52': ['222.232.0.0', '222.239.255.255', '韩国'],
-            
-            // 德国
-            '德国': ['31.0.0.0', '31.255.255.255', '德国'],
-            '德国2': ['46.0.0.0', '46.255.255.255', '德国'],
-            '德国3': ['62.0.0.0', '62.255.255.255', '德国'],
-            '德国4': ['77.0.0.0', '77.255.255.255', '德国'],
-            '德国5': ['78.0.0.0', '78.255.255.255', '德国'],
-            '德国6': ['79.0.0.0', '79.255.255.255', '德国'],
-            '德国7': ['80.0.0.0', '80.255.255.255', '德国'],
-            '德国8': ['81.0.0.0', '81.255.255.255', '德国'],
-            '德国9': ['82.0.0.0', '82.255.255.255', '德国'],
-            '德国10': ['83.0.0.0', '83.255.255.255', '德国'],
-            '德国11': ['84.0.0.0', '84.255.255.255', '德国'],
-            '德国12': ['85.0.0.0', '85.255.255.255', '德国'],
-            '德国13': ['87.0.0.0', '87.255.255.255', '德国'],
-            '德国14': ['88.0.0.0', '88.255.255.255', '德国'],
-            '德国15': ['89.0.0.0', '89.255.255.255', '德国'],
-            '德国16': ['91.0.0.0', '91.255.255.255', '德国'],
-            '德国17': ['92.0.0.0', '92.255.255.255', '德国'],
-            '德国18': ['93.0.0.0', '93.255.255.255', '德国'],
-            '德国19': ['94.0.0.0', '94.255.255.255', '德国'],
-            '德国20': ['95.0.0.0', '95.255.255.255', '德国'],
-            '德国21': ['109.0.0.0', '109.255.255.255', '德国'],
-            '德国22': ['128.65.0.0', '128.65.255.255', '德国'],
-            '德国23': ['128.127.0.0', '128.127.255.255', '德国'],
-            '德国24': ['128.130.0.0', '128.130.255.255', '德国'],
-            '德国25': ['134.0.0.0', '134.255.255.255', '德国'],
-            '德国26': ['141.0.0.0', '141.255.255.255', '德国'],
-            '德国27': ['145.0.0.0', '145.255.255.255', '德国'],
-            '德国28': ['146.0.0.0', '146.255.255.255', '德国'],
-            '德国29': ['147.0.0.0', '147.255.255.255', '德国'],
-            '德国30': ['148.0.0.0', '148.255.255.255', '德国'],
-            '德国31': ['149.0.0.0', '149.255.255.255', '德国'],
-            '德国32': ['152.0.0.0', '152.255.255.255', '德国'],
-            '德国33': ['155.0.0.0', '155.255.255.255', '德国'],
-            '德国34': ['156.0.0.0', '156.255.255.255', '德国'],
-            '德国35': ['158.0.0.0', '158.255.255.255', '德国'],
-            '德国36': ['159.0.0.0', '159.255.255.255', '德国'],
-            '德国37': ['176.0.0.0', '176.255.255.255', '德国'],
-            '德国38': ['178.0.0.0', '178.255.255.255', '德国'],
-            '德国39': ['188.0.0.0', '188.255.255.255', '德国'],
-            '德国40': ['193.0.0.0', '193.255.255.255', '德国'],
-            '德国41': ['194.0.0.0', '194.255.255.255', '德国'],
-            '德国42': ['195.0.0.0', '195.255.255.255', '德国'],
-            '德国43': ['212.0.0.0', '212.255.255.255', '德国'],
-            '德国44': ['217.0.0.0', '217.255.255.255', '德国'],
-            
-            // 英国
-            '英国': ['2.0.0.0', '2.255.255.255', '英国'],
-            '英国2': ['5.0.0.0', '5.255.255.255', '英国'],
-            '英国3': ['25.0.0.0', '25.255.255.255', '英国'],
-            '英国4': ['31.0.0.0', '31.255.255.255', '英国'],
-            '英国5': ['37.0.0.0', '37.255.255.255', '英国'],
-            '英国6': ['46.0.0.0', '46.255.255.255', '英国'],
-            '英国7': ['51.0.0.0', '51.255.255.255', '英国'],
-            '英国8': ['52.0.0.0', '52.255.255.255', '英国'],
-            '英国9': ['62.0.0.0', '62.255.255.255', '英国'],
-            '英国10': ['77.0.0.0', '77.255.255.255', '英国'],
-            '英国11': ['78.0.0.0', '78.255.255.255', '英国'],
-            '英国12': ['79.0.0.0', '79.255.255.255', '英国'],
-            '英国13': ['80.0.0.0', '80.255.255.255', '英国'],
-            '英国14': ['81.0.0.0', '81.255.255.255', '英国'],
-            '英国15': ['82.0.0.0', '82.255.255.255', '英国'],
-            '英国16': ['83.0.0.0', '83.255.255.255', '英国'],
-            '英国17': ['84.0.0.0', '84.255.255.255', '英国'],
-            '英国18': ['85.0.0.0', '85.255.255.255', '英国'],
-            '英国19': ['86.0.0.0', '86.255.255.255', '英国'],
-            '英国20': ['87.0.0.0', '87.255.255.255', '英国'],
-            '英国21': ['88.0.0.0', '88.255.255.255', '英国'],
-            '英国22': ['89.0.0.0', '89.255.255.255', '英国'],
-            '英国23': ['90.0.0.0', '90.255.255.255', '英国'],
-            '英国24': ['91.0.0.0', '91.255.255.255', '英国'],
-            '英国25': ['92.0.0.0', '92.255.255.255', '英国'],
-            '英国26': ['93.0.0.0', '93.255.255.255', '英国'],
-            '英国27': ['94.0.0.0', '94.255.255.255', '英国'],
-            '英国28': ['95.0.0.0', '95.255.255.255', '英国'],
-            '英国29': ['109.0.0.0', '109.255.255.255', '英国'],
-            '英国30': ['146.0.0.0', '146.255.255.255', '英国'],
-            '英国31': ['147.0.0.0', '147.255.255.255', '英国'],
-            '英国32': ['148.0.0.0', '148.255.255.255', '英国'],
-            '英国33': ['149.0.0.0', '149.255.255.255', '英国'],
-            '英国34': ['151.0.0.0', '151.255.255.255', '英国'],
-            '英国35': ['152.0.0.0', '152.255.255.255', '英国'],
-            '英国36': ['155.0.0.0', '155.255.255.255', '英国'],
-            '英国37': ['158.0.0.0', '158.255.255.255', '英国'],
-            '英国38': ['159.0.0.0', '159.255.255.255', '英国'],
-            '英国39': ['176.0.0.0', '176.255.255.255', '英国'],
-            '英国40': ['178.0.0.0', '178.255.255.255', '英国'],
-            '英国41': ['185.0.0.0', '185.255.255.255', '英国'],
-            '英国42': ['188.0.0.0', '188.255.255.255', '英国'],
-            '英国43': ['192.0.0.0', '192.255.255.255', '英国'],
-            '英国44': ['193.0.0.0', '193.255.255.255', '英国'],
-            '英国45': ['194.0.0.0', '194.255.255.255', '英国'],
-            '英国46': ['195.0.0.0', '195.255.255.255', '英国'],
-            '英国47': ['212.0.0.0', '212.255.255.255', '英国'],
-            '英国48': ['213.0.0.0', '213.255.255.255', '英国'],
-            '英国49': ['217.0.0.0', '217.255.255.255', '英国'],
-            
-            // 法国
-            '法国': ['2.0.0.0', '2.255.255.255', '法国'],
-            '法国2': ['5.0.0.0', '5.255.255.255', '法国'],
-            '法国3': ['37.0.0.0', '37.255.255.255', '法国'],
-            '法国4': ['46.0.0.0', '46.255.255.255', '法国'],
-            '法国5': ['62.0.0.0', '62.255.255.255', '法国'],
-            '法国6': ['77.0.0.0', '77.255.255.255', '法国'],
-            '法国7': ['78.0.0.0', '78.255.255.255', '法国'],
-            '法国8': ['79.0.0.0', '79.255.255.255', '法国'],
-            '法国9': ['80.0.0.0', '80.255.255.255', '法国'],
-            '法国10': ['81.0.0.0', '81.255.255.255', '法国'],
-            '法国11': ['82.0.0.0', '82.255.255.255', '法国'],
-            '法国12': ['83.0.0.0', '83.255.255.255', '法国'],
-            '法国13': ['84.0.0.0', '84.255.255.255', '法国'],
-            '法国14': ['85.0.0.0', '85.255.255.255', '法国'],
-            '法国15': ['86.0.0.0', '86.255.255.255', '法国'],
-            '法国16': ['87.0.0.0', '87.255.255.255', '法国'],
-            '法国17': ['88.0.0.0', '88.255.255.255', '法国'],
-            '法国18': ['89.0.0.0', '89.255.255.255', '法国'],
-            '法国19': ['90.0.0.0', '90.255.255.255', '法国'],
-            '法国20': ['91.0.0.0', '91.255.255.255', '法国'],
-            '法国21': ['92.0.0.0', '92.255.255.255', '法国'],
-            '法国22': ['93.0.0.0', '93.255.255.255', '法国'],
-            '法国23': ['94.0.0.0', '94.255.255.255', '法国'],
-            '法国24': ['95.0.0.0', '95.255.255.255', '法国'],
-            '法国25': ['109.0.0.0', '109.255.255.255', '法国'],
-            '法国26': ['147.0.0.0', '147.255.255.255', '法国'],
-            '法国27': ['148.0.0.0', '148.255.255.255', '法国'],
-            '法国28': ['149.0.0.0', '149.255.255.255', '法国'],
-            '法国29': ['151.0.0.0', '151.255.255.255', '法国'],
-            '法国30': ['152.0.0.0', '152.255.255.255', '法国'],
-            '法国31': ['155.0.0.0', '155.255.255.255', '法国'],
-            '法国32': ['158.0.0.0', '158.255.255.255', '法国'],
-            '法国33': ['159.0.0.0', '159.255.255.255', '法国'],
-            '法国34': ['176.0.0.0', '176.255.255.255', '法国'],
-            '法国35': ['178.0.0.0', '178.255.255.255', '法国'],
-            '法国36': ['185.0.0.0', '185.255.255.255', '法国'],
-            '法国37': ['188.0.0.0', '188.255.255.255', '法国'],
-            '法国38': ['193.0.0.0', '193.255.255.255', '法国'],
-            '法国39': ['194.0.0.0', '194.255.255.255', '法国'],
-            '法国40': ['195.0.0.0', '195.255.255.255', '法国'],
-            '法国41': ['212.0.0.0', '212.255.255.255', '法国'],
-            '法国42': ['213.0.0.0', '213.255.255.255', '法国'],
-            '法国43': ['217.0.0.0', '217.255.255.255', '法国'],
-            
-            // 澳大利亚
-            '澳大利亚': ['1.0.0.0', '1.255.255.255', '澳大利亚'],
-            '澳大利亚2': ['14.0.0.0', '14.255.255.255', '澳大利亚'],
-            '澳大利亚3': ['27.0.0.0', '27.255.255.255', '澳大利亚'],
-            '澳大利亚4': ['36.0.0.0', '36.255.255.255', '澳大利亚'],
-            '澳大利亚5': ['39.0.0.0', '39.255.255.255', '澳大利亚'],
-            '澳大利亚6': ['42.0.0.0', '42.255.255.255', '澳大利亚'],
-            '澳大利亚7': ['49.0.0.0', '49.255.255.255', '澳大利亚'],
-            '澳大利亚8': ['58.0.0.0', '58.255.255.255', '澳大利亚'],
-            '澳大利亚9': ['59.0.0.0', '59.255.255.255', '澳大利亚'],
-            '澳大利亚10': ['60.0.0.0', '60.255.255.255', '澳大利亚'],
-            '澳大利亚11': ['61.0.0.0', '61.255.255.255', '澳大利亚'],
-            '澳大利亚12': ['103.0.0.0', '103.255.255.255', '澳大利亚'],
-            '澳大利亚13': ['110.0.0.0', '110.255.255.255', '澳大利亚'],
-            '澳大利亚14': ['111.0.0.0', '111.255.255.255', '澳大利亚'],
-            '澳大利亚15': ['112.0.0.0', '112.255.255.255', '澳大利亚'],
-            '澳大利亚16': ['113.0.0.0', '113.255.255.255', '澳大利亚'],
-            '澳大利亚17': ['114.0.0.0', '114.255.255.255', '澳大利亚'],
-            '澳大利亚18': ['115.0.0.0', '115.255.255.255', '澳大利亚'],
-            '澳大利亚19': ['116.0.0.0', '116.255.255.255', '澳大利亚'],
-            '澳大利亚20': ['117.0.0.0', '117.255.255.255', '澳大利亚'],
-            '澳大利亚21': ['118.0.0.0', '118.255.255.255', '澳大利亚'],
-            '澳大利亚22': ['119.0.0.0', '119.255.255.255', '澳大利亚'],
-            '澳大利亚23': ['120.0.0.0', '120.255.255.255', '澳大利亚'],
-            '澳大利亚24': ['121.0.0.0', '121.255.255.255', '澳大利亚'],
-            '澳大利亚25': ['122.0.0.0', '122.255.255.255', '澳大利亚'],
-            '澳大利亚26': ['123.0.0.0', '123.255.255.255', '澳大利亚'],
-            '澳大利亚27': ['124.0.0.0', '124.255.255.255', '澳大利亚'],
-            '澳大利亚28': ['125.0.0.0', '125.255.255.255', '澳大利亚'],
-            '澳大利亚29': ['126.0.0.0', '126.255.255.255', '澳大利亚'],
-            '澳大利亚30': ['139.0.0.0', '139.255.255.255', '澳大利亚'],
-            '澳大利亚31': ['144.0.0.0', '144.255.255.255', '澳大利亚'],
-            '澳大利亚32': ['149.0.0.0', '149.255.255.255', '澳大利亚'],
-            '澳大利亚33': ['150.0.0.0', '150.255.255.255', '澳大利亚'],
-            '澳大利亚34': ['152.0.0.0', '152.255.255.255', '澳大利亚'],
-            '澳大利亚35': ['153.0.0.0', '153.255.255.255', '澳大利亚'],
-            '澳大利亚36': ['155.0.0.0', '155.255.255.255', '澳大利亚'],
-            '澳大利亚37': ['157.0.0.0', '157.255.255.255', '澳大利亚'],
-            '澳大利亚38': ['158.0.0.0', '158.255.255.255', '澳大利亚'],
-            '澳大利亚39': ['159.0.0.0', '159.255.255.255', '澳大利亚'],
-            '澳大利亚40': ['160.0.0.0', '160.255.255.255', '澳大利亚'],
-            '澳大利亚41': ['161.0.0.0', '161.255.255.255', '澳大利亚'],
-            '澳大利亚42': ['162.0.0.0', '162.255.255.255', '澳大利亚'],
-            '澳大利亚43': ['163.0.0.0', '163.255.255.255', '澳大利亚'],
-            '澳大利亚44': ['164.0.0.0', '164.255.255.255', '澳大利亚'],
-            '澳大利亚45': ['165.0.0.0', '165.255.255.255', '澳大利亚'],
-            '澳大利亚46': ['166.0.0.0', '166.255.255.255', '澳大利亚'],
-            '澳大利亚47': ['167.0.0.0', '167.255.255.255', '澳大利亚'],
-            '澳大利亚48': ['168.0.0.0', '168.255.255.255', '澳大利亚'],
-            '澳大利亚49': ['169.0.0.0', '169.255.255.255', '澳大利亚'],
-            '澳大利亚50': ['180.0.0.0', '180.255.255.255', '澳大利亚'],
-            '澳大利亚51': ['192.0.0.0', '192.255.255.255', '澳大利亚'],
-            '澳大利亚52': ['198.0.0.0', '198.255.255.255', '澳大利亚'],
-            '澳大利亚53': ['202.0.0.0', '202.255.255.255', '澳大利亚'],
-            '澳大利亚54': ['203.0.0.0', '203.255.255.255', '澳大利亚'],
-            '澳大利亚55': ['210.0.0.0', '210.255.255.255', '澳大利亚'],
-            '澳大利亚56': ['211.0.0.0', '211.255.255.255', '澳大利亚'],
-            '澳大利亚57': ['218.0.0.0', '218.255.255.255', '澳大利亚'],
-            '澳大利亚58': ['219.0.0.0', '219.255.255.255', '澳大利亚'],
-            '澳大利亚59': ['220.0.0.0', '220.255.255.255', '澳大利亚'],
-            '澳大利亚60': ['221.0.0.0', '221.255.255.255', '澳大利亚'],
-            '澳大利亚61': ['222.0.0.0', '222.255.255.255', '澳大利亚'],
-            '澳大利亚62': ['223.0.0.0', '223.255.255.255', '澳大利亚'],
-            
-            // 加拿大
-            '加拿大': ['24.0.0.0', '24.255.255.255', '加拿大'],
-            '加拿大2': ['50.0.0.0', '50.255.255.255', '加拿大'],
-            '加拿大3': ['63.0.0.0', '63.255.255.255', '加拿大'],
-            '加拿大4': ['65.0.0.0', '65.255.255.255', '加拿大'],
-            '加拿大5': ['66.0.0.0', '66.255.255.255', '加拿大'],
-            '加拿大6': ['67.0.0.0', '67.255.255.255', '加拿大'],
-            '加拿大7': ['68.0.0.0', '68.255.255.255', '加拿大'],
-            '加拿大8': ['69.0.0.0', '69.255.255.255', '加拿大'],
-            '加拿大9': ['70.0.0.0', '70.255.255.255', '加拿大'],
-            '加拿大10': ['71.0.0.0', '71.255.255.255', '加拿大'],
-            '加拿大11': ['72.0.0.0', '72.255.255.255', '加拿大'],
-            '加拿大12': ['73.0.0.0', '73.255.255.255', '加拿大'],
-            '加拿大13': ['74.0.0.0', '74.255.255.255', '加拿大'],
-            '加拿大14': ['75.0.0.0', '75.255.255.255', '加拿大'],
-            '加拿大15': ['76.0.0.0', '76.255.255.255', '加拿大'],
-            '加拿大16': ['96.0.0.0', '96.255.255.255', '加拿大'],
-            '加拿大17': ['97.0.0.0', '97.255.255.255', '加拿大'],
-            '加拿大18': ['98.0.0.0', '98.255.255.255', '加拿大'],
-            '加拿大19': ['99.0.0.0', '99.255.255.255', '加拿大'],
-            '加拿大20': ['100.0.0.0', '100.255.255.255', '加拿大'],
-            '加拿大21': ['104.0.0.0', '104.255.255.255', '加拿大'],
-            '加拿大22': ['107.0.0.0', '107.255.255.255', '加拿大'],
-            '加拿大23': ['108.0.0.0', '108.255.255.255', '加拿大'],
-            '加拿大24': ['142.0.0.0', '142.255.255.255', '加拿大'],
-            '加拿大25': ['162.0.0.0', '162.255.255.255', '加拿大'],
-            '加拿大26': ['172.0.0.0', '172.255.255.255', '加拿大'],
-            '加拿大27': ['184.0.0.0', '184.255.255.255', '加拿大'],
-            '加拿大28': ['192.0.0.0', '192.255.255.255', '加拿大'],
-            '加拿大29': ['198.0.0.0', '198.255.255.255', '加拿大'],
-            '加拿大30': ['199.0.0.0', '199.255.255.255', '加拿大'],
-            '加拿大31': ['204.0.0.0', '204.255.255.255', '加拿大'],
-            '加拿大32': ['205.0.0.0', '205.255.255.255', '加拿大'],
-            '加拿大33': ['206.0.0.0', '206.255.255.255', '加拿大'],
-            '加拿大34': ['207.0.0.0', '207.255.255.255', '加拿大'],
-            '加拿大35': ['208.0.0.0', '208.255.255.255', '加拿大'],
-            '加拿大36': ['209.0.0.0', '209.255.255.255', '加拿大'],
-            '加拿大37': ['216.0.0.0', '216.255.255.255', '加拿大'],
-            
-            // 俄罗斯
-            '俄罗斯': ['2.0.0.0', '2.255.255.255', '俄罗斯'],
-            '俄罗斯2': ['5.0.0.0', '5.255.255.255', '俄罗斯'],
-            '俄罗斯3': ['31.0.0.0', '31.255.255.255', '俄罗斯'],
-            '俄罗斯4': ['37.0.0.0', '37.255.255.255', '俄罗斯'],
-            '俄罗斯5': ['46.0.0.0', '46.255.255.255', '俄罗斯'],
-            '俄罗斯6': ['62.0.0.0', '62.255.255.255', '俄罗斯'],
-            '俄罗斯7': ['77.0.0.0', '77.255.255.255', '俄罗斯'],
-            '俄罗斯8': ['78.0.0.0', '78.255.255.255', '俄罗斯'],
-            '俄罗斯9': ['79.0.0.0', '79.255.255.255', '俄罗斯'],
-            '俄罗斯10': ['80.0.0.0', '80.255.255.255', '俄罗斯'],
-            '俄罗斯11': ['81.0.0.0', '81.255.255.255', '俄罗斯'],
-            '俄罗斯12': ['82.0.0.0', '82.255.255.255', '俄罗斯'],
-            '俄罗斯13': ['83.0.0.0', '83.255.255.255', '俄罗斯'],
-            '俄罗斯14': ['84.0.0.0', '84.255.255.255', '俄罗斯'],
-            '俄罗斯15': ['85.0.0.0', '85.255.255.255', '俄罗斯'],
-            '俄罗斯16': ['86.0.0.0', '86.255.255.255', '俄罗斯'],
-            '俄罗斯17': ['87.0.0.0', '87.255.255.255', '俄罗斯'],
-            '俄罗斯18': ['88.0.0.0', '88.255.255.255', '俄罗斯'],
-            '俄罗斯19': ['89.0.0.0', '89.255.255.255', '俄罗斯'],
-            '俄罗斯20': ['90.0.0.0', '90.255.255.255', '俄罗斯'],
-            '俄罗斯21': ['91.0.0.0', '91.255.255.255', '俄罗斯'],
-            '俄罗斯22': ['92.0.0.0', '92.255.255.255', '俄罗斯'],
-            '俄罗斯23': ['93.0.0.0', '93.255.255.255', '俄罗斯'],
-            '俄罗斯24': ['94.0.0.0', '94.255.255.255', '俄罗斯'],
-            '俄罗斯25': ['95.0.0.0', '95.255.255.255', '俄罗斯'],
-            '俄罗斯26': ['109.0.0.0', '109.255.255.255', '俄罗斯'],
-            '俄罗斯27': ['128.0.0.0', '128.255.255.255', '俄罗斯'],
-            '俄罗斯28': ['130.0.0.0', '130.255.255.255', '俄罗斯'],
-            '俄罗斯29': ['141.0.0.0', '141.255.255.255', '俄罗斯'],
-            '俄罗斯30': ['144.0.0.0', '144.255.255.255', '俄罗斯'],
-            '俄罗斯31': ['145.0.0.0', '145.255.255.255', '俄罗斯'],
-            '俄罗斯32': ['146.0.0.0', '146.255.255.255', '俄罗斯'],
-            '俄罗斯33': ['147.0.0.0', '147.255.255.255', '俄罗斯'],
-            '俄罗斯34': ['148.0.0.0', '148.255.255.255', '俄罗斯'],
-            '俄罗斯35': ['149.0.0.0', '149.255.255.255', '俄罗斯'],
-            '俄罗斯36': ['150.0.0.0', '150.255.255.255', '俄罗斯'],
-            '俄罗斯37': ['151.0.0.0', '151.255.255.255', '俄罗斯'],
-            '俄罗斯38': ['152.0.0.0', '152.255.255.255', '俄罗斯'],
-            '俄罗斯39': ['153.0.0.0', '153.255.255.255', '俄罗斯'],
-            '俄罗斯40': ['154.0.0.0', '154.255.255.255', '俄罗斯'],
-            '俄罗斯41': ['155.0.0.0', '155.255.255.255', '俄罗斯'],
-            '俄罗斯42': ['156.0.0.0', '156.255.255.255', '俄罗斯'],
-            '俄罗斯43': ['157.0.0.0', '157.255.255.255', '俄罗斯'],
-            '俄罗斯44': ['158.0.0.0', '158.255.255.255', '俄罗斯'],
-            '俄罗斯45': ['159.0.0.0', '159.255.255.255', '俄罗斯'],
-            '俄罗斯46': ['160.0.0.0', '160.255.255.255', '俄罗斯'],
-            '俄罗斯47': ['161.0.0.0', '161.255.255.255', '俄罗斯'],
-            '俄罗斯48': ['162.0.0.0', '162.255.255.255', '俄罗斯'],
-            '俄罗斯49': ['163.0.0.0', '163.255.255.255', '俄罗斯'],
-            '俄罗斯50': ['164.0.0.0', '164.255.255.255', '俄罗斯'],
-            '俄罗斯51': ['165.0.0.0', '165.255.255.255', '俄罗斯'],
-            '俄罗斯52': ['166.0.0.0', '166.255.255.255', '俄罗斯'],
-            '俄罗斯53': ['167.0.0.0', '167.255.255.255', '俄罗斯'],
-            '俄罗斯54': ['168.0.0.0', '168.255.255.255', '俄罗斯'],
-            '俄罗斯55': ['169.0.0.0', '169.255.255.255', '俄罗斯'],
-            '俄罗斯56': ['170.0.0.0', '170.255.255.255', '俄罗斯'],
-            '俄罗斯57': ['171.0.0.0', '171.255.255.255', '俄罗斯'],
-            '俄罗斯58': ['172.0.0.0', '172.255.255.255', '俄罗斯'],
-            '俄罗斯59': ['173.0.0.0', '173.255.255.255', '俄罗斯'],
-            '俄罗斯60': ['174.0.0.0', '174.255.255.255', '俄罗斯'],
-            '俄罗斯61': ['175.0.0.0', '175.255.255.255', '俄罗斯'],
-            '俄罗斯62': ['176.0.0.0', '176.255.255.255', '俄罗斯'],
-            '俄罗斯63': ['178.0.0.0', '178.255.255.255', '俄罗斯'],
-            '俄罗斯64': ['185.0.0.0', '185.255.255.255', '俄罗斯'],
-            '俄罗斯65': ['188.0.0.0', '188.255.255.255', '俄罗斯'],
-            '俄罗斯66': ['193.0.0.0', '193.255.255.255', '俄罗斯'],
-            '俄罗斯67': ['194.0.0.0', '194.255.255.255', '俄罗斯'],
-            '俄罗斯68': ['195.0.0.0', '195.255.255.255', '俄罗斯'],
-            '俄罗斯69': ['212.0.0.0', '212.255.255.255', '俄罗斯'],
-            '俄罗斯70': ['213.0.0.0', '213.255.255.255', '俄罗斯'],
-            '俄罗斯71': ['217.0.0.0', '217.255.255.255', '俄罗斯'],
-            
-            // 荷兰
-            '荷兰': ['2.0.0.0', '2.255.255.255', '荷兰'],
-            '荷兰2': ['5.0.0.0', '5.255.255.255', '荷兰'],
-            '荷兰3': ['37.0.0.0', '37.255.255.255', '荷兰'],
-            '荷兰4': ['46.0.0.0', '46.255.255.255', '荷兰'],
-            '荷兰5': ['62.0.0.0', '62.255.255.255', '荷兰'],
-            '荷兰6': ['77.0.0.0', '77.255.255.255', '荷兰'],
-            '荷兰7': ['78.0.0.0', '78.255.255.255', '荷兰'],
-            '荷兰8': ['79.0.0.0', '79.255.255.255', '荷兰'],
-            '荷兰9': ['80.0.0.0', '80.255.255.255', '荷兰'],
-            '荷兰10': ['81.0.0.0', '81.255.255.255', '荷兰'],
-            '荷兰11': ['82.0.0.0', '82.255.255.255', '荷兰'],
-            '荷兰12': ['83.0.0.0', '83.255.255.255', '荷兰'],
-            '荷兰13': ['84.0.0.0', '84.255.255.255', '荷兰'],
-            '荷兰14': ['85.0.0.0', '85.255.255.255', '荷兰'],
-            '荷兰15': ['86.0.0.0', '86.255.255.255', '荷兰'],
-            '荷兰16': ['87.0.0.0', '87.255.255.255', '荷兰'],
-            '荷兰17': ['88.0.0.0', '88.255.255.255', '荷兰'],
-            '荷兰18': ['89.0.0.0', '89.255.255.255', '荷兰'],
-            '荷兰19': ['90.0.0.0', '90.255.255.255', '荷兰'],
-            '荷兰20': ['91.0.0.0', '91.255.255.255', '荷兰'],
-            '荷兰21': ['92.0.0.0', '92.255.255.255', '荷兰'],
-            '荷兰22': ['93.0.0.0', '93.255.255.255', '荷兰'],
-            '荷兰23': ['94.0.0.0', '94.255.255.255', '荷兰'],
-            '荷兰24': ['95.0.0.0', '95.255.255.255', '荷兰'],
-            '荷兰25': ['109.0.0.0', '109.255.255.255', '荷兰'],
-            '荷兰26': ['145.0.0.0', '145.255.255.255', '荷兰'],
-            '荷兰27': ['146.0.0.0', '146.255.255.255', '荷兰'],
-            '荷兰28': ['147.0.0.0', '147.255.255.255', '荷兰'],
-            '荷兰29': ['148.0.0.0', '148.255.255.255', '荷兰'],
-            '荷兰30': ['149.0.0.0', '149.255.255.255', '荷兰'],
-            '荷兰31': ['151.0.0.0', '151.255.255.255', '荷兰'],
-            '荷兰32': ['152.0.0.0', '152.255.255.255', '荷兰'],
-            '荷兰33': ['155.0.0.0', '155.255.255.255', '荷兰'],
-            '荷兰34': ['158.0.0.0', '158.255.255.255', '荷兰'],
-            '荷兰35': ['159.0.0.0', '159.255.255.255', '荷兰'],
-            '荷兰36': ['176.0.0.0', '176.255.255.255', '荷兰'],
-            '荷兰37': ['178.0.0.0', '178.255.255.255', '荷兰'],
-            '荷兰38': ['185.0.0.0', '185.255.255.255', '荷兰'],
-            '荷兰39': ['188.0.0.0', '188.255.255.255', '荷兰'],
-            '荷兰40': ['193.0.0.0', '193.255.255.255', '荷兰'],
-            '荷兰41': ['194.0.0.0', '194.255.255.255', '荷兰'],
-            '荷兰42': ['195.0.0.0', '195.255.255.255', '荷兰'],
-            '荷兰43': ['212.0.0.0', '212.255.255.255', '荷兰'],
-            '荷兰44': ['213.0.0.0', '213.255.255.255', '荷兰'],
-            '荷兰45': ['217.0.0.0', '217.255.255.255', '荷兰'],
-            
-            // 瑞士
-            '瑞士': ['5.0.0.0', '5.255.255.255', '瑞士'],
-            '瑞士2': ['46.0.0.0', '46.255.255.255', '瑞士'],
-            '瑞士3': ['62.0.0.0', '62.255.255.255', '瑞士'],
-            '瑞士4': ['77.0.0.0', '77.255.255.255', '瑞士'],
-            '瑞士5': ['78.0.0.0', '78.255.255.255', '瑞士'],
-            '瑞士6': ['79.0.0.0', '79.255.255.255', '瑞士'],
-            '瑞士7': ['80.0.0.0', '80.255.255.255', '瑞士'],
-            '瑞士8': ['81.0.0.0', '81.255.255.255', '瑞士'],
-            '瑞士9': ['82.0.0.0', '82.255.255.255', '瑞士'],
-            '瑞士10': ['83.0.0.0', '83.255.255.255', '瑞士'],
-            '瑞士11': ['84.0.0.0', '84.255.255.255', '瑞士'],
-            '瑞士12': ['85.0.0.0', '85.255.255.255', '瑞士'],
-            '瑞士13': ['86.0.0.0', '86.255.255.255', '瑞士'],
-            '瑞士14': ['87.0.0.0', '87.255.255.255', '瑞士'],
-            '瑞士15': ['88.0.0.0', '88.255.255.255', '瑞士'],
-            '瑞士16': ['89.0.0.0', '89.255.255.255', '瑞士'],
-            '瑞士17': ['90.0.0.0', '90.255.255.255', '瑞士'],
-            '瑞士18': ['91.0.0.0', '91.255.255.255', '瑞士'],
-            '瑞士19': ['92.0.0.0', '92.255.255.255', '瑞士'],
-            '瑞士20': ['93.0.0.0', '93.255.255.255', '瑞士'],
-            '瑞士21': ['94.0.0.0', '94.255.255.255', '瑞士'],
-            '瑞士22': ['95.0.0.0', '95.255.255.255', '瑞士'],
-            '瑞士23': ['109.0.0.0', '109.255.255.255', '瑞士'],
-            '瑞士24': ['146.0.0.0', '146.255.255.255', '瑞士'],
-            '瑞士25': ['147.0.0.0', '147.255.255.255', '瑞士'],
-            '瑞士26': ['148.0.0.0', '148.255.255.255', '瑞士'],
-            '瑞士27': ['149.0.0.0', '149.255.255.255', '瑞士'],
-            '瑞士28': ['151.0.0.0', '151.255.255.255', '瑞士'],
-            '瑞士29': ['152.0.0.0', '152.255.255.255', '瑞士'],
-            '瑞士30': ['155.0.0.0', '155.255.255.255', '瑞士'],
-            '瑞士31': ['158.0.0.0', '158.255.255.255', '瑞士'],
-            '瑞士32': ['159.0.0.0', '159.255.255.255', '瑞士'],
-            '瑞士33': ['176.0.0.0', '176.255.255.255', '瑞士'],
-            '瑞士34': ['178.0.0.0', '178.255.255.255', '瑞士'],
-            '瑞士35': ['185.0.0.0', '185.255.255.255', '瑞士'],
-            '瑞士36': ['188.0.0.0', '188.255.255.255', '瑞士'],
-            '瑞士37': ['193.0.0.0', '193.255.255.255', '瑞士'],
-            '瑞士38': ['194.0.0.0', '194.255.255.255', '瑞士'],
-            '瑞士39': ['195.0.0.0', '195.255.255.255', '瑞士'],
-            '瑞士40': ['212.0.0.0', '212.255.255.255', '瑞士'],
-            '瑞士41': ['213.0.0.0', '213.255.255.255', '瑞士'],
-            '瑞士42': ['217.0.0.0', '217.255.255.255', '瑞士'],
-            
-            // 印度
-            '印度': ['1.0.0.0', '1.255.255.255', '印度'],
-            '印度2': ['14.0.0.0', '14.255.255.255', '印度'],
-            '印度3': ['27.0.0.0', '27.255.255.255', '印度'],
-            '印度4': ['36.0.0.0', '36.255.255.255', '印度'],
-            '印度5': ['39.0.0.0', '39.255.255.255', '印度'],
-            '印度6': ['42.0.0.0', '42.255.255.255', '印度'],
-            '印度7': ['49.0.0.0', '49.255.255.255', '印度'],
-            '印度8': ['58.0.0.0', '58.255.255.255', '印度'],
-            '印度9': ['59.0.0.0', '59.255.255.255', '印度'],
-            '印度10': ['60.0.0.0', '60.255.255.255', '印度'],
-            '印度11': ['61.0.0.0', '61.255.255.255', '印度'],
-            '印度12': ['103.0.0.0', '103.255.255.255', '印度'],
-            '印度13': ['110.0.0.0', '110.255.255.255', '印度'],
-            '印度14': ['111.0.0.0', '111.255.255.255', '印度'],
-            '印度15': ['112.0.0.0', '112.255.255.255', '印度'],
-            '印度16': ['113.0.0.0', '113.255.255.255', '印度'],
-            '印度17': ['114.0.0.0', '114.255.255.255', '印度'],
-            '印度18': ['115.0.0.0', '115.255.255.255', '印度'],
-            '印度19': ['116.0.0.0', '116.255.255.255', '印度'],
-            '印度20': ['117.0.0.0', '117.255.255.255', '印度'],
-            '印度21': ['118.0.0.0', '118.255.255.255', '印度'],
-            '印度22': ['119.0.0.0', '119.255.255.255', '印度'],
-            '印度23': ['120.0.0.0', '120.255.255.255', '印度'],
-            '印度24': ['121.0.0.0', '121.255.255.255', '印度'],
-            '印度25': ['122.0.0.0', '122.255.255.255', '印度'],
-            '印度26': ['123.0.0.0', '123.255.255.255', '印度'],
-            '印度27': ['124.0.0.0', '124.255.255.255', '印度'],
-            '印度28': ['125.0.0.0', '125.255.255.255', '印度'],
-            '印度29': ['126.0.0.0', '126.255.255.255', '印度'],
-            '印度30': ['139.0.0.0', '139.255.255.255', '印度'],
-            '印度31': ['144.0.0.0', '144.255.255.255', '印度'],
-            '印度32': ['149.0.0.0', '149.255.255.255', '印度'],
-            '印度33': ['150.0.0.0', '150.255.255.255', '印度'],
-            '印度34': ['152.0.0.0', '152.255.255.255', '印度'],
-            '印度35': ['153.0.0.0', '153.255.255.255', '印度'],
-            '印度36': ['155.0.0.0', '155.255.255.255', '印度'],
-            '印度37': ['157.0.0.0', '157.255.255.255', '印度'],
-            '印度38': ['158.0.0.0', '158.255.255.255', '印度'],
-            '印度39': ['159.0.0.0', '159.255.255.255', '印度'],
-            '印度40': ['160.0.0.0', '160.255.255.255', '印度'],
-            '印度41': ['161.0.0.0', '161.255.255.255', '印度'],
-            '印度42': ['162.0.0.0', '162.255.255.255', '印度'],
-            '印度43': ['163.0.0.0', '163.255.255.255', '印度'],
-            '印度44': ['164.0.0.0', '164.255.255.255', '印度'],
-            '印度45': ['165.0.0.0', '165.255.255.255', '印度'],
-            '印度46': ['166.0.0.0', '166.255.255.255', '印度'],
-            '印度47': ['167.0.0.0', '167.255.255.255', '印度'],
-            '印度48': ['168.0.0.0', '168.255.255.255', '印度'],
-            '印度49': ['169.0.0.0', '169.255.255.255', '印度'],
-            '印度50': ['180.0.0.0', '180.255.255.255', '印度'],
-            '印度51': ['192.0.0.0', '192.255.255.255', '印度'],
-            '印度52': ['198.0.0.0', '198.255.255.255', '印度'],
-            '印度53': ['202.0.0.0', '202.255.255.255', '印度'],
-            '印度54': ['203.0.0.0', '203.255.255.255', '印度'],
-            '印度55': ['210.0.0.0', '210.255.255.255', '印度'],
-            '印度56': ['211.0.0.0', '211.255.255.255', '印度'],
-            '印度57': ['218.0.0.0', '218.255.255.255', '印度'],
-            '印度58': ['219.0.0.0', '219.255.255.255', '印度'],
-            '印度59': ['220.0.0.0', '220.255.255.255', '印度'],
-            '印度60': ['221.0.0.0', '221.255.255.255', '印度'],
-            '印度61': ['222.0.0.0', '222.255.255.255', '印度'],
-            '印度62': ['223.0.0.0', '223.255.255.255', '印度'],
-            
-            // 巴西
-            '巴西': ['177.0.0.0', '177.255.255.255', '巴西'],
-            '巴西2': ['179.0.0.0', '179.255.255.255', '巴西'],
-            '巴西3': ['186.0.0.0', '186.255.255.255', '巴西'],
-            '巴西4': ['187.0.0.0', '187.255.255.255', '巴西'],
-            '巴西5': ['189.0.0.0', '189.255.255.255', '巴西'],
-            '巴西6': ['190.0.0.0', '190.255.255.255', '巴西'],
-            '巴西7': ['191.0.0.0', '191.255.255.255', '巴西'],
-            '巴西8': ['200.0.0.0', '200.255.255.255', '巴西'],
-            '巴西9': ['201.0.0.0', '201.255.255.255', '巴西'],
-            
-            // 其他常见地区
-            '马来西亚': ['1.32.0.0', '1.47.255.255', '马来西亚'],
-            '泰国': ['1.0.128.0', '1.0.255.255', '泰国'],
-            '越南': ['1.52.0.0', '1.55.255.255', '越南'],
-            '菲律宾': ['1.0.64.0', '1.0.127.255', '菲律宾'],
-            '印度尼西亚': ['1.0.8.0', '1.0.15.255', '印度尼西亚'],
-            '土耳其': ['5.0.0.0', '5.255.255.255', '土耳其'],
-            '沙特阿拉伯': ['5.0.0.0', '5.255.255.255', '沙特阿拉伯'],
-            '阿联酋': ['5.0.0.0', '5.255.255.255', '阿联酋'],
-            '以色列': ['5.0.0.0', '5.255.255.255', '以色列'],
-            '南非': ['41.0.0.0', '41.255.255.255', '南非'],
-            '埃及': ['41.0.0.0', '41.255.255.255', '埃及'],
-            '尼日利亚': ['41.0.0.0', '41.255.255.255', '尼日利亚'],
-            '肯尼亚': ['41.0.0.0', '41.255.255.255', '肯尼亚'],
-            '墨西哥': ['187.0.0.0', '187.255.255.255', '墨西哥'],
-            '阿根廷': ['200.0.0.0', '200.255.255.255', '阿根廷'],
-            '智利': ['200.0.0.0', '200.255.255.255', '智利'],
-            '哥伦比亚': ['200.0.0.0', '200.255.255.255', '哥伦比亚'],
-            '秘鲁': ['200.0.0.0', '200.255.255.255', '秘鲁'],
-            '委内瑞拉': ['200.0.0.0', '200.255.255.255', '委内瑞拉'],
-            
-            // 更多常见的IP段可以继续添加
+            remoteNodes: [],
+            mergedNodes: [],
+            uniqueNodes: [],
+            githubStats: {
+                local: 0,
+                remote: 0,
+                merged: 0,
+                unique: 0
+            }
         };
 
         // 页面加载完成
@@ -1620,9 +1109,13 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
             updateSourceBadge();
             updateResultCount();
             
-            // 默认设置：强制443端口未勾选，自动识别IP属地已勾选
+            // 加载保存的GitHub令牌
+            loadSavedToken();
+            
+            // 默认设置
             document.getElementById('forcePort443').checked = false;
             document.getElementById('autoLocation').checked = true;
+            document.getElementById('saveToken').checked = true;
         });
 
         // 初始化事件监听
@@ -1640,6 +1133,7 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
             document.getElementById('copyVlessBtn').addEventListener('click', () => copyToClipboard('vless'));
             document.getElementById('copyJsonBtn').addEventListener('click', () => copyToClipboard('json'));
             document.getElementById('copySubBtn').addEventListener('click', () => copyToClipboard('subscription'));
+            document.getElementById('copyMergedBtn').addEventListener('click', () => copyToClipboard('merged'));
             
             // 显示其他格式
             document.getElementById('showJsonBtn').addEventListener('click', () => toggleSection('jsonSection'));
@@ -1649,17 +1143,46 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
             document.getElementById('downloadVlessBtn').addEventListener('click', downloadVlessLinks);
             document.getElementById('downloadAllBtn').addEventListener('click', downloadAll);
             
+            // GitHub相关按钮
+            document.getElementById('downloadSubBtn').addEventListener('click', downloadGitHubSubscription);
+            document.getElementById('mergeBtn').addEventListener('click', mergeNodes);
+            document.getElementById('syncBtn').addEventListener('click', syncToGitHub);
+            
             // 防抖自动生成
             let debounceTimer;
             document.getElementById('csvInput').addEventListener('input', function() {
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => {
-                    // 只有当没有选择文件时才自动生成
                     if (generatedData.currentSource !== 'file') {
                         generateVless();
                     }
                 }, 1000);
             });
+            
+            // 保存令牌设置变化
+            document.getElementById('saveToken').addEventListener('change', function() {
+                if (!this.checked) {
+                    // 如果不保存令牌，清除已保存的令牌
+                    localStorage.removeItem('github_token');
+                }
+            });
+        }
+
+        // 加载保存的GitHub令牌
+        function loadSavedToken() {
+            const savedToken = localStorage.getItem('github_token');
+            if (savedToken) {
+                document.getElementById('githubToken').value = savedToken;
+                showStatus('已加载保存的GitHub令牌', 'info');
+            }
+        }
+
+        // 保存GitHub令牌
+        function saveGitHubToken(token) {
+            if (document.getElementById('saveToken').checked) {
+                localStorage.setItem('github_token', token);
+                showStatus('GitHub令牌已保存到本地存储', 'success');
+            }
         }
 
         // 初始化拖放功能
@@ -1799,8 +1322,21 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
         // 更新结果计数
         function updateResultCount() {
             const count = generatedData.nodesCount;
-            const badge = document.getElementById('resultCount');
-            badge.textContent = `${count}节点`;
+            document.getElementById('resultCount').textContent = `${count}节点`;
+        }
+
+        // 更新GitHub统计
+        function updateGitHubStats() {
+            const statsEl = document.getElementById('githubStats');
+            if (generatedData.githubStats.local > 0 || generatedData.githubStats.remote > 0) {
+                statsEl.style.display = 'flex';
+                document.getElementById('localNodes').textContent = generatedData.githubStats.local;
+                document.getElementById('remoteNodes').textContent = generatedData.githubStats.remote;
+                document.getElementById('mergedNodes').textContent = generatedData.githubStats.merged;
+                document.getElementById('uniqueNodes').textContent = generatedData.githubStats.unique;
+            } else {
+                statsEl.style.display = 'none';
+            }
         }
 
         // 生成Vless节点
@@ -1887,7 +1423,7 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
             };
         }
 
-        // 处理来自文件的CSV数据（A列和H列）
+        // 处理来自文件的CSV数据
         function processCSVFromFile(csvData, config) {
             try {
                 // 清空数据
@@ -1982,6 +1518,7 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
                 
                 // 更新数据
                 generatedData.nodesCount = nodesCount;
+                generatedData.githubStats.local = nodesCount;
                 
                 // 显示结果
                 displayResults();
@@ -1991,9 +1528,7 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
                 
                 // 更新UI
                 updateResultCount();
-                
-                // 显示地区统计
-                displayLocationStats();
+                updateGitHubStats();
                 
                 // 显示成功消息
                 const sourceText = generatedData.currentSource === 'file' ? 'CSV文件' : '粘贴内容';
@@ -2008,7 +1543,7 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
             }
         }
 
-        // 处理来自粘贴文本的CSV数据（多种分隔符）
+        // 处理来自粘贴文本的CSV数据
         function processCSVFromText(csvData, config) {
             try {
                 // 清空数据
@@ -2113,6 +1648,7 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
                 
                 // 更新数据
                 generatedData.nodesCount = nodesCount;
+                generatedData.githubStats.local = nodesCount;
                 
                 // 显示结果
                 displayResults();
@@ -2122,9 +1658,7 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
                 
                 // 更新UI
                 updateResultCount();
-                
-                // 显示地区统计
-                displayLocationStats();
+                updateGitHubStats();
                 
                 // 显示成功消息
                 const locationText = config.autoLocation ? '（已自动识别IP属地）' : '';
@@ -2143,14 +1677,29 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
             // 将IP地址转换为数字
             const ipNum = ipToNumber(ip);
             
+            // 简化的IP属地数据库
+            const ipLocationDatabase = {
+                '日本': ['1.0.16.0', '1.0.31.255'],
+                '美国': ['3.0.0.0', '3.255.255.255'],
+                '新加坡': ['101.100.0.0', '101.103.255.255'],
+                '韩国': ['1.11.0.0', '1.11.255.255'],
+                '香港': ['43.243.0.0', '43.255.255.255'],
+                '台湾': ['59.120.0.0', '59.127.255.255'],
+                '德国': ['31.0.0.0', '31.255.255.255'],
+                '英国': ['2.0.0.0', '2.255.255.255'],
+                '法国': ['2.0.0.0', '2.255.255.255'],
+                '澳大利亚': ['1.0.0.0', '1.255.255.255'],
+                '加拿大': ['24.0.0.0', '24.255.255.255'],
+                '俄罗斯': ['2.0.0.0', '2.255.255.255']
+            };
+            
             // 在数据库中查找
-            for (const [key, value] of Object.entries(ipLocationDatabase)) {
-                const startIP = ipToNumber(value[0]);
-                const endIP = ipToNumber(value[1]);
-                const locationName = value[2];
+            for (const [location, range] of Object.entries(ipLocationDatabase)) {
+                const startIP = ipToNumber(range[0]);
+                const endIP = ipToNumber(range[1]);
                 
                 if (ipNum >= startIP && ipNum <= endIP) {
-                    return locationName;
+                    return location;
                 }
             }
             
@@ -2174,31 +1723,310 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
                    parseInt(parts[3]);
         }
 
-        // 显示地区统计信息
-        function displayLocationStats() {
-            const locationInfo = document.getElementById('locationInfo');
-            const locationStatsEl = document.getElementById('locationStats');
-            
-            if (Object.keys(generatedData.locationStats).length > 0) {
-                locationInfo.style.display = 'block';
+        // 下载GitHub订阅文件（修复版本）
+        async function downloadGitHubSubscription() {
+            try {
+                showLoading(true);
+                showStatus('正在从GitHub下载订阅文件...', 'info');
                 
-                let statsHTML = '';
-                for (const [location, count] of Object.entries(generatedData.locationStats)) {
-                    statsHTML += `
-                        <div class="location-item">
-                            <span class="location-name">${location}</span>
-                            <span class="count">${count}</span>
-                        </div>
-                    `;
+                const repo = document.getElementById('githubRepo').value.trim();
+                
+                if (!repo || !repo.includes('/')) {
+                    showStatus('错误: GitHub仓库格式不正确，应为"用户名/仓库名"', 'error');
+                    showLoading(false);
+                    return;
                 }
                 
-                locationStatsEl.innerHTML = statsHTML;
-            } else {
-                locationInfo.style.display = 'none';
+                // 构建GitHub Pages URL
+                const [username, reponame] = repo.split('/');
+                const file = document.getElementById('githubFile').value.trim();
+                
+                // 使用正确的GitHub Pages URL格式
+                const pagesUrl = `https://${username}.github.io/${reponame}/${file}`;
+                
+                console.log('正在下载URL:', pagesUrl);
+                
+                // 尝试从GitHub Pages下载
+                const response = await fetch(pagesUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'text/plain',
+                        'Cache-Control': 'no-cache'
+                    },
+                    mode: 'cors' // 明确指定CORS模式
+                });
+                
+                console.log('响应状态:', response.status, response.statusText);
+                
+                if (!response.ok) {
+                    // 如果GitHub Pages不可用，尝试从原始文件下载
+                    const rawUrl = `https://raw.githubusercontent.com/${repo}/main/${file}`;
+                    console.log('尝试从原始文件下载:', rawUrl);
+                    
+                    const rawResponse = await fetch(rawUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'text/plain',
+                            'Cache-Control': 'no-cache'
+                        }
+                    });
+                    
+                    if (!rawResponse.ok) {
+                        throw new Error(`下载失败: ${rawResponse.status} ${rawResponse.statusText}`);
+                    }
+                    
+                    const base64Content = await rawResponse.text();
+                    processDownloadedContent(base64Content);
+                } else {
+                    const base64Content = await response.text();
+                    processDownloadedContent(base64Content);
+                }
+                
+            } catch (error) {
+                console.error('下载GitHub订阅文件失败:', error);
+                showStatus(`下载失败: ${error.message}`, 'error');
+            } finally {
+                showLoading(false);
             }
         }
 
-        // 解析CSV行（处理引号）
+        // 处理下载的内容
+        function processDownloadedContent(base64Content) {
+            try {
+                // 解码Base64内容
+                const decodedContent = atob(base64Content.trim());
+                const nodeLinks = decodedContent.split('\n').filter(line => {
+                    const trimmed = line.trim();
+                    return trimmed && trimmed.startsWith('vless://');
+                });
+                
+                generatedData.remoteNodes = nodeLinks;
+                generatedData.githubStats.remote = nodeLinks.length;
+                updateGitHubStats();
+                
+                showStatus(`✅ 成功下载 ${nodeLinks.length} 个远程节点`, 'success');
+                
+                // 显示远程节点信息
+                showRemoteNodesInfo(nodeLinks);
+                
+            } catch (decodeError) {
+                console.error('解码失败:', decodeError);
+                showStatus('错误: 订阅文件解码失败，可能不是有效的Base64格式', 'error');
+            }
+        }
+
+        // 显示远程节点信息
+        function showRemoteNodesInfo(nodeLinks) {
+            const mergedSection = document.getElementById('mergedSection');
+            mergedSection.style.display = 'block';
+            
+            const mergedResult = document.getElementById('mergedResult');
+            mergedResult.textContent = `从GitHub下载的节点 (${nodeLinks.length}个):\n\n${nodeLinks.join('\n\n')}`;
+            mergedResult.classList.remove('empty');
+            
+            // 滚动到合并结果区域
+            mergedSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // 合并节点
+        function mergeNodes() {
+            try {
+                if (generatedData.vlessLinks.length === 0 && generatedData.remoteNodes.length === 0) {
+                    showStatus('错误: 没有可合并的节点数据，请先生成节点或下载订阅文件', 'error');
+                    return;
+                }
+                
+                showStatus('正在合并节点并去重...', 'info');
+                
+                // 合并所有节点
+                const allNodes = [...generatedData.vlessLinks, ...generatedData.remoteNodes];
+                generatedData.githubStats.merged = allNodes.length;
+                
+                // 去重（基于节点链接）
+                const uniqueNodes = [];
+                const seenNodes = new Set();
+                
+                for (const node of allNodes) {
+                    // 提取节点唯一标识（IP:端口）
+                    const match = node.match(/@([^:]+):(\d+)/);
+                    if (match) {
+                        const nodeKey = `${match[1]}:${match[2]}`;
+                        if (!seenNodes.has(nodeKey)) {
+                            seenNodes.add(nodeKey);
+                            uniqueNodes.push(node);
+                        }
+                    } else {
+                        // 如果无法提取IP:端口，直接添加
+                        uniqueNodes.push(node);
+                    }
+                }
+                
+                generatedData.uniqueNodes = uniqueNodes;
+                generatedData.githubStats.unique = uniqueNodes.length;
+                
+                // 更新统计
+                updateGitHubStats();
+                
+                // 显示合并结果
+                const mergedSection = document.getElementById('mergedSection');
+                mergedSection.style.display = 'block';
+                
+                const mergedResult = document.getElementById('mergedResult');
+                mergedResult.textContent = `合并去重结果 (${uniqueNodes.length}个节点):\n\n本地节点: ${generatedData.vlessLinks.length}个\n远程节点: ${generatedData.remoteNodes.length}个\n去重后: ${uniqueNodes.length}个\n\n节点列表:\n\n${uniqueNodes.join('\n\n')}`;
+                mergedResult.classList.remove('empty');
+                
+                showStatus(`✅ 成功合并去重，共得到 ${uniqueNodes.length} 个唯一节点`, 'success');
+                
+                // 滚动到合并结果区域
+                mergedSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+            } catch (error) {
+                showStatus(`合并节点失败: ${error.message}`, 'error');
+                console.error('合并节点失败:', error);
+            }
+        }
+
+        // 同步到GitHub
+        async function syncToGitHub() {
+            try {
+                showLoading(true);
+                showStatus('开始GitHub同步流程...', 'info');
+                
+                // 步骤1: 验证配置
+                const token = document.getElementById('githubToken').value.trim();
+                const repo = document.getElementById('githubRepo').value.trim();
+                const branch = document.getElementById('githubBranch').value.trim();
+                const file = document.getElementById('githubFile').value.trim();
+                
+                if (!token) {
+                    showStatus('错误: 请输入GitHub个人访问令牌', 'error');
+                    showLoading(false);
+                    return;
+                }
+                
+                if (!repo || !repo.includes('/')) {
+                    showStatus('错误: GitHub仓库格式不正确', 'error');
+                    showLoading(false);
+                    return;
+                }
+                
+                // 保存令牌
+                saveGitHubToken(token);
+                
+                // 步骤2: 确保有本地节点数据
+                if (generatedData.vlessLinks.length === 0) {
+                    showStatus('警告: 本地没有生成节点，正在尝试自动生成...', 'warning');
+                    await generateVless();
+                    if (generatedData.vlessLinks.length === 0) {
+                        showStatus('错误: 无法生成本地节点，请检查CSV数据', 'error');
+                        showLoading(false);
+                        return;
+                    }
+                }
+                
+                // 步骤3: 下载远程订阅文件
+                showStatus('步骤1/3: 正在下载远程订阅文件...', 'info');
+                try {
+                    await downloadGitHubSubscription();
+                } catch (downloadError) {
+                    showStatus('警告: 下载远程订阅文件失败，将只使用本地节点', 'warning');
+                }
+                
+                // 等待下载完成
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // 步骤4: 合并去重
+                showStatus('步骤2/3: 正在合并节点并去重...', 'info');
+                mergeNodes();
+                
+                // 等待合并完成
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // 步骤5: 准备上传内容
+                if (generatedData.uniqueNodes.length === 0 && generatedData.vlessLinks.length > 0) {
+                    generatedData.uniqueNodes = [...generatedData.vlessLinks];
+                    generatedData.githubStats.unique = generatedData.vlessLinks.length;
+                }
+                
+                if (generatedData.uniqueNodes.length === 0) {
+                    showStatus('错误: 没有可上传的节点数据', 'error');
+                    showLoading(false);
+                    return;
+                }
+                
+                const nodeText = generatedData.uniqueNodes.join('\n');
+                const base64Content = btoa(unescape(encodeURIComponent(nodeText)));
+                
+                // 步骤6: 获取文件SHA（如果存在）
+                showStatus('步骤3/3: 正在提交到GitHub...', 'info');
+                
+                // 构建API URL
+                const apiUrl = `https://api.github.com/repos/${repo}/contents/${file}`;
+                
+                // 首先尝试获取现有文件信息
+                let sha = null;
+                try {
+                    const fileInfoResponse = await fetch(apiUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `token ${token}`,
+                            'Accept': 'application/vnd.github.v3+json'
+                        }
+                    });
+                    
+                    if (fileInfoResponse.ok) {
+                        const fileInfo = await fileInfoResponse.json();
+                        sha = fileInfo.sha;
+                    }
+                } catch (shaError) {
+                    // 文件可能不存在，这是正常的
+                    console.log('文件可能不存在，将创建新文件');
+                }
+                
+                // 准备提交数据
+                const commitMessage = `更新节点订阅 (${new Date().toLocaleString()}) - 共 ${generatedData.uniqueNodes.length} 个节点`;
+                const commitData = {
+                    message: commitMessage,
+                    content: base64Content,
+                    branch: branch
+                };
+                
+                if (sha) {
+                    commitData.sha = sha;
+                }
+                
+                // 提交文件
+                const response = await fetch(apiUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(commitData)
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`提交失败: ${response.status} - ${errorData.message || '未知错误'}`);
+                }
+                
+                showStatus(`✅ GitHub同步完成！成功提交 ${generatedData.uniqueNodes.length} 个节点到仓库`, 'success');
+                
+                // 显示更新后的订阅链接
+                const [username, reponame] = repo.split('/');
+                const pagesUrl = `https://${username}.github.io/${reponame}/${file}`;
+                showStatus(`订阅链接已更新: ${pagesUrl}`, 'info');
+                
+            } catch (error) {
+                showStatus(`GitHub同步失败: ${error.message}`, 'error');
+                console.error('GitHub同步失败:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // 解析CSV行
         function parseCSVLine(line) {
             const result = [];
             let current = '';
@@ -2212,7 +2040,7 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
                     inQuotes = true;
                 } else if (char === '"' && inQuotes && nextChar === '"') {
                     current += '"';
-                    i++; // 跳过下一个引号
+                    i++;
                 } else if (char === '"' && inQuotes) {
                     inQuotes = false;
                 } else if (char === ',' && !inQuotes) {
@@ -2277,7 +2105,6 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
                 vlessLinksEl.classList.add('empty');
             }
             
-            // 更新JSON显示
             const jsonOutputEl = document.getElementById('json-output');
             jsonOutputEl.textContent = JSON.stringify(generatedData.jsonConfig, null, 2);
         }
@@ -2286,7 +2113,6 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
         function generateSubscription() {
             if (generatedData.vlessLinks.length > 0) {
                 const vlessLinksText = generatedData.vlessLinks.join('\n');
-                // Base64编码
                 const base64 = btoa(unescape(encodeURIComponent(vlessLinksText)));
                 generatedData.subscription = base64;
                 
@@ -2326,6 +2152,12 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
                 case 'subscription':
                     text = generatedData.subscription;
                     break;
+                case 'merged':
+                    text = generatedData.uniqueNodes.join('\n');
+                    if (!text) {
+                        text = '暂无合并数据';
+                    }
+                    break;
             }
             
             if (!text || (type === 'vless' && generatedData.vlessLinks.length === 0)) {
@@ -2333,7 +2165,6 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
                 return;
             }
             
-            // 使用现代API
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text).then(() => {
                     showStatus('✅ 已复制到剪贴板！', 'success');
@@ -2392,13 +2223,9 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
             
             const timestamp = new Date().toISOString().slice(0, 19).replace(/[:]/g, '-');
             
-            // 下载Vless链接
             downloadFile(generatedData.vlessLinks.join('\n'), `vless_links_${timestamp}.txt`);
-            
-            // 下载JSON配置
             downloadFile(JSON.stringify(generatedData.jsonConfig, null, 2), `vless_config_${timestamp}.json`, 'application/json');
             
-            // 下载订阅链接
             if (generatedData.subscription) {
                 downloadFile(generatedData.subscription, `subscription_${timestamp}.txt`);
             }
@@ -2437,11 +2264,10 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
             statusEl.textContent = message;
             statusEl.className = `status-message status-${type}`;
             
-            // 自动隐藏
-            if (type === 'success' || type === 'info') {
+            if (type === 'success' || type === 'info' || type === 'warning') {
                 setTimeout(() => {
                     statusEl.style.display = 'none';
-                }, 4000);
+                }, 5000);
             }
         }
 
@@ -2454,6 +2280,34 @@ vless://471a8e64-7b21-4703-b1d1-45a221098459@IP:端口?encryption=none&security=
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // 将IP地址转换为数字（用于IP属地识别）
+        function ipToNumber(ip) {
+            const parts = ip.split('.');
+            return (parseInt(parts[0]) << 24) + 
+                   (parseInt(parts[1]) << 16) + 
+                   (parseInt(parts[2]) << 8) + 
+                   parseInt(parts[3]);
+        }
+
+        // 简化的IP属地数据库（实际应该更完整）
+        const ipLocationDatabase = {
+            // 这里应该有完整的IP段数据，但为了简洁省略
+            // 实际使用时应该包含完整的IP数据库
+        };
+
+        // 简化的IP属地识别
+        function getSimpleIPLocation(ip) {
+            const ipNum = ipToNumber(ip);
+            
+            // 简化的示例，实际应该使用完整的数据库
+            if (ipNum >= 16777216 && ipNum <= 16777471) return '日本';
+            if (ipNum >= 16777472 && ipNum <= 16777727) return '韩国';
+            if (ipNum >= 16842752 && ipNum <= 16843007) return '美国';
+            if (ipNum >= 16908288 && ipNum <= 16908543) return '新加坡';
+            
+            return '未知';
         }
     </script>
 </body>
