@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vless节点生成工具 - 完整版</title>
+    <title>Vless节点生成工具 - 完整版</title>
     <style>
         :root {
             --primary-color: #4361ee;
@@ -11,6 +12,7 @@
             --success-color: #4cc9f0;
             --info-color: #4895ef;
             --warning-color: #f72585;
+            --github-color: #24292e;
             --github-color: #24292e;
             --light-color: #f8f9fa;
             --border-radius: 12px;
@@ -183,6 +185,7 @@
 
         textarea {
             min-height: 150px;
+            min-height: 150px;
             font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
             font-size: 14px;
             resize: vertical;
@@ -212,8 +215,10 @@
 
         .btn {
             padding: 12px 24px;
+            padding: 12px 24px;
             border: none;
             border-radius: 8px;
+            font-size: 15px;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
@@ -221,6 +226,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            gap: 8px;
             gap: 8px;
             position: relative;
             overflow: hidden;
@@ -252,6 +258,7 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
         }
 
         .btn-success {
@@ -259,6 +266,13 @@
             color: white;
         }
 
+        .btn-github {
+            background: linear-gradient(135deg, var(--github-color) 0%, #2d333b 100%);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning-color) 0%, #b5179e 100%);
         .btn-github {
             background: linear-gradient(135deg, var(--github-color) 0%, #2d333b 100%);
             color: white;
@@ -274,6 +288,7 @@
             width: 100%;
         }
 
+        /* 修复文件上传区域样式 */
         /* 修复文件上传区域样式 */
         .file-upload-container {
             margin-bottom: 20px;
@@ -293,6 +308,11 @@
             align-items: center;
             justify-content: center;
             min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 180px;
         }
 
         .file-upload-area:hover {
@@ -307,6 +327,7 @@
         }
 
         .file-upload-area .upload-icon {
+        .file-upload-area .upload-icon {
             font-size: 3rem;
             color: var(--primary-color);
             margin-bottom: 15px;
@@ -317,6 +338,7 @@
             color: #4a5568;
             margin-bottom: 8px;
             font-weight: 500;
+            font-size: 1.1rem;
             font-size: 1.1rem;
         }
 
@@ -330,11 +352,14 @@
         }
 
         /* 修复文件信息区域样式 */
+        /* 修复文件信息区域样式 */
         .file-info {
             margin-top: 15px;
             padding: 15px;
             background: linear-gradient(135deg, #e8f4fd 0%, #d1e9ff 100%);
+            background: linear-gradient(135deg, #e8f4fd 0%, #d1e9ff 100%);
             border-radius: 8px;
+            border: 1px solid #b6e0fe;
             border: 1px solid #b6e0fe;
             display: none;
             animation: fadeIn 0.3s ease-out;
@@ -367,7 +392,9 @@
         }
 
         /* 修复移除文件按钮样式 */
+        /* 修复移除文件按钮样式 */
         .remove-file-btn {
+            background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
             background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
             color: #c53030;
             border: none;
@@ -375,14 +402,38 @@
             padding: 8px 16px;
             font-size: 14px;
             font-weight: 600;
+            font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
 
         .remove-file-btn:hover {
+            background: linear-gradient(135deg, #feb2b2 0%, #fc8181 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(252, 129, 129, 0.3);
+        }
+
+        .github-config {
+            background: linear-gradient(135deg, #f6f8fa 0%, #f0f4f8 100%);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+            border: 1px solid #e1e4e8;
+        }
+
+        .github-config h4 {
+            color: #24292e;
+            margin-bottom: 15px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             background: linear-gradient(135deg, #feb2b2 0%, #fc8181 100%);
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(252, 129, 129, 0.3);
@@ -495,6 +546,13 @@
             display: block;
         }
 
+        .status-warning {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            color: #856404;
+            border-left-color: #ffc107;
+            display: block;
+        }
+
         .help-text {
             font-size: 13px;
             color: #718096;
@@ -514,6 +572,19 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             margin-top: 25px;
+        }
+
+        .github-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .github-buttons {
+                grid-template-columns: 1fr;
+            }
         }
 
         .github-buttons {
@@ -561,7 +632,36 @@
         .source-badge {
             display: inline-block;
             background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .source-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
             color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-left: 10px;
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 12px;
@@ -592,6 +692,35 @@
             color: #718096;
             font-weight: 500;
             margin-bottom: 5px;
+        .github-stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 100px;
+        }
+
+        .stat-label {
+            color: #718096;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 16px;
         }
 
         .stat-value {
@@ -668,12 +797,41 @@
             border: 1px solid #e2e8f0;
         }
 
+        .workflow-steps {
+            margin-top: 20px;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .step-number {
+            background: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
         .step-number {
             background: var(--primary-color);
             color: white;
             width: 30px;
             height: 30px;
             border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -696,14 +854,28 @@
             font-size: 13px;
             color: #718096;
             line-height: 1.4;
+        .step-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
         }
 
+        .step-desc {
+            font-size: 13px;
+            color: #718096;
+            line-height: 1.4;
+        }
+
+        .token-info {
+            background: linear-gradient(135deg, #e8f4fd 0%, #d1e9ff 100%);
         .token-info {
             background: linear-gradient(135deg, #e8f4fd 0%, #d1e9ff 100%);
             border-radius: 8px;
             padding: 15px;
             margin-top: 10px;
+            margin-top: 10px;
             border: 1px solid #b6e0fe;
+            font-size: 12px;
             font-size: 12px;
             color: #2c5282;
         }
@@ -711,8 +883,13 @@
         .token-info a {
             color: #2b6cb0;
             text-decoration: none;
+        .token-info a {
+            color: #2b6cb0;
+            text-decoration: none;
         }
 
+        .token-info a:hover {
+            text-decoration: underline;
         .token-info a:hover {
             text-decoration: underline;
         }
@@ -723,6 +900,8 @@
         <header>
             <h1>Vless节点生成工具 - 完整版</h1>
             <p>生成Vless节点 + GitHub订阅文件自动同步，全流程一键执行</p>
+            <h1>Vless节点生成工具 - 完整版</h1>
+            <p>生成Vless节点 + GitHub订阅文件自动同步，全流程一键执行</p>
         </header>
 
         <div class="main-grid">
@@ -730,6 +909,7 @@
             <div class="card">
                 <div class="card-header">
                     <h2>
+                        <span>📁</span>
                         <span>📁</span>
                         CSV数据源
                         <span id="sourceBadge" class="source-badge">未选择</span>
@@ -745,6 +925,7 @@
                         <div class="file-upload-container">
                             <div class="file-upload-area" id="dropArea">
                                 <div class="upload-icon">📁</div>
+                                <div class="upload-icon">📁</div>
                                 <p><strong>拖放CSV文件到此处，或点击选择</strong></p>
                                 <small>支持.csv或.txt文件格式</small>
                                 <input type="file" id="fileInput" accept=".csv,.txt">
@@ -757,6 +938,7 @@
                                         <span id="fileSize" class="file-size"></span>
                                     </div>
                                     <button type="button" id="removeFileBtn" class="remove-file-btn">
+                                        <span>🗑️</span> 移除文件
                                         <span>🗑️</span> 移除文件
                                     </button>
                                 </div>
@@ -827,6 +1009,7 @@
                         </div>
                         <div class="help-text">
                             ✓ 启用：自动识别IP所属地区，生成如"新加坡01"、"美国02"等别名
+                            ✓ 启用：自动识别IP所属地区，生成如"新加坡01"、"美国02"等别名
                         </div>
                     </div>
 
@@ -849,6 +1032,7 @@
 
                     <div class="section">
                         <div class="section-title">
+                            <span>⚙️ 高级配置</span>
                             <span>⚙️ 高级配置</span>
                         </div>
                         
@@ -878,9 +1062,12 @@
             </div>
 
             <!-- 右侧：结果输出和GitHub同步 -->
+            <!-- 右侧：结果输出和GitHub同步 -->
             <div class="card">
                 <div class="card-header">
                     <h2>
+                        <span>📊</span>
+                        生成结果 & GitHub同步
                         <span>📊</span>
                         生成结果 & GitHub同步
                         <span id="resultCount" class="badge">0节点</span>
@@ -891,12 +1078,31 @@
                         <div class="result-header">
                             <h3>🔗 Vless节点链接</h3>
                             <button id="copyVlessBtn" class="btn btn-success">
+                            <button id="copyVlessBtn" class="btn btn-success">
                                 <span>📋</span> 复制全部
                             </button>
                         </div>
                         <div class="result-box">
                             <div id="vless-links" class="result-content empty">Vless链接将在这里显示...</div>
                         </div>
+                        
+                        <div class="github-stats" id="githubStats" style="display: none;">
+                            <div class="stat-item">
+                                <span class="stat-label">本地节点</span>
+                                <span class="stat-value" id="localNodes">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">远程节点</span>
+                                <span class="stat-value" id="remoteNodes">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">合并后节点</span>
+                                <span class="stat-value" id="mergedNodes">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">去重后节点</span>
+                                <span class="stat-value" id="uniqueNodes">0</span>
+                            </div>
                         
                         <div class="github-stats" id="githubStats" style="display: none;">
                             <div class="stat-item">
@@ -1032,9 +1238,94 @@
                         </div>
                     </div>
 
+                    <div class="section">
+                        <div class="section-title">
+                            <span>🐙 GitHub订阅同步</span>
+                        </div>
+                        
+                        <div class="github-config">
+                            <h4><span>🔧</span> GitHub配置</h4>
+                            <div class="form-group">
+                                <label for="githubToken">GitHub个人访问令牌：</label>
+                                <input type="password" id="githubToken" placeholder="输入GitHub Personal Access Token">
+                                <div class="help-text">
+                                    需要repo权限，用于提交文件到GitHub仓库
+                                    <a href="https://github.com/settings/tokens" target="_blank">获取令牌</a>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="githubRepo">GitHub仓库：</label>
+                                <input type="text" id="githubRepo" value="daizhouhui/CustomNode">
+                                <div class="help-text">格式：用户名/仓库名</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="githubBranch">分支：</label>
+                                <input type="text" id="githubBranch" value="main">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="githubFile">订阅文件路径：</label>
+                                <input type="text" id="githubFile" value="node.txt">
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="saveToken" checked>
+                                <label for="saveToken">保存令牌到本地存储</label>
+                            </div>
+                            
+                            <div class="token-info">
+                                <strong>⚠️ 安全提示：</strong>令牌将保存到浏览器的本地存储中，仅用于GitHub API调用。
+                                建议使用仅具有必要权限的令牌，并定期更新。
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-steps">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <div class="step-title">下载订阅文件</div>
+                                    <div class="step-desc">从GitHub Pages下载现有的Base64订阅文件</div>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <div class="step-title">合并去重</div>
+                                    <div class="step-desc">将本地生成的节点与远程节点合并，去除重复项</div>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <div class="step-title">提交更新</div>
+                                    <div class="step-desc">将新的Base64订阅文件提交回GitHub仓库</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="github-buttons">
+                            <button id="downloadSubBtn" class="btn btn-primary">
+                                <span>⬇️</span> 下载订阅文件
+                            </button>
+                            <button id="mergeBtn" class="btn btn-success">
+                                <span>🔄</span> 合并节点
+                            </button>
+                            <button id="syncBtn" class="btn btn-github">
+                                <span>🚀</span> 一键同步
+                            </button>
+                        </div>
+                        
+                        <div class="help-text">
+                            <strong>一键同步功能：</strong>自动执行下载→合并→提交的完整流程，生成新的订阅文件并更新到GitHub
+                        </div>
+                    </div>
+
                     <div class="section" id="jsonSection" style="display: none;">
                         <div class="result-header">
                             <h3>📄 JSON配置</h3>
+                            <button id="copyJsonBtn" class="btn btn-success">
                             <button id="copyJsonBtn" class="btn btn-success">
                                 <span>📋</span> 复制
                             </button>
@@ -1048,11 +1339,24 @@
                         <div class="result-header">
                             <h3>🔗 Base64订阅链接</h3>
                             <button id="copySubBtn" class="btn btn-success">
+                            <button id="copySubBtn" class="btn btn-success">
                                 <span>📋</span> 复制
                             </button>
                         </div>
                         <div class="result-box">
                             <div id="subscription" class="result-content"></div>
+                        </div>
+                    </div>
+
+                    <div class="section" id="mergedSection" style="display: none;">
+                        <div class="result-header">
+                            <h3>🔄 合并结果</h3>
+                            <button id="copyMergedBtn" class="btn btn-success">
+                                <span>📋</span> 复制
+                            </button>
+                        </div>
+                        <div class="result-box">
+                            <div id="mergedResult" class="result-content"></div>
                         </div>
                     </div>
 
@@ -1074,6 +1378,8 @@
         <div class="footer">
             <p>© 2023 Vless节点生成工具 | 生成Vless节点 + GitHub订阅文件自动同步，全流程一键执行</p>
             <p>支持GitHub订阅文件下载、合并、去重、提交全自动化流程</p>
+            <p>© 2023 Vless节点生成工具 | 生成Vless节点 + GitHub订阅文件自动同步，全流程一键执行</p>
+            <p>支持GitHub订阅文件下载、合并、去重、提交全自动化流程</p>
         </div>
     </div>
 
@@ -1086,6 +1392,15 @@
             nodesCount: 0,
             currentSource: 'none',
             currentFileName: '',
+            remoteNodes: [],
+            mergedNodes: [],
+            uniqueNodes: [],
+            githubStats: {
+                local: 0,
+                remote: 0,
+                merged: 0,
+                unique: 0
+            }
             remoteNodes: [],
             mergedNodes: [],
             uniqueNodes: [],
@@ -1113,8 +1428,13 @@
             loadSavedToken();
             
             // 默认设置
+            // 加载保存的GitHub令牌
+            loadSavedToken();
+            
+            // 默认设置
             document.getElementById('forcePort443').checked = false;
             document.getElementById('autoLocation').checked = true;
+            document.getElementById('saveToken').checked = true;
             document.getElementById('saveToken').checked = true;
         });
 
@@ -1134,6 +1454,7 @@
             document.getElementById('copyJsonBtn').addEventListener('click', () => copyToClipboard('json'));
             document.getElementById('copySubBtn').addEventListener('click', () => copyToClipboard('subscription'));
             document.getElementById('copyMergedBtn').addEventListener('click', () => copyToClipboard('merged'));
+            document.getElementById('copyMergedBtn').addEventListener('click', () => copyToClipboard('merged'));
             
             // 显示其他格式
             document.getElementById('showJsonBtn').addEventListener('click', () => toggleSection('jsonSection'));
@@ -1142,6 +1463,11 @@
             // 下载按钮
             document.getElementById('downloadVlessBtn').addEventListener('click', downloadVlessLinks);
             document.getElementById('downloadAllBtn').addEventListener('click', downloadAll);
+            
+            // GitHub相关按钮
+            document.getElementById('downloadSubBtn').addEventListener('click', downloadGitHubSubscription);
+            document.getElementById('mergeBtn').addEventListener('click', mergeNodes);
+            document.getElementById('syncBtn').addEventListener('click', syncToGitHub);
             
             // GitHub相关按钮
             document.getElementById('downloadSubBtn').addEventListener('click', downloadGitHubSubscription);
@@ -1158,6 +1484,31 @@
                     }
                 }, 1000);
             });
+            
+            // 保存令牌设置变化
+            document.getElementById('saveToken').addEventListener('change', function() {
+                if (!this.checked) {
+                    // 如果不保存令牌，清除已保存的令牌
+                    localStorage.removeItem('github_token');
+                }
+            });
+        }
+
+        // 加载保存的GitHub令牌
+        function loadSavedToken() {
+            const savedToken = localStorage.getItem('github_token');
+            if (savedToken) {
+                document.getElementById('githubToken').value = savedToken;
+                showStatus('已加载保存的GitHub令牌', 'info');
+            }
+        }
+
+        // 保存GitHub令牌
+        function saveGitHubToken(token) {
+            if (document.getElementById('saveToken').checked) {
+                localStorage.setItem('github_token', token);
+                showStatus('GitHub令牌已保存到本地存储', 'success');
+            }
             
             // 保存令牌设置变化
             document.getElementById('saveToken').addEventListener('change', function() {
@@ -1337,6 +1688,21 @@
             } else {
                 statsEl.style.display = 'none';
             }
+            document.getElementById('resultCount').textContent = `${count}节点`;
+        }
+
+        // 更新GitHub统计
+        function updateGitHubStats() {
+            const statsEl = document.getElementById('githubStats');
+            if (generatedData.githubStats.local > 0 || generatedData.githubStats.remote > 0) {
+                statsEl.style.display = 'flex';
+                document.getElementById('localNodes').textContent = generatedData.githubStats.local;
+                document.getElementById('remoteNodes').textContent = generatedData.githubStats.remote;
+                document.getElementById('mergedNodes').textContent = generatedData.githubStats.merged;
+                document.getElementById('uniqueNodes').textContent = generatedData.githubStats.unique;
+            } else {
+                statsEl.style.display = 'none';
+            }
         }
 
         // 生成Vless节点
@@ -1423,6 +1789,7 @@
             };
         }
 
+        // 处理来自文件的CSV数据
         // 处理来自文件的CSV数据
         function processCSVFromFile(csvData, config) {
             try {
@@ -1519,6 +1886,7 @@
                 // 更新数据
                 generatedData.nodesCount = nodesCount;
                 generatedData.githubStats.local = nodesCount;
+                generatedData.githubStats.local = nodesCount;
                 
                 // 显示结果
                 displayResults();
@@ -1528,6 +1896,7 @@
                 
                 // 更新UI
                 updateResultCount();
+                updateGitHubStats();
                 updateGitHubStats();
                 
                 // 显示成功消息
@@ -1543,6 +1912,7 @@
             }
         }
 
+        // 处理来自粘贴文本的CSV数据
         // 处理来自粘贴文本的CSV数据
         function processCSVFromText(csvData, config) {
             try {
@@ -1649,6 +2019,7 @@
                 // 更新数据
                 generatedData.nodesCount = nodesCount;
                 generatedData.githubStats.local = nodesCount;
+                generatedData.githubStats.local = nodesCount;
                 
                 // 显示结果
                 displayResults();
@@ -1658,6 +2029,7 @@
                 
                 // 更新UI
                 updateResultCount();
+                updateGitHubStats();
                 updateGitHubStats();
                 
                 // 显示成功消息
@@ -1693,12 +2065,32 @@
                 '俄罗斯': ['2.0.0.0', '2.255.255.255']
             };
             
+            // 简化的IP属地数据库
+            const ipLocationDatabase = {
+                '日本': ['1.0.16.0', '1.0.31.255'],
+                '美国': ['3.0.0.0', '3.255.255.255'],
+                '新加坡': ['101.100.0.0', '101.103.255.255'],
+                '韩国': ['1.11.0.0', '1.11.255.255'],
+                '香港': ['43.243.0.0', '43.255.255.255'],
+                '台湾': ['59.120.0.0', '59.127.255.255'],
+                '德国': ['31.0.0.0', '31.255.255.255'],
+                '英国': ['2.0.0.0', '2.255.255.255'],
+                '法国': ['2.0.0.0', '2.255.255.255'],
+                '澳大利亚': ['1.0.0.0', '1.255.255.255'],
+                '加拿大': ['24.0.0.0', '24.255.255.255'],
+                '俄罗斯': ['2.0.0.0', '2.255.255.255']
+            };
+            
             // 在数据库中查找
+            for (const [location, range] of Object.entries(ipLocationDatabase)) {
+                const startIP = ipToNumber(range[0]);
+                const endIP = ipToNumber(range[1]);
             for (const [location, range] of Object.entries(ipLocationDatabase)) {
                 const startIP = ipToNumber(range[0]);
                 const endIP = ipToNumber(range[1]);
                 
                 if (ipNum >= startIP && ipNum <= endIP) {
+                    return location;
                     return location;
                 }
             }
@@ -2049,6 +2441,7 @@
                 } else if (char === '"' && inQuotes && nextChar === '"') {
                     current += '"';
                     i++;
+                    i++;
                 } else if (char === '"' && inQuotes) {
                     inQuotes = false;
                 } else if (char === ',' && !inQuotes) {
@@ -2166,6 +2559,12 @@
                         text = '暂无合并数据';
                     }
                     break;
+                case 'merged':
+                    text = generatedData.uniqueNodes.join('\n');
+                    if (!text) {
+                        text = '暂无合并数据';
+                    }
+                    break;
             }
             
             if (!text || (type === 'vless' && generatedData.vlessLinks.length === 0)) {
@@ -2273,8 +2672,10 @@
             statusEl.className = `status-message status-${type}`;
             
             if (type === 'success' || type === 'info' || type === 'warning') {
+            if (type === 'success' || type === 'info' || type === 'warning') {
                 setTimeout(() => {
                     statusEl.style.display = 'none';
+                }, 5000);
                 }, 5000);
             }
         }
@@ -2288,6 +2689,34 @@
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // 将IP地址转换为数字（用于IP属地识别）
+        function ipToNumber(ip) {
+            const parts = ip.split('.');
+            return (parseInt(parts[0]) << 24) + 
+                   (parseInt(parts[1]) << 16) + 
+                   (parseInt(parts[2]) << 8) + 
+                   parseInt(parts[3]);
+        }
+
+        // 简化的IP属地数据库（实际应该更完整）
+        const ipLocationDatabase = {
+            // 这里应该有完整的IP段数据，但为了简洁省略
+            // 实际使用时应该包含完整的IP数据库
+        };
+
+        // 简化的IP属地识别
+        function getSimpleIPLocation(ip) {
+            const ipNum = ipToNumber(ip);
+            
+            // 简化的示例，实际应该使用完整的数据库
+            if (ipNum >= 16777216 && ipNum <= 16777471) return '日本';
+            if (ipNum >= 16777472 && ipNum <= 16777727) return '韩国';
+            if (ipNum >= 16842752 && ipNum <= 16843007) return '美国';
+            if (ipNum >= 16908288 && ipNum <= 16908543) return '新加坡';
+            
+            return '未知';
         }
     </script>
 </body>
