@@ -1723,7 +1723,7 @@
                    parseInt(parts[3]);
         }
 
-        // 下载GitHub订阅文件（修复版本）
+        // 下载GitHub订阅文件（优化版本：优先raw URL以避免CORS问题，添加错误处理和重试）
         async function downloadGitHubSubscription() {
             try {
                 showLoading(true);
@@ -1737,32 +1737,18 @@
                     return;
                 }
                 
-                // 构建GitHub Pages URL
+                // 构建raw URL优先（raw.githubusercontent.com支持CORS）
                 const [username, reponame] = repo.split('/');
+                const branch = document.getElementById('githubBranch').value.trim() || 'main';
                 const file = document.getElementById('githubFile').value.trim();
                 
-                // 使用正确的GitHub Pages URL格式
-                const pagesUrl = `https://${username}.github.io/${reponame}/${file}`;
+                const rawUrl = `https://raw.githubusercontent.com/${repo}/${branch}/${file}`;
+                console.log('优先尝试从raw URL下载:', rawUrl);
                 
-                console.log('正在下载URL:', pagesUrl);
+                let base64Content = null;
                 
-                // 尝试从GitHub Pages下载
-                const response = await fetch(pagesUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'text/plain',
-                        'Cache-Control': 'no-cache'
-                    },
-                    mode: 'cors' // 明确指定CORS模式
-                });
-                
-                console.log('响应状态:', response.status, response.statusText);
-                
-                if (!response.ok) {
-                    // 如果GitHub Pages不可用，尝试从原始文件下载
-                    const rawUrl = `https://raw.githubusercontent.com/${repo}/main/${file}`;
-                    console.log('尝试从原始文件下载:', rawUrl);
-                    
+                // 尝试从raw URL下载
+                try {
                     const rawResponse = await fetch(rawUrl, {
                         method: 'GET',
                         headers: {
@@ -1772,19 +1758,42 @@
                     });
                     
                     if (!rawResponse.ok) {
-                        throw new Error(`下载失败: ${rawResponse.status} ${rawResponse.statusText}`);
+                        throw new Error(`raw URL下载失败: ${rawResponse.status} ${rawResponse.statusText}`);
                     }
                     
-                    const base64Content = await rawResponse.text();
+                    base64Content = await rawResponse.text();
+                } catch (rawError) {
+                    console.warn('raw URL下载失败，尝试Pages URL:', rawError);
+                    
+                    // 备选Pages URL
+                    const pagesUrl = `https://${username}.github.io/${reponame}/${file}`;
+                    console.log('尝试从Pages URL下载:', pagesUrl);
+                    
+                    const pagesResponse = await fetch(pagesUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'text/plain',
+                            'Cache-Control': 'no-cache'
+                        }
+                    });
+                    
+                    if (!pagesResponse.ok) {
+                        throw new Error(`Pages URL下载失败: ${pagesResponse.status} ${pagesResponse.statusText}`);
+                    }
+                    
+                    base64Content = await pagesResponse.text();
+                }
+                
+                // 处理下载的内容
+                if (base64Content) {
                     processDownloadedContent(base64Content);
                 } else {
-                    const base64Content = await response.text();
-                    processDownloadedContent(base64Content);
+                    throw new Error('无法获取订阅文件内容');
                 }
                 
             } catch (error) {
                 console.error('下载GitHub订阅文件失败:', error);
-                showStatus(`下载失败: ${error.message}`, 'error');
+                showStatus(`下载失败: ${error.message}. 请检查网络、仓库设置或CORS问题。`, 'error');
             } finally {
                 showLoading(false);
             }
@@ -1793,9 +1802,10 @@
         // 处理下载的内容
         function processDownloadedContent(base64Content) {
             try {
-                // 解码Base64内容
-                const decodedContent = atob(base64Content.trim());
-                const nodeLinks = decodedContent.split('\n').filter(line => {
+                // 解码Base64内容（去除可能的换行和空格）
+                const trimmedBase64 = base64Content.trim();
+                const decodedContent = atob(trimmedBase64);
+                const nodeLinks = decodedContent.split(/\r?\n/).filter(line => {
                     const trimmed = line.trim();
                     return trimmed && trimmed.startsWith('vless://');
                 });
@@ -1804,14 +1814,14 @@
                 generatedData.githubStats.remote = nodeLinks.length;
                 updateGitHubStats();
                 
-                showStatus(`✅ 成功下载 ${nodeLinks.length} 个远程节点`, 'success');
+                showStatus(`✅ 成功下载并解码 ${nodeLinks.length} 个远程节点`, 'success');
                 
                 // 显示远程节点信息
                 showRemoteNodesInfo(nodeLinks);
                 
             } catch (decodeError) {
                 console.error('解码失败:', decodeError);
-                showStatus('错误: 订阅文件解码失败，可能不是有效的Base64格式', 'error');
+                showStatus('错误: 订阅文件解码失败，可能不是有效的Base64格式或内容损坏', 'error');
             }
         }
 
@@ -1840,9 +1850,10 @@
                 
                 // 合并所有节点
                 const allNodes = [...generatedData.vlessLinks, ...generatedData.remoteNodes];
+                generatedData.mergedNodes = allNodes;
                 generatedData.githubStats.merged = allNodes.length;
                 
-                // 去重（基于节点链接）
+                // 去重（基于IP:端口）
                 const uniqueNodes = [];
                 const seenNodes = new Set();
                 
@@ -1856,7 +1867,7 @@
                             uniqueNodes.push(node);
                         }
                     } else {
-                        // 如果无法提取IP:端口，直接添加
+                        // 如果无法提取IP:端口，直接添加（以防非标准格式）
                         uniqueNodes.push(node);
                     }
                 }
@@ -1926,14 +1937,10 @@
                 
                 // 步骤3: 下载远程订阅文件
                 showStatus('步骤1/3: 正在下载远程订阅文件...', 'info');
-                try {
-                    await downloadGitHubSubscription();
-                } catch (downloadError) {
-                    showStatus('警告: 下载远程订阅文件失败，将只使用本地节点', 'warning');
-                }
+                await downloadGitHubSubscription();
                 
                 // 等待下载完成
-                await new Promise(resolve => setTimeout(resolve, 1500));
+                await new Promise(resolve => setTimeout(resolve, 1000));
                 
                 // 步骤4: 合并去重
                 showStatus('步骤2/3: 正在合并节点并去重...', 'info');
@@ -1955,7 +1962,7 @@
                 }
                 
                 const nodeText = generatedData.uniqueNodes.join('\n');
-                const base64Content = btoa(unescape(encodeURIComponent(nodeText)));
+                const base64Content = btoa(nodeText);  // 直接btoa，不需要unescape/encodeURIComponent，因为vless链接是ASCII
                 
                 // 步骤6: 获取文件SHA（如果存在）
                 showStatus('步骤3/3: 正在提交到GitHub...', 'info');
@@ -1969,7 +1976,7 @@
                     const fileInfoResponse = await fetch(apiUrl, {
                         method: 'GET',
                         headers: {
-                            'Authorization': `token ${token}`,
+                            'Authorization': `Bearer ${token}`,
                             'Accept': 'application/vnd.github.v3+json'
                         }
                     });
@@ -1977,10 +1984,11 @@
                     if (fileInfoResponse.ok) {
                         const fileInfo = await fileInfoResponse.json();
                         sha = fileInfo.sha;
+                    } else if (fileInfoResponse.status !== 404) {
+                        throw new Error(`获取文件信息失败: ${fileInfoResponse.status} ${fileInfoResponse.statusText}`);
                     }
                 } catch (shaError) {
-                    // 文件可能不存在，这是正常的
-                    console.log('文件可能不存在，将创建新文件');
+                    console.warn('获取SHA失败，将创建新文件:', shaError);
                 }
                 
                 // 准备提交数据
@@ -1999,7 +2007,7 @@
                 const response = await fetch(apiUrl, {
                     method: 'PUT',
                     headers: {
-                        'Authorization': `token ${token}`,
+                        'Authorization': `Bearer ${token}`,
                         'Accept': 'application/vnd.github.v3+json',
                         'Content-Type': 'application/json'
                     },
@@ -2019,7 +2027,7 @@
                 showStatus(`订阅链接已更新: ${pagesUrl}`, 'info');
                 
             } catch (error) {
-                showStatus(`GitHub同步失败: ${error.message}`, 'error');
+                showStatus(`GitHub同步失败: ${error.message}. 请检查令牌权限（需要repo scope）、网络或仓库设置。`, 'error');
                 console.error('GitHub同步失败:', error);
             } finally {
                 showLoading(false);
@@ -2113,7 +2121,7 @@
         function generateSubscription() {
             if (generatedData.vlessLinks.length > 0) {
                 const vlessLinksText = generatedData.vlessLinks.join('\n');
-                const base64 = btoa(unescape(encodeURIComponent(vlessLinksText)));
+                const base64 = btoa(vlessLinksText);
                 generatedData.subscription = base64;
                 
                 const subscriptionEl = document.getElementById('subscription');
@@ -2280,34 +2288,6 @@
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-
-        // 将IP地址转换为数字（用于IP属地识别）
-        function ipToNumber(ip) {
-            const parts = ip.split('.');
-            return (parseInt(parts[0]) << 24) + 
-                   (parseInt(parts[1]) << 16) + 
-                   (parseInt(parts[2]) << 8) + 
-                   parseInt(parts[3]);
-        }
-
-        // 简化的IP属地数据库（实际应该更完整）
-        const ipLocationDatabase = {
-            // 这里应该有完整的IP段数据，但为了简洁省略
-            // 实际使用时应该包含完整的IP数据库
-        };
-
-        // 简化的IP属地识别
-        function getSimpleIPLocation(ip) {
-            const ipNum = ipToNumber(ip);
-            
-            // 简化的示例，实际应该使用完整的数据库
-            if (ipNum >= 16777216 && ipNum <= 16777471) return '日本';
-            if (ipNum >= 16777472 && ipNum <= 16777727) return '韩国';
-            if (ipNum >= 16842752 && ipNum <= 16843007) return '美国';
-            if (ipNum >= 16908288 && ipNum <= 16908543) return '新加坡';
-            
-            return '未知';
         }
     </script>
 </body>
