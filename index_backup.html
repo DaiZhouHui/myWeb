@@ -1079,11 +1079,6 @@
             color: white;
         }
 
-        .btn-upload-yaml {
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            color: white;
-        }
-
         /* 新增：上传合并订阅至指定路径按钮 */
         .btn-merge-to-path {
             background: linear-gradient(135deg, #9b2c2c 0%, #822727 100%);
@@ -2143,9 +2138,9 @@
                     <!-- 生成结果标签页 -->
                     <div class="card-tab-navigation" id="resultTabNav">
                         <button class="card-tab-btn active" data-tab="vless-tab">本地Vless</button>
-                        <button class="card-tab-btn" data-tab="local-base64-tab">本地订阅包</button>
+                        <button class="card-tab-btn" data-tab="local-base64-tab">本地Base64</button>
                         <button class="card-tab-btn" data-tab="merged-tab">合并Vless</button>
-                        <button class="card-tab-btn" data-tab="auto-base64-tab">合并订阅包</button>
+                        <button class="card-tab-btn" data-tab="auto-base64-tab">合并Base64</button>
                         <button class="card-tab-btn" data-tab="proxy-tools-tab">代理工具</button>
                     </div>
 
@@ -2169,7 +2164,7 @@
                         </div>
                     </div>
 
-                    <!-- 本地订阅包标签页 -->
+                    <!-- 本地Base64标签页 -->
                     <div class="card-tab-content" id="local-base64-tab">
                         <div class="result-header">
                             <h3>🔗 Base64订阅（本地生成）</h3>
@@ -2179,20 +2174,6 @@
                         </div>
                         <div class="result-box">
                             <div id="localBase64Output" class="result-content empty">Base64订阅内容将在这里显示...</div>
-                        </div>
-                        <div class="result-header" style="margin-top: 20px;">
-                            <h3>📄 本地YAML配置</h3>
-                            <div class="button-group">
-                                <button id="copyLocalYamlBtn" class="btn btn-info">
-                                    <span>📋</span> 复制YAML
-                                </button>
-                                <button id="downloadLocalYamlBtn" class="btn btn-primary">
-                                    <span>📁</span> 下载YAML
-                                </button>
-                            </div>
-                        </div>
-                        <div class="result-box">
-                            <div id="localYamlOutput" class="result-content empty">本地YAML配置将在这里显示...</div>
                         </div>
                         <div class="help-text">
                             此Base64可直接作为订阅链接导入Clash、Shadowrocket等工具
@@ -2212,7 +2193,7 @@
                         </div>
                     </div>
 
-                    <!-- 合并订阅包标签页 -->
+                    <!-- 合并Base64订阅标签页 -->
                     <div class="card-tab-content" id="auto-base64-tab">
                         <div class="result-header">
                             <h3>🔗 Base64订阅（本地+远程合并）</h3>
@@ -2222,20 +2203,6 @@
                         </div>
                         <div class="result-box">
                             <div id="autoBase64Output" class="result-content empty">合并去重后将自动生成Base64订阅内容...</div>
-                        </div>
-                        <div class="result-header" style="margin-top: 20px;">
-                            <h3>📄 合并结果YAML配置</h3>
-                            <div class="button-group">
-                                <button id="copyMergedYamlBtn" class="btn btn-info">
-                                    <span>📋</span> 复制YAML
-                                </button>
-                                <button id="downloadMergedYamlBtn" class="btn btn-primary">
-                                    <span>📁</span> 下载YAML
-                                </button>
-                            </div>
-                        </div>
-                        <div class="result-box">
-                            <div id="mergedYamlOutput" class="result-content empty">合并后的YAML配置将在这里显示...</div>
                         </div>
                     </div>
 
@@ -2418,15 +2385,6 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="github-link-item" id="mergedYamlLink" style="display: none;">
-                                <div class="link-label">合并YAML配置链接：</div>
-                                <div class="link-content">
-                                    <input type="text" id="mergedYamlUrl" readonly class="link-input">
-                                    <button id="copyMergedYamlUrl" class="btn btn-info btn-sm">
-                                        <span>📋</span> 复制
-                                    </button>
-                                </div>
-                            </div>
                             <div class="github-link-item" id="mergedOptimalLink" style="display: none;">
                                 <div class="link-label">优选订阅链接：</div>
                                 <div class="link-content">
@@ -2445,29 +2403,11 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="github-link-item" id="localYamlLink" style="display: none;">
-                                <div class="link-label">本地YAML配置链接：</div>
-                                <div class="link-content">
-                                    <input type="text" id="localYamlUrl" readonly class="link-input">
-                                    <button id="copyLocalYamlUrl" class="btn btn-info btn-sm">
-                                        <span>📋</span> 复制
-                                    </button>
-                                </div>
-                            </div>
                             <div class="github-link-item" id="mergedToPathLink" style="display: none;">
                                 <div class="link-label">指定路径订阅链接：</div>
                                 <div class="link-content">
                                     <input type="text" id="mergedToPathUrl" readonly class="link-input">
                                     <button id="copyMergedToPathUrl" class="btn btn-info btn-sm">
-                                        <span>📋</span> 复制
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="github-link-item" id="yamlConfigLink" style="display: none;">
-                                <div class="link-label">YAML配置文件链接：</div>
-                                <div class="link-content">
-                                    <input type="text" id="yamlConfigUrl" readonly class="link-input">
-                                    <button id="copyYamlConfigUrl" class="btn btn-info btn-sm">
                                         <span>📋</span> 复制
                                     </button>
                                 </div>
@@ -2590,10 +2530,6 @@
                             <label for="manualVlessInput3">粘贴Vless节点（每行一个）</label>
                             <textarea id="manualVlessInput3" placeholder="粘贴vless://开头的节点链接，每行一个"></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="yamlFileName">YAML文件名（可选，默认为 clash-config.yaml）</label>
-                            <input type="text" id="yamlFileName" placeholder="clash-config.yaml" value="clash-config.yaml">
-                        </div>
                         <div class="button-group">
                             <button id="convertToYamlBtn" class="btn btn-success">
                                 <span>🔧</span> 转换为YAML
@@ -2606,9 +2542,6 @@
                             </button>
                             <button id="downloadYamlBtn" class="btn btn-primary">
                                 <span>📁</span> 下载YAML
-                            </button>
-                            <button id="uploadYamlBtn" class="btn btn-upload-yaml">
-                                <span>📤</span> 上传YAML
                             </button>
                         </div>
                         <div class="result-box" id="manualYamlSection" style="display: none; margin-top: 12px;">
@@ -2627,25 +2560,14 @@
         </div>
     </div>
     <script>
-        // UTF-8 转 Base64 编码函数
-        function utf8ToBase64(str) {
-            const bytes = new TextEncoder().encode(str);
-            const binString = Array.from(bytes, (byte) =>
-                String.fromCodePoint(byte)
-            ).join("");
-            return btoa(binString);
-        }
-
         // 全局数据
         let data = {
             vlessLinks: [],
             localBase64Content: '',  // 本地生成自动Base64
-            localYamlContent: '',    // 本地生成的YAML
             autoBase64Content: '',   // 合并后自动Base64
             manualBase64Content: '', // 手动转换Base64
             manualIpPortContent: '', // 手动提取IP:端口
             manualYamlContent: '',   // 手动转换YAML
-            mergedYamlContent: '',   // 合并生成的YAML
             remoteNodes: [],
             uniqueNodes: [],
             nodeSha: null,
@@ -3153,11 +3075,7 @@
             });
             document.getElementById('syncBtn').addEventListener('click', oneClickSync);
             document.getElementById('copyMergedBtn').addEventListener('click', () => copyText(data.uniqueNodes.join('\n')));
-            document.getElementById('copyMergedYamlBtn').addEventListener('click', () => copyText(data.mergedYamlContent));
-            document.getElementById('downloadMergedYamlBtn').addEventListener('click', downloadMergedYaml);
             document.getElementById('copyLocalBase64Btn').addEventListener('click', () => copyText(data.localBase64Content));
-            document.getElementById('copyLocalYamlBtn').addEventListener('click', () => copyText(data.localYamlContent));
-            document.getElementById('downloadLocalYamlBtn').addEventListener('click', downloadLocalYaml);
             document.getElementById('copyAutoBase64Btn').addEventListener('click', () => copyText(data.autoBase64Content));
             document.getElementById('convertToBase64Btn').addEventListener('click', convertManualToBase64);
             document.getElementById('copyManualBase64Btn').addEventListener('click', () => copyText(data.manualBase64Content));
@@ -3165,7 +3083,6 @@
             document.getElementById('testParseBtn').addEventListener('click', testVlessParse);
             document.getElementById('copyYamlBtn').addEventListener('click', () => copyText(data.manualYamlContent));
             document.getElementById('downloadYamlBtn').addEventListener('click', downloadManualYaml);
-            document.getElementById('uploadYamlBtn').addEventListener('click', uploadManualYaml);
 
             // 原有的四个上传按钮 - 添加确认提示
             document.getElementById('uploadLocalBase64ToPathBtn').addEventListener('click', () => {
@@ -3211,12 +3128,9 @@
             // 新增：GitHub.io链接复制按钮事件
             document.getElementById('copyPlainNodesUrl').addEventListener('click', () => copyGithubUrl('plainNodesUrl'));
             document.getElementById('copyMergedBase64Url').addEventListener('click', () => copyGithubUrl('mergedBase64Url'));
-            document.getElementById('copyMergedYamlUrl').addEventListener('click', () => copyGithubUrl('mergedYamlUrl'));
             document.getElementById('copyMergedOptimalUrl').addEventListener('click', () => copyGithubUrl('mergedOptimalUrl'));
             document.getElementById('copyLocalBase64Url').addEventListener('click', () => copyGithubUrl('localBase64Url'));
-            document.getElementById('copyLocalYamlUrl').addEventListener('click', () => copyGithubUrl('localYamlUrl'));
             document.getElementById('copyMergedToPathUrl').addEventListener('click', () => copyGithubUrl('mergedToPathUrl'));
-            document.getElementById('copyYamlConfigUrl').addEventListener('click', () => copyGithubUrl('yamlConfigUrl'));
 
             // 新增：代理工具下载按钮事件
             document.getElementById('downloadClashBtn').addEventListener('click', () => downloadProxyConfig('clash'));
@@ -3319,32 +3233,6 @@
 
                 // 显示GitHub.io链接
                 showGithubLink('plainNodesLink', 'plainNodesUrl', result.githubIoUrl);
-
-                // 同时上传对应的YAML配置文件
-                try {
-                    const yamlFileName = plainNodeFile.replace(/\.[^/.]+$/, '') + '.yaml';
-                    const yamlContent = data.mergedYamlContent;
-
-                    const yamlResult = await uploadToGitHub(
-                        yamlFileName,
-                        utf8ToBase64(yamlContent),
-                        false,
-                        `上传合并YAML配置 ${yamlFileName} - ${new Date().toLocaleString()} (${data.uniqueNodes.length}节点)`
-                    );
-
-                    const yamlMessage = yamlResult.isNew
-                        ? `✅ 新建YAML配置文件 ${yamlFileName} 成功！`
-                        : `✅ 更新YAML配置文件 ${yamlFileName} 成功！`;
-
-                    showNotification('YAML上传成功', yamlMessage, 'success');
-                    addLog('上传YAML配置', `${yamlMessage} (SHA: ${yamlResult.sha.substring(0, 8)}...)`, 'success');
-
-                    // 显示YAML配置文件的GitHub.io链接（复用mergedYamlLink）
-                    showGithubLink('mergedYamlLink', 'mergedYamlUrl', yamlResult.githubIoUrl);
-                } catch (yamlError) {
-                    console.warn('YAML文件上传失败，但节点文件已成功上传:', yamlError);
-                    showNotification('YAML上传失败', '节点文件上传成功，但YAML配置文件上传失败: ' + yamlError.message, 'warning');
-                }
             } catch (e) {
                 showNotification('上传失败', '上传过程中发生错误: ' + e.message, 'error');
                 addLog('上传明文节点', '上传失败: ' + e.message, 'error');
@@ -3537,18 +3425,12 @@
             // 清空生成结果
             data.vlessLinks = [];
             data.localBase64Content = '';
-            data.localYamlContent = '';
             data.autoBase64Content = '';
-            data.mergedYamlContent = '';
             displayVlessLinks();
             document.getElementById('localBase64Output').textContent = 'Base64订阅内容将在这里显示...';
             document.getElementById('localBase64Output').classList.add('empty');
-            document.getElementById('localYamlOutput').textContent = '本地YAML配置将在这里显示...';
-            document.getElementById('localYamlOutput').classList.add('empty');
             document.getElementById('autoBase64Output').textContent = '合并去重后将自动生成Base64订阅内容...';
             document.getElementById('autoBase64Output').classList.add('empty');
-            document.getElementById('mergedYamlOutput').textContent = '合并后的YAML配置将在这里显示...';
-            document.getElementById('mergedYamlOutput').classList.add('empty');
             updateStats();
         }
 
@@ -4156,12 +4038,8 @@
                 // 自动生成本地Base64
                 if (data.vlessLinks.length > 0) {
                     data.localBase64Content = btoa(data.vlessLinks.join('\n'));
-                    // 生成对应的本地YAML内容
-                    data.localYamlContent = generateClashYAML(data.vlessLinks);
                     document.getElementById('localBase64Output').textContent = data.localBase64Content;
                     document.getElementById('localBase64Output').classList.remove('empty');
-                    document.getElementById('localYamlOutput').textContent = data.localYamlContent;
-                    document.getElementById('localYamlOutput').classList.remove('empty');
                 }
 
                 displayVlessLinks();
@@ -4831,104 +4709,6 @@
 
             showNotification('下载成功', `${filename} 已下载`, 'success');
             addLog('下载配置', `下载了手动转换的Clash YAML配置文件`, 'success');
-        }
-
-        // 新增：下载合并生成的YAML
-        function downloadMergedYaml() {
-            if (!data.mergedYamlContent) {
-                showNotification('下载失败', '请先合并节点生成YAML配置', 'error');
-                return;
-            }
-
-            const filename = `merged-clash-config-${new Date().toISOString().split('T')[0]}.yaml`;
-            const blob = new Blob([data.mergedYamlContent], { type: 'application/x-yaml' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            showNotification('下载成功', `${filename} 已下载`, 'success');
-            addLog('下载配置', `下载了合并生成的Clash YAML配置文件`, 'success');
-        }
-
-        // 新增：下载本地生成的YAML
-        function downloadLocalYaml() {
-            if (!data.localYamlContent) {
-                showNotification('下载失败', '请先生成本地节点生成YAML配置', 'error');
-                return;
-            }
-
-            const filename = `local-clash-config-${new Date().toISOString().split('T')[0]}.yaml`;
-            const blob = new Blob([data.localYamlContent], { type: 'application/x-yaml' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            showNotification('下载成功', `${filename} 已下载`, 'success');
-            addLog('下载配置', `下载了本地生成的Clash YAML配置文件`, 'success');
-        }
-
-        // 新增：上传手动转换的YAML配置到GitHub
-        async function uploadManualYaml() {
-            if (!data.manualYamlContent) {
-                showNotification('上传失败', '请先转换Vless节点为YAML格式', 'error');
-                return;
-            }
-
-            showLoading(true, 'uploadYamlBtn');
-            try {
-                const token = document.getElementById('githubToken').value.trim();
-                if (!token) {
-                    showNotification('上传失败', '请先输入GitHub Token，否则无法上传文件', 'error');
-                    showLoading(false, 'uploadYamlBtn');
-                    return;
-                }
-
-                const repo = document.getElementById('githubRepo').value.trim();
-                if (!repo) {
-                    showNotification('上传失败', '请先输入GitHub仓库名称，格式为：用户名/仓库名', 'error');
-                    showLoading(false, 'uploadYamlBtn');
-                    return;
-                }
-
-                // 获取YAML文件名，默认为 clash-config.yaml
-                const yamlFileName = document.getElementById('yamlFileName').value.trim() || 'clash-config.yaml';
-
-                // 使用通用上传函数
-                const result = await uploadToGitHub(
-                    yamlFileName,
-                    utf8ToBase64(data.manualYamlContent),
-                    false, // YAML文件不需要Base64编码
-                    `上传手动转换的Clash YAML配置 - ${new Date().toLocaleString()}`
-                );
-
-                // 标记缓存需要更新
-                data.cache.needsUpdate = true;
-
-                const message = result.isNew
-                    ? `✅ 新建YAML配置文件 ${yamlFileName} 成功！`
-                    : `✅ 更新YAML配置文件 ${yamlFileName} 成功！`;
-
-                showNotification('上传成功', message, 'success');
-                addLog('上传YAML配置', `${message} (SHA: ${result.sha.substring(0, 8)}...)`, 'success');
-
-                // 显示GitHub.io链接
-                showGithubLink('yamlConfigLink', 'yamlConfigUrl', result.githubIoUrl);
-            } catch (e) {
-                showNotification('上传失败', '上传过程中发生错误: ' + e.message, 'error');
-                addLog('上传YAML配置', '上传失败: ' + e.message, 'error');
-            } finally {
-                showLoading(false, 'uploadYamlBtn');
-            }
         }
 
         // 新增：手动Vless转IP:端口
@@ -5671,14 +5451,9 @@
             const plainText = data.uniqueNodes.join('\n');
             data.autoBase64Content = btoa(plainText);
 
-            // 生成对应的YAML内容
-            data.mergedYamlContent = data.uniqueNodes.length ? generateClashYAML(data.uniqueNodes) : '';
-
             document.getElementById('autoBase64Output').textContent = data.autoBase64Content;
             document.getElementById('autoBase64Output').classList.toggle('empty', data.uniqueNodes.length === 0);
             document.getElementById('mergedResult').textContent = data.uniqueNodes.length ? data.uniqueNodes.join('\n\n') : '无节点';
-            document.getElementById('mergedYamlOutput').textContent = data.mergedYamlContent;
-            document.getElementById('mergedYamlOutput').classList.toggle('empty', data.uniqueNodes.length === 0);
 
             // 显示合并完成通知
             if (data.uniqueNodes.length > 0) {
@@ -5750,32 +5525,6 @@
 
                 // 显示GitHub.io链接
                 showGithubLink('localBase64Link', 'localBase64Url', result.githubIoUrl);
-
-                // 同时上传对应的YAML配置文件
-                try {
-                    const yamlFileName = targetFile.replace(/\.[^/.]+$/, '') + '.yaml'; // 替换扩展名为.yaml
-                    const yamlContent = generateClashYAML(data.vlessLinks);
-
-                    const yamlResult = await uploadToGitHub(
-                        yamlFileName,
-                        utf8ToBase64(yamlContent),
-                        false,
-                        `上传本地YAML配置 ${yamlFileName} - ${new Date().toLocaleString()} (${data.vlessLinks.length}节点)`
-                    );
-
-                    const yamlMessage = yamlResult.isNew
-                        ? `✅ 新建YAML配置文件 ${yamlFileName} 成功！`
-                        : `✅ 更新YAML配置文件 ${yamlFileName} 成功！`;
-
-                    showNotification('YAML上传成功', yamlMessage, 'success');
-                    addLog('上传YAML配置', `${yamlMessage} (SHA: ${yamlResult.sha.substring(0, 8)}...)`, 'success');
-
-                    // 显示YAML配置文件的GitHub.io链接
-                    showGithubLink('localYamlLink', 'localYamlUrl', yamlResult.githubIoUrl);
-                } catch (yamlError) {
-                    console.warn('YAML文件上传失败，但节点文件已成功上传:', yamlError);
-                    showNotification('YAML上传失败', '节点文件上传成功，但YAML配置文件上传失败: ' + yamlError.message, 'warning');
-                }
             } catch (e) {
                 showNotification('上传失败', '上传过程中发生错误: ' + e.message, 'error');
                 addLog('上传本地订阅', '上传失败: ' + e.message, 'error');
@@ -5821,32 +5570,6 @@
 
                 // 显示GitHub.io链接
                 showGithubLink('mergedBase64Link', 'mergedBase64Url', result.githubIoUrl);
-
-                // 同时上传对应的YAML配置文件
-                try {
-                    const yamlFileName = mainNodeFile.replace(/\.[^/.]+$/, '') + '.yaml';
-                    const yamlContent = data.mergedYamlContent;
-
-                    const yamlResult = await uploadToGitHub(
-                        yamlFileName,
-                        utf8ToBase64(yamlContent),
-                        false,
-                        `上传合并YAML配置 ${yamlFileName} - ${new Date().toLocaleString()} (${data.uniqueNodes.length}节点)`
-                    );
-
-                    const yamlMessage = yamlResult.isNew
-                        ? `✅ 新建YAML配置文件 ${yamlFileName} 成功！`
-                        : `✅ 更新YAML配置文件 ${yamlFileName} 成功！`;
-
-                    showNotification('YAML上传成功', yamlMessage, 'success');
-                    addLog('上传YAML配置', `${yamlMessage} (SHA: ${yamlResult.sha.substring(0, 8)}...)`, 'success');
-
-                    // 显示YAML配置文件的GitHub.io链接
-                    showGithubLink('mergedYamlLink', 'mergedYamlUrl', yamlResult.githubIoUrl);
-                } catch (yamlError) {
-                    console.warn('YAML文件上传失败，但节点文件已成功上传:', yamlError);
-                    showNotification('YAML上传失败', '节点文件上传成功，但YAML配置文件上传失败: ' + yamlError.message, 'warning');
-                }
             } catch (e) {
                 showNotification('上传失败', '上传过程中发生错误: ' + e.message, 'error');
                 addLog('上传合并Base64', '上传失败: ' + e.message, 'error');
@@ -5892,32 +5615,6 @@
 
                 // 显示GitHub.io链接
                 showGithubLink('mergedOptimalLink', 'mergedOptimalUrl', result.githubIoUrl);
-
-                // 同时上传对应的YAML配置文件（使用与MainNode相同的文件名模式）
-                try {
-                    const yamlFileName = optimalNodeFile.replace(/\.[^/.]+$/, '') + '.yaml';
-                    const yamlContent = data.mergedYamlContent;
-
-                    const yamlResult = await uploadToGitHub(
-                        yamlFileName,
-                        utf8ToBase64(yamlContent),
-                        false,
-                        `上传合并YAML配置 ${yamlFileName} - ${new Date().toLocaleString()} (${data.uniqueNodes.length}节点)`
-                    );
-
-                    const yamlMessage = yamlResult.isNew
-                        ? `✅ 新建YAML配置文件 ${yamlFileName} 成功！`
-                        : `✅ 更新YAML配置文件 ${yamlFileName} 成功！`;
-
-                    showNotification('YAML上传成功', yamlMessage, 'success');
-                    addLog('上传YAML配置', `${yamlMessage} (SHA: ${yamlResult.sha.substring(0, 8)}...)`, 'success');
-
-                    // 显示YAML配置文件的GitHub.io链接（复用mergedYamlLink）
-                    showGithubLink('mergedYamlLink', 'mergedYamlUrl', yamlResult.githubIoUrl);
-                } catch (yamlError) {
-                    console.warn('YAML文件上传失败，但节点文件已成功上传:', yamlError);
-                    showNotification('YAML上传失败', '节点文件上传成功，但YAML配置文件上传失败: ' + yamlError.message, 'warning');
-                }
             } catch (e) {
                 showNotification('上传失败', '上传过程中发生错误: ' + e.message, 'error');
                 addLog('上传合并优选订阅', '上传失败: ' + e.message, 'error');
@@ -5989,32 +5686,6 @@
 
                 // 显示GitHub.io链接
                 showGithubLink('mergedToPathLink', 'mergedToPathUrl', result.githubIoUrl);
-
-                // 同时上传对应的YAML配置文件
-                try {
-                    const yamlFileName = targetFile.replace(/\.[^/.]+$/, '') + '.yaml';
-                    const yamlContent = data.mergedYamlContent;
-
-                    const yamlResult = await uploadToGitHub(
-                        yamlFileName,
-                        utf8ToBase64(yamlContent),
-                        false,
-                        `上传合并YAML配置 ${yamlFileName} - ${new Date().toLocaleString()} (${data.uniqueNodes.length}节点)`
-                    );
-
-                    const yamlMessage = yamlResult.isNew
-                        ? `✅ 新建YAML配置文件 ${yamlFileName} 成功！`
-                        : `✅ 更新YAML配置文件 ${yamlFileName} 成功！`;
-
-                    showNotification('YAML上传成功', yamlMessage, 'success');
-                    addLog('上传YAML配置', `${yamlMessage} (SHA: ${yamlResult.sha.substring(0, 8)}...)`, 'success');
-
-                    // 显示YAML配置文件的GitHub.io链接（复用mergedYamlLink）
-                    showGithubLink('mergedYamlLink', 'mergedYamlUrl', yamlResult.githubIoUrl);
-                } catch (yamlError) {
-                    console.warn('YAML文件上传失败，但节点文件已成功上传:', yamlError);
-                    showNotification('YAML上传失败', '节点文件上传成功，但YAML配置文件上传失败: ' + yamlError.message, 'warning');
-                }
             } catch (e) {
                 showNotification('上传失败', '上传过程中发生错误: ' + e.message, 'error');
                 addLog('上传合并至指定路径', '上传失败: ' + e.message, 'error');
@@ -6092,28 +5763,11 @@
                     // 不抛出错误，继续执行
                 }
 
-                // 9. 上传对应的YAML配置文件
-                try {
-                    const yamlFileName = mainNodeFile.replace(/\.[^/.]+$/, '') + '.yaml';
-                    const yamlContent = data.mergedYamlContent;
-
-                    await uploadToGitHub(
-                        yamlFileName,
-                        utf8ToBase64(yamlContent),
-                        false,
-                        `一键同步YAML配置 ${yamlFileName} - ${new Date().toLocaleString()} (${data.uniqueNodes.length}节点)`
-                    );
-                    console.log('✅ YAML配置 上传成功');
-                } catch (e) {
-                    console.warn('⚠️ YAML配置上传失败，但其他文件已成功上传:', e);
-                    // 不抛出错误，继续执行
-                }
-
-                // 10. 清除缓存更新标记
+                // 9. 清除缓存更新标记
                 data.cache.needsUpdate = false;
 
-                showNotification('一键同步成功', `成功同步 ${data.uniqueNodes.length} 个节点到GitHub三个文件和YAML配置，所有操作已完成！`, 'success');
-                addLog('一键同步', `成功同步 ${data.uniqueNodes.length} 个节点到GitHub三个文件和YAML配置`, 'success');
+                showNotification('一键同步成功', `成功同步 ${data.uniqueNodes.length} 个节点到GitHub三个文件，所有操作已完成！`, 'success');
+                addLog('一键同步', `成功同步 ${data.uniqueNodes.length} 个节点到GitHub三个文件`, 'success');
             } catch (e) {
                 showNotification('一键同步失败', '同步过程中发生错误: ' + e.message, 'error');
                 addLog('一键同步', '同步失败: ' + e.message, 'error');
