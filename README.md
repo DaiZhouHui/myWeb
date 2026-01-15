@@ -2,6 +2,16 @@
 
 一个功能强大的Web工具，用于将CSV数据转换为Vless节点链接，生成Base64订阅，并与GitHub仓库同步。
 
+默认示例 GitHub Pages 发布页（基于默认仓库设置 `DaiZhouHui/CustomNode`）：
+
+- 仓库首页（Pages）：https://daizhouhui.github.io/CustomNode/
+
+默认三个节点订阅文件（Pages 版本示例）：
+
+- 主要订阅（Pages）: https://daizhouhui.github.io/CustomNode/MainNode
+- 优选订阅（Pages）: https://daizhouhui.github.io/CustomNode/OptimalNode
+- 明文订阅（Pages）: https://daizhouhui.github.io/CustomNode/PlainNode
+
 ## 🌟 功能特点
 
 ### 📊 CSV数据解析
@@ -45,6 +55,8 @@
 1. 输入GitHub Token（需要repo权限）
 2. 设置仓库信息（仓库名、分支）
 3. 下载远程节点或一键同步
+
+说明：工具提供两种生成公开链接的方式——GitHub Pages 和 Raw（raw.githubusercontent.com）。默认使用 Pages（更适合通过浏览器或设备直接导入订阅）。在页面“高级”设置中可切换生成链接类型。
 
 ## ⚙️ 配置说明
 
@@ -129,6 +141,17 @@ GitHub仓库中的三个主要文件：
 3. **IP合法性**：工具会验证IP地址的有效性
 4. **网络连接**：需要网络连接以访问GitHub API和获取IP地理信息
 
+## ✅ 建议的新增功能（基于当前项目，优先级由易到难）
+
+1. 定时同步（浏览器端提示）：允许用户设置一个简单的“每 N 小时自动检测并同步”的选项，配合本地通知提示。（实现：使用 setInterval + 本地存储开关）
+2. 本地预览订阅二维码：为生成的 Base64 / Pages 链接提供二维码，便于手机直接扫码导入订阅。 （实现难度低，使用现成二维码库或第三方API）
+3. 快速导入/导出配置：导出当前界面配置为 JSON 配置文件（包含 token 是否保存的标记），便于迁移到其他浏览器或恢复设置。
+4. 简易 Token 有效性检查：在输入 GitHub Token 后，点击验证按钮，可以快速检测 token 权限是否包含 repo 权限并给出友好提示。
+5. CI/CD 模板（可选）：提供一份 GitHub Actions workflow 模板示例，让用户在仓库中自动用提交触发 Pages 发布（便于自动化更新 Pages 内容）。
+6. 订阅文件版本历史与回滚提示：在上传成功后记录最近几次 SHA 与时间（仅在本地记录），并提供回滚到某次上传的简易说明。
+
+这些建议侧重于增强用户体验和自动化程度，大多数为前端或轻量脚本实现，便于后续迭代。
+
 ## 🔒 隐私安全
 
 - 所有操作在浏览器本地完成
@@ -150,6 +173,8 @@ GitHub仓库中的三个主要文件：
 
 ---
 
-**版本**：4.0  
-**最后更新**：2025年  
+---
+
+**版本**：26.01.15.16  (格式：YY.MM.DD.HH，示例)
+**最后更新**：2026-01-15 16:12  
 **兼容性**：现代浏览器（Chrome、Firefox、Edge等）
