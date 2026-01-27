@@ -1,4 +1,4 @@
-// ip-geolocation-service.js - 终极兼容版
+// ip-geolocation.js - 终极兼容版
 
 (function () {
     'use strict';
