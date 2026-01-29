@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vless节点生成工具</title>
+    <title>Vless节点生成工具-部署在GitHub Pages</title>
     <link rel="icon" href="./style/ico.png" type="image/png">
     <link rel="stylesheet" href="./style.css">
 </head>
@@ -12,7 +12,6 @@
 <body>
     <!-- 全局通知容器 -->
     <div class="notification-container" id="notificationContainer"></div>
-
     <div class="container">
         <!-- 顶部信息提示条（可隐藏） -->
         <div class="header-info" id="headerInfo">
@@ -52,6 +51,9 @@
             </button>
             <button class="quick-btn" onclick="document.getElementById('toggleHeaderBtn').click()">
                 <span>👁️</span> 显示/隐藏标题
+            </button>
+            <button class="quick-btn" onclick="window.location.href='https://daizhouhui.github.io/CustomNode/'">
+                <span>🏢</span> 节点仓库
             </button>
         </div>
 
@@ -290,11 +292,17 @@
                                 </div>
                             </div>
 
+                            <div class="config-row">
+                                <div class="form-group">
+                                    <label>自定义Path参数 <span class="help-inline">默认: /?ed=2048</span></label>
+                                    <input type="text" id="customPath" value="/?ed=2048" placeholder="例如: /?ed=2048">
+                                </div>
+                            </div>
+
                             <div class="help-text">
                                 其他固定参数：<br>
                                 • 加密方式：none<br>
                                 • 网络类型：ws<br>
-                                • Path：/?ed=2048<br>
                                 • TLS：启用<br>
                                 • Flow：空<br>
                                 • 伪装方式：空
@@ -451,7 +459,7 @@
                         <!-- GitHub配置帮助文本 - 放在右上角 -->
                         <div class="github-config-help">
                             GitHub API令牌 <a href="https://github.com/settings/tokens" target="_blank">获取令牌</a>:需repo权限
-                            <a href="#" onclick="copyGitToken()">复制查看示例令牌</a>
+                            <a href="#" onclick="copyGitToken()">复制示例令牌</a>
                         </div>
 
                         <div class="section-title">
@@ -1318,15 +1326,19 @@
             }
 
             // 原有的四个上传按钮 - 添加确认提示
+            //上传本地订阅至指定路径按钮点击事件
             document.getElementById('uploadLocalBase64ToPathBtn').addEventListener('click', () => {
                 validateAndUpload('uploadLocalBase64ToPath');
             });
+            //上传合并明文订阅按钮点击事件
             document.getElementById('uploadPlainNodesBtn').addEventListener('click', () => {
                 validateAndUpload('uploadPlainNodes');
             });
+            //上传合并主要订阅按钮点击事件
             document.getElementById('uploadMergedBase64Btn').addEventListener('click', () => {
                 validateAndUpload('uploadMergedBase64');
             });
+            //上传合并优选订阅按钮点击事件
             document.getElementById('uploadMergedOptimalBtn').addEventListener('click', () => {
                 validateAndUpload('uploadMergedOptimal');
             });
@@ -1598,11 +1610,11 @@
                 if (headerInfo.classList.contains('hidden')) {
                     headerInfo.classList.remove('hidden');
                     toggleBtn.textContent = '隐藏';
-                    showNotification('提示', '标题已显示', 'info');
+                    // showNotification('提示', '标题已显示', 'info');
                 } else {
                     headerInfo.classList.add('hidden');
                     toggleBtn.textContent = '显示';
-                    showNotification('提示', '标题已隐藏', 'info');
+                    // showNotification('提示', '标题已隐藏', 'info');
                 }
             });
         }
@@ -2271,38 +2283,6 @@
             return false;
         }
 
-        // 新增：判断是否为延迟值
-        function isDelayValue(value) {
-            if (!value || typeof value !== 'string') return false;
-
-            const normalized = value.toLowerCase().trim();
-
-            // 匹配延迟模式
-            const delayPatterns = [
-                /^(\d+(\.\d+)?)\s*(ms|毫秒)$/i,
-                /^(\d+(\.\d+)?)\s*(s|秒)$/i,
-                /^延迟\s*[:：]?\s*(\d+(\.\d+)?)/i,
-                /^ping\s*[:：]?\s*(\d+(\.\d+)?)/i,
-                /^(\d+(\.\d+)?)\s*ms$/i
-            ];
-
-            for (const pattern of delayPatterns) {
-                if (pattern.test(normalized)) {
-                    return true;
-                }
-            }
-
-            // 检查是否包含延迟单位
-            const delayUnits = ['ms', '毫秒', '延迟', 'ping', 'latency'];
-            for (const unit of delayUnits) {
-                if (normalized.includes(unit)) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         // 更新列检测结果显示 - 优化样式
         // 更新列检测结果显示 - 优化样式和逻辑
         // 更新列检测结果显示 - 优化样式和逻辑
@@ -2715,7 +2695,7 @@
 
                     // 如果没有从CSV获取到地区信息，使用IP检测（等待异步结果）
                     if (!regionNameForGroup) {
-                        const detectedLocation = await getLocation(ip);
+                        const detectedLocation = await getLocationCached(ip);
                         regionNameForGroup = detectedLocation !== '未知' ? detectedLocation : config.prefix;
                     }
 
@@ -2794,7 +2774,7 @@
         async function generateRemarkFromCSV(ip, port, city, country, region, speed, config) {
             // 如果不使用CSV信息，使用默认方式
             if (!config.useCsvInfo) {
-                const location = await getLocation(ip);
+                const location = await getLocationCached(ip);
                 const regionKey = location !== '未知' ? location : config.prefix;
                 return {
                     remark: `${location}-${port}-${ip}`,
@@ -2879,13 +2859,13 @@
             else if (chineseRegion && chineseRegion.trim()) regionKey = chineseRegion.trim();
             else if (chineseCountry && chineseCountry.trim()) regionKey = chineseCountry.trim();
             else {
-                const detectedLocation = await getLocation(ip);
+                const detectedLocation = await getLocationCached(ip);
                 regionKey = detectedLocation !== '未知' ? detectedLocation : config.prefix;
             }
 
             // 如果parts只有端口等异常情况，回退到IP检测
             if (parts.length === 0 || parts.length === 1) {
-                const detectedLocation = await getLocation(ip);
+                const detectedLocation = await getLocationCached(ip);
                 parts.length = 0;
                 parts.push(detectedLocation !== '未知' ? detectedLocation : config.prefix);
                 parts.push(port.toString());
@@ -3072,6 +3052,9 @@
         }
 
         function generateLink(ip, port, config, remark) {
+            // 读取自定义Path参数，默认为 /?ed=2048
+            const customPath = document.getElementById('customPath') ? document.getElementById('customPath').value.trim() : '/?ed=2048';
+            const encodedPath = encodeURIComponent(customPath);
             const params = [
                 'encryption=none',
                 'security=tls',
@@ -3079,7 +3062,7 @@
                 `fp=${config.fp}`,
                 'type=ws',
                 `host=${encodeURIComponent(config.host)}`,
-                'path=%2F%3Fed%3D2048',
+                `path=${encodedPath}`,
                 'alpn=h2%2Chttp%2F1.1',
                 'flow='
             ];
@@ -4064,7 +4047,7 @@
             }
         }
 
-        // 修复：上传本地生成Base64到指定路径 - 修正文件格式问题
+        // 修复：上传本地生成Base64(本地订阅)到指定路径 - 修正文件格式问题
         async function uploadLocalBase64ToPath() {
             showLoading(true, 'uploadLocalBase64ToPathBtn');
             try {
@@ -4102,8 +4085,10 @@
                     const firstBase64 = btoa(data.vlessLinks.join('\n'));
                     contentToUpload = btoa(firstBase64);
                 } else {
-                    // 其他自定义路径：使用本地生成的Base64内容
-                    contentToUpload = data.localBase64Content || btoa(data.vlessLinks.join('\n'));
+                    // 其他自定义路径：上传双重Base64编码
+                    const firstBase64 = btoa(data.vlessLinks.join('\n'));
+                    contentToUpload = btoa(firstBase64);
+                    // contentToUpload = data.localBase64Content || btoa(data.vlessLinks.join('\n'));
                 }
 
                 // 使用通用上传函数
@@ -4558,6 +4543,17 @@
             addLog('配置文件下载', `下载了 Clash 配置文件，包含 ${nodes.length} 个节点`, 'success');
         }
 
+        // 新增：YAML字符串转义函数 - 确保特殊字符不破坏YAML结构
+        function yamlQuote(str) {
+            if (!str) return '""';
+            // 如果包含特殊字符、冒号、井号等需要用引号包围
+            if (/[:"\#\{\}\[\]&\*'|>@`\n\r\t]/.test(str)) {
+                // 转义双引号和反斜杠
+                return '"' + str.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"';
+            }
+            return '"' + str + '"';
+        }
+
         // 生成Clash YAML配置
         function generateClashYAML(nodes) {
             const proxies = [];
@@ -4629,9 +4625,8 @@
                     'enhanced-mode': 'fake-ip',
                     'fake-ip-range': '198.18.0.1/16',
                     nameserver: [
-                        '114.114.114.114',
-                        '223.5.5.5',
                         '8.8.8.8',
+                        '223.5.5.5',
                         '1.1.1.1'
                     ]
                 },
@@ -4646,27 +4641,29 @@
                         name: '♻️ 自动选择',
                         type: 'url-test',
                         proxies: proxyNames,
-                        url: 'http://www.gstatic.com/generate_204',
+                        // 使用 Cloudflare 的检测端点，通常中国大陆通过代理可访问，减少被GFW阻断导致的测速失败
+                        url: 'https://www.cloudflare.com/cdn-cgi/trace',
                         interval: 300
                     },
                     {
                         name: '🔥 故障转移',
                         type: 'fallback',
                         proxies: proxyNames,
-                        url: 'http://www.gstatic.com/generate_204',
+                        // 故障转移也使用同样的检测URL以便在国内环境下更可靠地检测可用节点
+                        url: 'https://www.cloudflare.com/cdn-cgi/trace',
                         interval: 300
                     }
                 ],
                 rules: [
-                    'DOMAIN-SUFFIX,google.com,🚀 节点选择',
-                    'DOMAIN-SUFFIX,youtube.com,🚀 节点选择',
-                    'DOMAIN-SUFFIX,github.com,🚀 节点选择',
-                    'DOMAIN-SUFFIX,twitter.com,🚀 节点选择',
-                    'DOMAIN-SUFFIX,facebook.com,🚀 节点选择',
-                    'DOMAIN-SUFFIX,instagram.com,🚀 节点选择',
-                    'DOMAIN-SUFFIX,telegram.org,🚀 节点选择',
-                    'DOMAIN-SUFFIX,netflix.com,🚀 节点选择',
-                    'DOMAIN-SUFFIX,spotify.com,🚀 节点选择',
+                    'DOMAIN-SUFFIX,google.com,♻️ 自动选择',
+                    'DOMAIN-SUFFIX,youtube.com,♻️ 自动选择',
+                    'DOMAIN-SUFFIX,github.com,♻️ 自动选择',
+                    'DOMAIN-SUFFIX,twitter.com,♻️ 自动选择',
+                    'DOMAIN-SUFFIX,facebook.com,♻️ 自动选择',
+                    'DOMAIN-SUFFIX,instagram.com,♻️ 自动选择',
+                    'DOMAIN-SUFFIX,telegram.org,♻️ 自动选择',
+                    'DOMAIN-SUFFIX,netflix.com,♻️ 自动选择',
+                    'DOMAIN-SUFFIX,spotify.com,♻️ 自动选择',
                     'GEOIP,CN,DIRECT',
                     'MATCH,♻️ 自动选择'
                 ]
@@ -4679,7 +4676,7 @@
             // 添加代理配置
             yamlContent += 'proxies:\n';
             proxies.forEach(proxy => {
-                yamlContent += '  - name: "' + proxy.name + '"\n';
+                yamlContent += '  - name: ' + yamlQuote(proxy.name) + '\n';
                 yamlContent += '    type: ' + proxy.type + '\n';
                 yamlContent += '    server: ' + proxy.server + '\n';
                 yamlContent += '    port: ' + proxy.port + '\n';
@@ -4691,14 +4688,14 @@
 
                 // 添加SNI
                 if (proxy.sni) {
-                    yamlContent += '    sni: "' + proxy.sni + '"\n';
+                    yamlContent += '    sni: ' + yamlQuote(proxy.sni) + '\n';
                 }
 
                 // 添加ALPN
                 if (proxy.alpn && Array.isArray(proxy.alpn)) {
                     yamlContent += '    alpn:\n';
                     proxy.alpn.forEach(alpn => {
-                        yamlContent += '      - "' + alpn.trim() + '"\n';
+                        yamlContent += '      - ' + yamlQuote(alpn.trim()) + '\n';
                     });
                 }
 
@@ -4709,11 +4706,11 @@
 
                 if (proxy['ws-opts']) {
                     yamlContent += '    ws-opts:\n';
-                    yamlContent += '      path: "' + proxy['ws-opts'].path + '"\n';
+                    yamlContent += '      path: ' + yamlQuote(proxy['ws-opts'].path) + '\n';
                     if (proxy['ws-opts'].headers && Object.keys(proxy['ws-opts'].headers).length > 0) {
                         yamlContent += '      headers:\n';
                         Object.entries(proxy['ws-opts'].headers).forEach(([key, value]) => {
-                            yamlContent += '        ' + key + ': "' + value + '"\n';
+                            yamlContent += '        ' + key + ': ' + yamlQuote(value) + '\n';
                         });
                     }
                 }
@@ -4723,14 +4720,14 @@
             // 添加代理组
             yamlContent += 'proxy-groups:\n';
             config['proxy-groups'].forEach(group => {
-                yamlContent += '  - name: "' + group.name + '"\n';
+                yamlContent += '  - name: ' + yamlQuote(group.name) + '\n';
                 yamlContent += '    type: ' + group.type + '\n';
                 yamlContent += '    proxies:\n';
                 group.proxies.forEach(proxy => {
-                    yamlContent += '      - "' + proxy + '"\n';
+                    yamlContent += '      - ' + yamlQuote(proxy) + '\n';
                 });
                 if (group.url) {
-                    yamlContent += '    url: "' + group.url + '"\n';
+                    yamlContent += '    url: ' + yamlQuote(group.url) + '\n';
                 }
                 if (group.interval) {
                     yamlContent += '    interval: ' + group.interval + '\n';
@@ -5316,6 +5313,22 @@
                 }
             })();
         }
+        // 新增：IP地址位置缓存 - 避免重复调用和支持并行
+        let locationCache = {};
+
+        // 新增：带缓存的地理位置查询函数 - 支持并行查询
+        async function getLocationCached(ip) {
+            // 如果已缓存，直接返回
+            if (locationCache[ip]) {
+                return locationCache[ip];
+            }
+
+            // 调用原始getLocation并缓存结果
+            const location = await window.IPGeolocationService.getIPLocation(ip);
+            locationCache[ip] = location;
+            return location;
+        }
+
         /**
          * 自定义获取IP地址对应的国家/地区名称
          * @param {string} ip - IPv4地址
